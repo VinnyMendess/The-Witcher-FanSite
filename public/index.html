@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AquaTech | Página Inicial</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" href="./assets/icon/favicon2.ico" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+
+  <body>
+    <!--Header-->
+    <header>
+      <div class="logo">
+        <img src="./assets/imgs/logo-bruxo.png" alt="logo-bruxo" />
+      </div>
+      <!--Navegação-->
+      <nav>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">sobre</a></li>
+          <li><a href="">Conteúdo</a></li>
+          <li><a href="">Quiz</a></li>
+        </ul>
+        <ul>
+          <li><a href="./login.html">Entrar</a></li>
+          <li><a href="./cadastro.html">Cadastrar</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!--Hero Section-->
+    <section class="hero">
+      <div class="elements-hero">
+        <div class="hero-title">
+          <h1>
+            Sua Jornada de <br />
+            Aventura <br />
+            começa
+          </h1>
+          <h2>AGORA</h2>
+          <div class="hero-button">
+            <a href="">Iniciar Contrato</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-box">
+        <div class="img-logo-tipo">
+          <img src="./assets/imgs/logotipo.png" alt="" />
+        </div>
+        <div class="img-banner">
+          <img src="./assets/imgs/banner.png" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section-02">
+      <div class="section-02-title">
+        <h3>UMA TERRA SOMBRIA E DESOLADA</h3>
+      </div>
+      <div class="section-02-container">
+        <div class="elements-box">
+          <div class="box" id="box-01"></div>
+          <p>Monstros e Maldições</p>
+        </div>
+        <div class="elements-box">
+          <div class="box" id="box-02"></div>
+          <p>O continente em Guerra</p>
+        </div>
+        <div class="elements-box">
+          <div class="box" id="box-03"></div>
+          <p>O caminho do bruxo</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-03">
+      <div class="section-03-title">
+        <h4>GERALT <span>DE</span></h4>
+        <!-- <h4>RIVIA</h4>-->
+      </div>
+
+      <div class="container">
+        <div class="banners">
+          <div class="box-elements">
+            <img src="./assets/imgs/icon-wolf.png" alt="" />
+            <img src="./assets/imgs/symbols.png" alt="" />
+          </div>
+          <div class="section-03-container-img">
+            <img src="./assets/imgs/banner-witcher.png" alt="" />
+          </div>
+        </div>
+        <div class="elements">
+          <div class="title">RIVIA</div>
+          <button onclick="estender_01()">
+            <div class="icon-element">
+              <img src="./assets/imgs/symbol-2.png" alt="" /> O bruxo Mutante
+            </div>
+          </button>
+          <div id="panel_1" class="panel">
+            <p>
+              Geralt é um Bruxo, um caçador de monstros profissional. Ele não
+              nasceu assim: foi submetido a dolorosas mutações químicas (as
+              Provas das Ervas) quando criança, ganhando força, reflexos e
+              sentidos sobre-humanos para sobreviver ao seu ofício.
+            </p>
+          </div>
+          <button onclick="estender_02()">
+            <div class="icon-element">
+              <img src="./assets/imgs/symbol-1.png" alt="" /> A escola do lobo
+            </div>
+          </button>
+          <div id="panel_2" class="panel">
+            <p>
+              Ele foi treinado na fortaleza de Kaer Morhen, o lar da Escola do
+              Lobo. Lá, ele dominou a esgrima, a alquimia e o conhecimento do
+              Bestiário, tornando-se um dos espadachins mais temidos e
+              respeitados do Continente.
+            </p>
+          </div>
+          <button onclick="estender_03()">
+            <div class="icon-element">
+              <img src="./assets/imgs/symbol-3.png" alt="" />O lobo Branco
+            </div>
+          </button>
+          <div id="panel_3" class="panel">
+            <p>
+              Seus icônicos cabelos brancos não são de velhice. Eles são a marca
+              de mutações experimentais extras que ele suportou. Essa aparência
+              distinta lhe rendeu o apelido de "Lobo Branco" (ou "Gwynbleidd" na
+              Língua Antiga).
+            </p>
+          </div>
+          <button onclick="estender_04()">
+            <div class="icon-element">
+              <img src="./assets/imgs/symbol-4.png" alt="" />O Ódio do Ofício
+            </div>
+          </button>
+          <div id="panel_4" class="panel">
+            <p>
+              Geralt carrega duas espadas: uma de aço para humanos e bestas
+              comuns, e uma de prata para monstros e criaturas mágicas. Ele
+              também usa "Sinais", formas simples de magia de combate, como Aard
+              (impacto telecinético) e Igni (fogo).
+            </p>
+          </div>
+          <button onclick="estender_05()">
+            <div class="icon-element">
+              <img src="./assets/imgs/symbol-5.png" alt="" />O Mal Menor
+            </div>
+          </button>
+          <div id="panel_5" class="panel">
+            <p>
+              Em um mundo dividido pela guerra e preconceito, Geralt luta para
+              se manter neutro. Ele segue seu próprio código moral, muitas vezes
+              sendo forçado a escolher o "mal menor" em situações onde não
+              existe uma escolha "boa".
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-04">
+      <div class="title">
+        <h5>Mais que Aço e Prata</h5>
+      </div>
+      <div class="container-characters">
+        <div class="background">
+          <div class="landscape">
+            <img src="./assets/imgs/background-yennefer.png" alt="" />
+          </div>
+          <div class="character">
+            <img src="./assets/imgs/yennefer.png" alt="" />
+          </div>
+        </div>
+        <div class="elements">
+          <div class="title-text"><p>Amor Tempestuoso</p></div>
+          <div class="text">
+            <p>
+              Uma das feiticeiras mais poderosas do Continente, Yennefer é
+              ambiciosa, orgulhosa e marcada por um passado trágico. Seu caminho
+              está ligado a Geralt por um desejo mágico, resultando em um
+              relacionamento complexo, apaixonado e muitas vezes caótico. Ela é
+              a figura materna de Ciri e fará absolutamente tudo para proteger
+              sua família.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-04">
+      <div id="section-ciri" class="container-characters">
+        <div class="background">
+          <div class="landscape">
+            <img src="./assets/imgs/background-ciri.png" alt="" />
+          </div>
+          <div class="character">
+            <img src="./assets/imgs/ciri.png" alt="" />
+          </div>
+        </div>
+        <div class="elements">
+          <div class="title-text"><p>Amor Tempestuoso</p></div>
+          <div class="text">
+            <p>
+              Uma das feiticeiras mais poderosas do Continente, Yennefer é
+              ambiciosa, orgulhosa e marcada por um passado trágico. Seu caminho
+              está ligado a Geralt por um desejo mágico, resultando em um
+              relacionamento complexo, apaixonado e muitas vezes caótico. Ela é
+              a figura materna de Ciri e fará absolutamente tudo para proteger
+              sua família.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-04">
+      <div id="section-dandelion" class="container-characters">
+        <div class="background">
+          <div class="landscape">
+            <img src="./assets/imgs/background-dandelion.png" alt="" />
+          </div>
+          <div class="character">
+            <img src="./assets/imgs/dandelion.png" alt="" />
+          </div>
+        </div>
+        <div class="elements">
+          <div class="title-text"><p>Amor Tempestuoso</p></div>
+          <div class="text">
+            <p>
+              Uma das feiticeiras mais poderosas do Continente, Yennefer é
+              ambiciosa, orgulhosa e marcada por um passado trágico. Seu caminho
+              está ligado a Geralt por um desejo mágico, resultando em um
+              relacionamento complexo, apaixonado e muitas vezes caótico. Ela é
+              a figura materna de Ciri e fará absolutamente tudo para proteger
+              sua família.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-05">
+      <div class="container">
+        <div class="title">
+          <p>
+            Faça a Prova das
+            <span style="font-weight: 900; color: green">Ervas</span>
+          </p>
+        </div>
+        <img src="./assets/imgs/ervas.png" alt="" />
+      </div>
+    </section>
+
+    <section class="section-06">
+      <p>Descubra que você seria no universo de The Witcher</p>
+      <div class="container">
+        <div class="box-class">
+          <p>Bardo</p>
+          <div id="bardo" class="background">
+            <img src="./assets/imgs/bardo.png" alt="" />
+          </div>
+        </div>
+        <div class="box-class">
+          <p>Bruxo</p>
+          <div class="background">
+            <img src="./assets/imgs/bruxo.png" alt="" />
+          </div>
+        </div>
+        <div class="box-class">
+          <p>Feiticeira</p>
+          <div id="feiticeira" class="background">
+            <img src="./assets/imgs/feiticeira.png" alt="" />
+          </div>
+        </div>
+        <div class="box-class">
+          <p>Criminoso</p>
+          <div id="criminoso" class="background">
+            <img src="./assets/imgs/criminoso.png" alt="" />
+          </div>
+        </div>
+        <div class="box-class">
+          <p>Nobre</p>
+          <div id="nobre" class="background">
+            <img src="./assets/imgs/nobre.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-07">
+      <div class="text-title">
+        <p id="title">O destino Chama</p>
+        <p>
+          "Você me dará aquilo que já possui e que ainda não
+          <span style="color: red">sabe</span> "
+        </p>
+      </div>
+      <div class="container">
+        <img src="./assets/imgs/banner-ciri-geralt.png" alt="" />
+        <div class="box-text">
+          <p>
+            A Lei da Surpresa define caminhos inesperados. Qual será o seu?
+            Descubra se você é um Bruxo, um Feiticeiro, um Bardo, um Nobre ou um
+            Criminoso.
+          </p>
+          <a href="">INICIAR</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Feit por <span style="font-family: the witcher">Vinicius Mendes</span>
+      </p>
+      <p>Um trabalho de Fan para Fan</p>
+    </footer>
+  </body>
+</html>
+
+<script>
+  function estender_01() {
+    if (panel_1.style.display == "block") {
+      panel_1.style.display = "none";
+    } else {
+      panel_1.style.display = "block";
+    }
+  }
+  function estender_02() {
+    if (panel_2.style.display == "block") {
+      panel_2.style.display = "none";
+    } else {
+      panel_2.style.display = "block";
+    }
+  }
+  function estender_03() {
+    if (panel_3.style.display == "block") {
+      panel_3.style.display = "none";
+    } else {
+      panel_3.style.display = "block";
+    }
+  }
+  function estender_04() {
+    if (panel_4.style.display == "block") {
+      panel_4.style.display = "none";
+    } else {
+      panel_4.style.display = "block";
+    }
+  }
+  function estender_05() {
+    if (panel_5.style.display == "block") {
+      panel_5.style.display = "none";
+    } else {
+      panel_5.style.display = "block";
+      
+    }
+  }
+</script>

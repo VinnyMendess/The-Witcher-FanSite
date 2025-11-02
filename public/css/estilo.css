@@ -1,0 +1,619 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=MedievalSharp&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=MedievalSharp&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Lora:ital,wght@0,400..700;1,400..700&family=MedievalSharp&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap");
+/*font-family: "MedievalSharp", cursive;
+font-family: "Cinzel", serif;
+
+font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;*/
+
+@font-face {
+  font-family: "the witcher";
+  src: url(/public/assets/Thewitcher-jnOj.ttf) format("truetype");
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Barlow", "Segoe UI", "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+  background-color: rgb(0, 0, 0);
+  font-family: cinzel;
+  color: #fff;
+}
+
+:root {
+  --tamanho-header: 80px;
+  --tamanho-banner: calc(
+    100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px
+  );
+  --tamanho-simulador: calc(
+    100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px
+  );
+  --tamanho-login: calc(
+    100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px
+  );
+  --tamanho-footer: 65px;
+
+  --medieval--sharp: font-family: "MedievalSharp", cursive;
+  --cinzel: font-family: "Cinzel", serif;
+  --font-family: "Lora", serif;
+}
+
+header {
+  display: flex;
+  position: fixed;
+  padding-top: 10px;
+  background-color: #000000;
+  width: 100%;
+  z-index: 15;
+  font-family: the witcher;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+}
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding-right: 40px;
+}
+
+header nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 50px;
+  
+}
+
+header nav ul a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #f3ffec;
+  
+}
+
+.hero {
+  display: flex;
+  padding-top: 5rem;
+  justify-content: space-around;
+  flex-direction: row;
+  height: 90vh;
+  background-color: #ffffff;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #000000;
+}
+
+.hero-title h1 {
+  font-family: "Lora", serif;
+  font-size: 5rem;
+  margin: 0;
+}
+
+.hero-title h2 {
+  font-family: "Cinzel", serf;
+  font-weight: 500;
+  font-size: 5rem;
+  margin: 0;
+}
+
+.hero-button {
+  display: flex;
+  align-items: center;
+}
+
+.hero-title a {
+  text-decoration: none;
+  color: #fff;
+  background-color: #000000;
+  width: 300px;
+  font-size: 2rem;
+  padding: 10px;
+  font-family: the witcher;
+  text-align: center;
+}
+.hero-box {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.img-banner {
+  display: flex;
+}
+.hero-box .img-logo-tipo img {
+  width: 70%;
+}
+
+.hero-box .img-banner img {
+  width: 80%;
+}
+
+@media (width: 1920px) {
+  .hero-box .img-banner img {
+    width: 700px;
+  }
+  .hero-title h1 {
+  font-size: 7rem;
+}
+}
+
+.section-02 {
+  height: var(--tamanho-banner);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 7rem;
+  gap: 2rem;
+
+}
+.section-02-title h3{
+font-family: "Cinzel", serif;
+font-size: 3.5rem;
+font-weight: 400;
+}
+
+.section-02-container {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+}
+.section-02-container .elements-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: the witcher;
+  font-size: 1.4rem;
+}
+
+.section-02-container .elements-box .box{
+  width: 15rem;
+  height: 15rem;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+#box-01{
+  background: url(/public/assets/imgs/icon-wolf.png),
+  #fff;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#box-02{
+  background: url(/public/assets/imgs/icon-war.png),
+  #fff;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#box-03{
+  background: url(/public/assets/imgs/icon-witcher.png),
+  #fff;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+.section-03{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rem;
+  height: 250vh;
+}
+
+.section-02-title{
+
+}
+.section-03-title h4{
+ font-size: 20rem;
+ font-family: the witcher;
+ font-weight: 400;
+ margin: 0;
+ background: #000000;
+background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+ 
+ 
+}
+.section-03-title span{
+  font-size: 10rem;
+  color: rgba(141, 1, 1, 0.767);
+
+}
+
+.section-03-container-img{
+
+
+}
+
+.section-03 .container{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.section-03 .container .elements{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  padding-right: 100px;
+  left: 60%;
+  gap: 25px;
+
+}
+
+.section-03 .container .elements button{
+  background-color: #00000000;
+  border: none;
+  color: #fff;
+  font-family: "MedievalSharp", cursive;
+  font-size: 2.5rem;
+  cursor: pointer;
+
+
+
+
+}
+.section-03 .container .elements .title{
+  font-family: the witcher;
+  font-size: 10rem;
+  padding-bottom: 60px;
+  background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  
+
+}
+.position{
+  display: block;
+  width: 50%;
+  background-color: #32b9cd;
+}
+
+.elements .panel{
+  display: none;
+  width: 320px;
+  background-color: rgba(255, 255, 255, 0);
+  overflow: hidden;
+  font-weight: 400;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  gap: 50px;
+   transition: max-height 5.2s ease-out;  
+   font-size: 15px;
+}
+.panel.descer{
+  color: #EA1814;
+}
+
+.container .banners{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.banners .box-elements img{
+  width: 30%;
+  opacity: calc(50%);
+}
+
+.banners .box-elements{
+  display: flex;
+  padding-top: 90px;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffff;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
+
+
+
+}
+.icon-element{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  border-left: black 10px;
+
+}
+.icon-element img{
+  width: 35px;
+}
+
+
+.section-03 .container .elements button img:hover{
+  animation: girar 1.5s alternate forwards;
+}
+
+
+
+@keyframes girar {
+  from {
+    transform: rotate(0) scale(1);
+
+  }
+  to{
+    
+    transform: rotate(360deg) scale(1.2);
+  }
+
+}
+
+
+
+.section-04{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  margin-bottom: 15rem;
+}
+.section-04 .title{
+  font-size: 5rem;
+  font-family: the witcher;
+ background: #000000;
+background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+}
+.section-04 .container-characters{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+}
+
+.container-characters .background{
+  display: flex;
+  position: relative;
+}
+.container-characters .background .character{
+  position: absolute;
+  left: 65%;
+}
+.container-characters .elements{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  
+}
+.elements .text{
+  color: #ffffff;
+
+ font-family: "Lora", serif;
+}
+.elements .title-text{
+  font-size: 2rem;
+  color: purple;
+  font-family: "MedievalSharp", cursive;
+}
+
+
+
+#section-ciri{
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 0;
+}
+
+#section-ciri .background .character{
+  left: 10%;
+  bottom: -10%;
+}
+
+#section-dandelion .background .character{
+  top: -30%;
+  
+}
+
+.section-05{
+  display: flex;
+  background-color: #FFF;
+   justify-content: center;
+  color: #000000;
+  padding-top: 50px;
+}
+
+.section-05 .container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 3rem;
+  font-family: "MedievalSharp", cursive;
+ 
+}
+.section-05 .container img{
+  width: 800px;
+}
+
+
+.section-06{
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+  font-size: 2.5rem;
+  align-items: center;
+  background-color: #fff;
+  color: #000000;
+  height: 100vh;
+  font-family: "MedievalSharp", cursive;
+
+}
+
+.section-06 .container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 70px;
+
+}
+
+.section-06 .container .box-class{
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: cinzel;
+  font-size: 2rem;
+
+  
+}
+.section-06 .container .box-class .background{
+background: rgba(222, 20, 20, 0.30);
+  width: 150px;
+  height:300px;
+}
+
+.section-06 .container .box-class .background img{
+  position: absolute;
+  width: 200px;
+}
+
+
+#bardo{
+  background: rgba(26, 171, 7, 0.30);
+
+}
+#bardo img{
+  width: 180px;
+}
+#feiticeira{
+  background: rgba(96, 8, 143, 0.30);
+
+}
+#feiticeira img{
+  right: -10%;
+  bottom: -5%;
+}
+#criminoso{
+  background: rgba(0, 0, 0, 0.30);
+}
+#criminoso img{
+  width: 300px;
+  bottom: -10%;
+  right: -30%;
+}
+#nobre{
+  background: rgba(203, 152, 11, 0.30);
+
+}
+#nobre img{
+  width: 160px;
+}
+
+
+.section-07{
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+  font-size: 2.5rem;
+  align-items: center;
+  background-color: #000000;
+  color: #ffffff;
+  height: 200vh;
+  font-family: "MedievalSharp", cursive;
+
+}
+.section-07 #title{
+  font-size: 8rem;
+  font-family: the witcher;
+}
+
+.section-07 .text-title{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-07 .container{
+  display: flex;
+  justify-content: space-between;
+  gap: 290px;
+}
+.section-07 .container .box-text{
+  font-family: cinzel;
+  font-size: 30px;
+  width:500px;
+  text-align: center;
+}
+
+.section-07 .container img{
+  width: 300px;
+}
+
+.section-07 .container .box-text a{
+  text-decoration: none;
+  background-color: #ffffff;
+  font-family: "MedievalSharp", cursive;
+  color: #000000;
+  padding: 10px 50px 10px 50px;
+}
+
+
+footer{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
