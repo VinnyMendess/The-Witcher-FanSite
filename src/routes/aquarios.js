@@ -3,11 +3,11 @@ var router = express.Router();
 
 var aquarioController = require("../controllers/aquarioController");
 
-router.get("/:empresaId", function (req, res) {
+router.get("/:idUsuario", function (req, res) {
   aquarioController.buscarAquariosPorEmpresa(req, res);
 });
 
-router.post("/cadastrar", function (req, res) {
+router.post("/idUsuario", function (req, res) {
   aquarioController.cadastrar(req, res);
 })
 

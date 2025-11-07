@@ -1,10 +1,16 @@
+html .Dashboard {      
+  margin: 0;          
+  padding: 0;         
+  overflow: hidden;     
+  box-sizing: border-box; 
 
+}
 .Dashboard-features{
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
-    margin: 10px 50px 10px 50px;
+    margin: 10px 50px 10px 20px;
 }
 
 .section-title{
@@ -19,17 +25,20 @@
     align-items: center;
     font-size: 1.5rem;
 }
-
+.section-stats .box-class img{
+    width: 150px;
+}
 .section-stats .box-class .background{
 background: rgba(222, 20, 20, 0.30);
-  width: 200px;
-  height:350px;
+  width: 120px;
+  height:250px;
 }
 
 .section-stats{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 50px;
 }
 
 .conteiner-stats{
@@ -37,8 +46,12 @@ background: rgba(222, 20, 20, 0.30);
     align-items: center;
     gap: 10px;
     width: 100%;
-    font-size: 0.8rem;    
+    font-size: 0.8rem;  
+    
 
+}
+.box-stats{
+    width: 100%;
 }
 
 .container-contracts{
@@ -49,12 +62,18 @@ background: rgba(222, 20, 20, 0.30);
     font-size: 0.8rem;    
 
 }
+.text-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 
 .section-info{
     display: flex;
     justify-content: space-between;
      align-items: flex-start;
-     margin-top: 50px;
+     margin-top: 15px;
+     
      
 }
 
@@ -63,8 +82,10 @@ background: rgba(222, 20, 20, 0.30);
     color: black;
     padding: 10px;
     border-radius: 10px;
-    height: 170px;
+    height: 150px;
     width: 50%;
+    font-size: 0.9rem;
+    font-weight: 500;
 
 }
 
@@ -72,5 +93,7 @@ background: rgba(222, 20, 20, 0.30);
     background-color: rgb(68, 61, 61);
     border-radius: 5px;
     padding: 20px;
+    width: 30%;
+
 }
 
