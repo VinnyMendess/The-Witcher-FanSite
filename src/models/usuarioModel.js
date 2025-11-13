@@ -22,8 +22,9 @@ function cadastrar(nome, email, senha) {
     return database.executar(instrucaoSql);
 
    // var instrucaoSql = `
-    //INSERT INTO sobre (porOndeConheceu, personagemFavorito, interessePrincipalSite, fkUsuario) VALUES()
-    //`
+    //INSERT INTO sobre (porOndeConheceu, personagemFavorito, interessePrincipalSite, fkUsuario) VALUES()`
+    //console.log("Executando a instrução SQL: \n" + instrucao);
+    // return database.executar(instrucao);
 }
 
 module.exports = {

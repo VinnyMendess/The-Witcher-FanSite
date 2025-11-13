@@ -69,7 +69,7 @@
           <p>Estatísticas</p>
           <div class="conteiner-stats">
             <img src="../assets/imgs/vitalidade.png" alt="" />
-            <div class="text-container"><p>Vitalidade</p> <p>100</p></div>
+            <div class="text-container"><p>Vitalidade</p> <div id="kpiVitalidade"></div></div>
           </div>
           <div class="conteiner-stats">
             <img src="../assets/imgs/combate.png" alt="" />
@@ -141,12 +141,55 @@
 
     
 
-  
+  const kpiVitalidade = document.getElementById("kpiVitalidade");
+
+    fetch("/dash/kpiVitalidade", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            // Garante que o ID do usuário seja enviado
+            idUsuarioServer: sessionStorage.ID_USUARIO
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch kpiVitalidade!");
+
+        if (resposta.ok) {
+            console.log("Resposta OK. Status:", resposta.status);
+
+            resposta.json().then(json => {
+                console.log("Dados recebidos (JSON):", json);
+
+                // --- TRATAMENTO CRÍTICO PARA EVITAR ERRO DE JSON VAZIO/UNDEFINED ---
+                if (json && json.length > 0 && json[0].vitalidade != undefined) {
+                    // O resultado do banco deve ser um array, e a KPI está na primeira posição [0]
+                    const vitalidade = json[0].vitalidade;
+                    
+                    // Atualiza o elemento no HTML
+                    kpiVitalidade.innerHTML = vitalidade;
+                } else {
+                    console.warn("Nenhum dado de 'vitalidade' retornado ou JSON vazio.");
+                    kpiVitalidade.innerHTML = "0"; // Valor padrão em caso de erro ou sem dados
+                }
+            });
+        } else {
+            // Se a resposta.ok for false (ex: status 404, 500)
+            console.error("Falha ao carregar a KPI de Vitalidade. Status:", resposta.status);
+            // Tenta obter a mensagem de erro do servidor
+            resposta.text().then(text => console.error("Detalhes do Erro:", text));
+            kpiVitalidade.innerHTML = "Erro";
+        }
+    }).catch(function (erro) {
+        // Erro de rede ou CORS
+        console.error("Erro no fetch da KPI de Vitalidade:", erro);
+        kpiVitalidade.innerHTML = "Falha";
+    });
 
 
 
 
-  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  //  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
   let proximaAtualizacao;
 
