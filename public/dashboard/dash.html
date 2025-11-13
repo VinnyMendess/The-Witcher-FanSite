@@ -34,7 +34,7 @@
 
   <!-- <body onload=" atualizarFeed()"> -->
 
-  <body class="Dashboard">
+  <body onload="exibirAquariosDoUsuario()" class="Dashboard">
     <aside>
       <div class="asiede-logo">
         <img src="../assets/imgs/Wittcher-logo.png" alt="" />
@@ -141,7 +141,30 @@
 
     
 
-  const kpiVitalidade = document.getElementById("kpiVitalidade");
+  
+const kpiVitalidade = document.getElementById("kpiVitalidade");
+
+const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
+
+
+  //  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+  let proximaAtualizacao;
+
+  // window.onload = exibirAquariosDoUsuario;
+
+  function exibirAquariosDoUsuario() {
+
+const idUsuarioLogado = ID_USUARIO_GLOBAL;
+
+console.log("Valor de ID_USUARIO lido:", idUsuarioLogado);
+
+if (!idUsuarioLogado) {
+        console.error("ERRO CRÍTICO: ID_USUARIO não encontrado. KPI não carregada.");
+        kpiVitalidade.innerHTML = "ID Ausente";
+        return; // Sai da função se o ID não existir
+    }
+    
 
     fetch("/dash/kpiVitalidade", {
         method: "POST",
@@ -150,7 +173,7 @@
         },
         body: JSON.stringify({
             // Garante que o ID do usuário seja enviado
-            idUsuarioServer: sessionStorage.ID_USUARIO
+            idUsuarioServer: idUsuarioLogado
         })
     }).then(function (resposta) {
         console.log("ESTOU NO THEN DO fetch kpiVitalidade!");
@@ -189,40 +212,37 @@
 
 
 
-  //  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-  let proximaAtualizacao;
 
-  window.onload = exibirAquariosDoUsuario();
 
-  function exibirAquariosDoUsuario() {
-    var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-    aquarios.forEach((item) => {
-      document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
-            `;
 
-      document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id}">${item.descricao}</span>
-                    </h3>
-                    <div class="graph">
-                        <canvas id="myChartCanvas${item.id}"></canvas>
-                    </div>
-                    <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
-                    </div>
-                </div>
-            `;
+  //   var aquarios = JSON.parse(sessionStorage.AQUARIOS);
+  //   aquarios.forEach((item) => {
+  //     document.getElementById("btnAquario").innerHTML += `
+  //           <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
+  //           `;
 
-      obterDadosGrafico(item.id);
-    });
+  //     document.getElementById("graficos").innerHTML += `
+  //               <div id="grafico${item.id}" class="display-none">
+  //                   <h3 class="tituloGraficos">
+  //                       <span id="tituloAquario${item.id}">${item.descricao}</span>
+  //                   </h3>
+  //                   <div class="graph">
+  //                       <canvas id="myChartCanvas${item.id}"></canvas>
+  //                   </div>
+  //                   <div class="label-captura">
+  //                       <p id="avisoCaptura${item.id}" style="color: white"></p>
+  //                   </div>
+  //               </div>
+  //           `;
 
-    if (aquarios.length > 0) {
-      exibirAquario(aquarios[0].id);
-    }
-  }
+  //     obterDadosGrafico(item.id);
+  //   });
+
+  //   if (aquarios.length > 0) {
+  //     exibirAquario(aquarios[0].id);
+  //   }
+   }
 
   function alterarTitulo(idAquario) {
     var tituloAquario = document.getElementById(`tituloAquario${idAquario}`);

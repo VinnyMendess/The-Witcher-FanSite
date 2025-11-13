@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
 
-    <title>AquaTech | Login</title>
+    <title>The Witcher</title>
 
     <script src="./js/sessao.js"></script>
 
@@ -109,11 +109,12 @@
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
 
 
                     setTimeout(function () {
                         window.location = "./dashboard/dash.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 0); // apenas para exibir o loading
 
                 });
 
