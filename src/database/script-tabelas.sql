@@ -1,11 +1,3 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
-/*
-comandos para mysql server
-*/
-
 CREATE DATABASE TheWitcher;
 USE TheWitcher;
 
@@ -29,3 +21,26 @@ CONSTRAINT fkUsuarioSobre
 FOREIGN KEY (fkUsuario)
 REFERENCES usuario (idUsuario)
 );
+
+CREATE TABLE Estatisticas (
+idEstatistica INT PRIMARY KEY,
+vitalidade INT,
+pontos INT,
+fkUsuario INT,
+FOREIGN KEY (fkUsuario)
+REFERENCES usuario (idUsuario)
+);
+
+INSERT INTO Estatisticas VALUES
+(1, 2000, 10, 1),
+(2, 2000, 10, 2),
+(3, 2000, 10, 3);
+
+UPDATE Estatisticas SET vitalidade = 10
+WHERE idEstatistica = 1;
+SELECT * FROM usuario;
+
+
+
+
+
