@@ -1,21 +1,21 @@
 // sessão
 function validarSessao() {
-    // Agora valida pelo ID que você está usando
+    var email = sessionStorage.EMAIL_USUARIO;
+    var nome = sessionStorage.NOME_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
-    
-    // Você precisa de b_usuario no dash.html, senão dará erro
-    // var b_usuario = document.getElementById("b_usuario");
 
-    if (idUsuario != null) {
-        // Se houver um elemento com id 'b_usuario' na dash, descomente:
-        // b_usuario.innerHTML = sessionStorage.NOME_USUARIO; 
+
+    var b_usuario = document.getElementById("b_usuario");
+
+    if (email != null && nome != null) {
+        b_usuario.innerHTML = nome;
     } else {
-        window.location = "../login.html"; 
+        window.location = "../login.html";
     }
 }
 
 function limparSessao() {
-    // sessionStorage.clear();
+    sessionStorage.clear();
     window.location = "../login.html";
 }
 

@@ -155,59 +155,55 @@ const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
 
   function exibirAquariosDoUsuario() {
 
-const idUsuarioLogado = ID_USUARIO_GLOBAL;
+const kpiVitalidade = document.getElementById("kpiVitalidade");
+let proximaAtualizacao; // Mantém a variável de timing
 
-console.log("Valor de ID_USUARIO lido:", idUsuarioLogado);
+// Use a variável local DENTRO da função para forçar a leitura tardia do ID
 
-if (!idUsuarioLogado) {
+    
+    // Leitura mais segura do ID, DENTRO da função onload
+    const idUsuarioLogado = sessionStorage.ID_USUARIO;
+
+    console.log("Valor de ID_USUARIO lido:", idUsuarioLogado);
+
+    if (!idUsuarioLogado) {
+        // Se o ID ainda for undefined (sinal de falha na sessão)
         console.error("ERRO CRÍTICO: ID_USUARIO não encontrado. KPI não carregada.");
         kpiVitalidade.innerHTML = "ID Ausente";
-        return; // Sai da função se o ID não existir
+        return; 
     }
     
-
+    // FETCH DA KPI
     fetch("/dash/kpiVitalidade", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            // Garante que o ID do usuário seja enviado
-            idUsuarioServer: idUsuarioLogado
+            idUsuarioServer: idUsuarioLogado 
         })
     }).then(function (resposta) {
         console.log("ESTOU NO THEN DO fetch kpiVitalidade!");
-
+  
         if (resposta.ok) {
-            console.log("Resposta OK. Status:", resposta.status);
-
             resposta.json().then(json => {
-                console.log("Dados recebidos (JSON):", json);
-
-                // --- TRATAMENTO CRÍTICO PARA EVITAR ERRO DE JSON VAZIO/UNDEFINED ---
                 if (json && json.length > 0 && json[0].vitalidade != undefined) {
-                    // O resultado do banco deve ser um array, e a KPI está na primeira posição [0]
-                    const vitalidade = json[0].vitalidade;
-                    
-                    // Atualiza o elemento no HTML
-                    kpiVitalidade.innerHTML = vitalidade;
+                    kpiVitalidade.innerHTML = json[0].vitalidade;
                 } else {
-                    console.warn("Nenhum dado de 'vitalidade' retornado ou JSON vazio.");
-                    kpiVitalidade.innerHTML = "0"; // Valor padrão em caso de erro ou sem dados
+                    kpiVitalidade.innerHTML = "0";
                 }
             });
         } else {
-            // Se a resposta.ok for false (ex: status 404, 500)
-            console.error("Falha ao carregar a KPI de Vitalidade. Status:", resposta.status);
-            // Tenta obter a mensagem de erro do servidor
-            resposta.text().then(text => console.error("Detalhes do Erro:", text));
-            kpiVitalidade.innerHTML = "Erro";
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            kpiVitalidade.innerHTML = "Erro Server";
         }
     }).catch(function (erro) {
-        // Erro de rede ou CORS
-        console.error("Erro no fetch da KPI de Vitalidade:", erro);
+        console.error("Erro no fetch da KPI:", erro);
         kpiVitalidade.innerHTML = "Falha";
     });
+
+   
+}
 
 
 
@@ -242,54 +238,9 @@ if (!idUsuarioLogado) {
   //   if (aquarios.length > 0) {
   //     exibirAquario(aquarios[0].id);
   //   }
-   }
+   
 
-  function alterarTitulo(idAquario) {
-    var tituloAquario = document.getElementById(`tituloAquario${idAquario}`);
-    var descricao = JSON.parse(sessionStorage.AQUARIOS).find(
-      (item) => item.id == idAquario
-    ).descricao;
-    tituloAquario.innerHTML =
-      "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" +
-      descricao +
-      "</span>";
-  }
 
-  function exibirAquario(idAquario) {
-    let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
-
-    for (i = 0; i < todosOsGraficos.length; i++) {
-      // exibindo - ou não - o gráfico
-      if (todosOsGraficos[i].id != idAquario) {
-        let elementoAtual = document.getElementById(
-          `grafico${todosOsGraficos[i].id}`
-        );
-        if (elementoAtual.classList.contains("display-block")) {
-          elementoAtual.classList.remove("display-block");
-        }
-        elementoAtual.classList.add("display-none");
-
-        // alterando estilo do botão
-        let btnAtual = document.getElementById(
-          `btnAquario${todosOsGraficos[i].id}`
-        );
-        if (btnAtual.classList.contains("btn-pink")) {
-          btnAtual.classList.remove("btn-pink");
-        }
-        btnAtual.classList.add("btn-white");
-      }
-    }
-
-    // exibindo - ou não - o gráfico
-    let graficoExibir = document.getElementById(`grafico${idAquario}`);
-    graficoExibir.classList.remove("display-none");
-    graficoExibir.classList.add("display-block");
-
-    // alterando estilo do botão
-    let btnExibir = document.getElementById(`btnAquario${idAquario}`);
-    btnExibir.classList.remove("btn-white");
-    btnExibir.classList.add("btn-pink");
-  }
 
   // O gráfico é construído com três funções:
   // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez

@@ -67,6 +67,9 @@
 
 </html>
 
+
+
+
 <script>
 
 
@@ -107,14 +110,15 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
+                    
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.idUsuario;
-
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.ID_USUARIO = json.idUsuario; 
+                    
 
                     setTimeout(function () {
                         window.location = "./dashboard/dash.html";
-                    }, 0); // apenas para exibir o loading
+                    }, 1000); // apenas para exibir o loading
 
                 });
 
