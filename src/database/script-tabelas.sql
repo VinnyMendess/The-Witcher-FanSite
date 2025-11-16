@@ -27,20 +27,81 @@ idEstatistica INT PRIMARY KEY,
 vitalidade INT,
 pontos INT,
 fkUsuario INT,
+CONSTRAINT fkUsuarioEstatistcas
 FOREIGN KEY (fkUsuario)
-REFERENCES usuario (idUsuario)
+REFERENCES usuario (idUsuario),
+fkClasse INT,
+CONSTRAINT fkClasseEstatisticas
+FOREIGN KEY (fkClasse)
+REFERENCES classeQuiz (idClasse)
 );
 
 INSERT INTO Estatisticas VALUES
-(1, 2000, 10, 1),
-(2, 2000, 10, 2),
-(3, 2000, 10, 3);
+(2, 250, 211, 2, 2);
+
+
 
 UPDATE Estatisticas SET vitalidade = 10
 WHERE idEstatistica = 1;
 SELECT * FROM usuario;
 
 
+SELECT vitalidade FROM Estatisticas WHERE fkUsuario = 1;
+
+CREATE TABLE classeQuiz 
+(idClasse INT PRIMARY KEY AUTO_INCREMENT,
+nomeClasse VARCHAR(45),
+descricaoClasse VARCHAR(300),
+urlClasse VARCHAR(50),
+combateClasse INT,
+influenciaClasse INT,
+conhecimentoClasse INT,
+discricaoClasse INT);
+
+
+
+INSERT INTO classeQuiz 
+(nomeClasse, descricaoClasse, urlClasse, combateClasse, influenciaClasse, conhecimentoClasse, discricaoClasse) 
+VALUES
+-- 1. BRUXO --
+('Bruxo', 'Mutante caçador de monstros. Treinado em esgrima, alquimia e sinais. Focado em sobrevivência e combate contra feras.', 
+'../assets/imgs/bruxo.png', 9, 3, 7, 8),
+
+-- 2. BARDO --
+('Bardo', 'Artista viajante e mestre da persuasão. É o rosto do grupo, usado para negociar, buscar informações e entreter multidões.', 
+'../assets/imgs/bardo.png', 4, 10, 5, 6),
+
+-- 3. FEITICEIRA --
+('Feiticeira', 'Conjuradora poderosa, focada em magia caótica e arcana. Geralmente envolvida em política e conspirações de poder.', 
+'', 3, 8, 10, 5),
+
+-- 4. NOBRE --
+('Nobre', 'Nascido na corte, focado em liderança, estratégia militar e etiqueta. Tem vasto acesso a recursos e conexões sociais.', 
+'../assets/imgs/nobre.png', 6, 9, 7, 5), 
+
+-- 5. CRIMINOSO--
+('Criminoso', 'Especialista em furtividade, arrombamento, emboscadas e detecção de armadilhas. Sobrevivente das ruas e mestre da paranoia.', 
+'../assets/imgs/criminoso.png', 7, 4, 4, 10);
+
+
+UPDATE Estatisticas SET fkClasse = (
+    SELECT idClasse FROM classeQuiz WHERE nomeClasse = 'Bardo'
+) WHERE fkUsuario = 1;
+
+SELECT * FROM usuario;
+
+
+SELECT *
+FROM Estatisticas 
+JOIN classeQuiz ON idClasse = fkClasse
+WHERE fkUsuario = 2;
+
+SELECT * FROM Estatisticas;
+
+SELECT influenciaClasse
+FROM Estatisticas 
+JOIN classeQuiz ON idClasse = fkClasse
+WHERE fkUsuario = 2;
 
 
 
