@@ -9,7 +9,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AquaTech | Dashboards</title>
+    <link rel="icon" href="./assets/icon/favicon-32x32.png" />
+    <title>The Witcher</title>
 
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/sessao.js"></script>
@@ -34,7 +35,7 @@
 
   <!-- <body onload=" atualizarFeed()"> -->
 
-  <body onload="exibirAquariosDoUsuario()" class="Dashboard">
+  <body onload="iniciarKpiDash()" class="Dashboard">
     <aside>
       <div class="asiede-logo">
         <img src="../assets/imgs/Wittcher-logo.png" alt="" />
@@ -61,7 +62,7 @@
         <div class="box-class">
           <p>Bruxo</p>
           <div class="background">
-            <img src="../assets/imgs/bruxo.png" alt="" />
+            <img id="imgClasseUsuario" alt="" />
           </div>
         </div>
 
@@ -73,20 +74,20 @@
           </div>
           <div class="conteiner-stats">
             <img src="../assets/imgs/combate.png" alt="" />
-            <div class="text-container"><p>Combate</p> <p>100</p></div>
+            <div class="text-container"><p>Combate</p> <div id="kpiCombate"></div></div>
           </div>
           <div class="conteiner-stats">
             <img src="../assets/imgs/influencia.png" alt="" />
-           <div class="text-container"><p>Influeêcia</p> <p>100</p></div>
+           <div class="text-container"><p>Influência</p> <div id="kpiInfluencia"></div></div>
           </div>
           <div class="conteiner-stats">
             <img src="../assets/imgs/conhecimento.png" alt="" />
-            <div class="text-container"><p>Conhecimento</p> <p>100</p></div>
+            <div class="text-container"><p>Conhecimento</p> <div id="kpiConhecimento"></div></div>
             
           </div>
           <div class="conteiner-stats">
             <img src="../assets/imgs/discricao.png" alt="" />
-            <div class="text-container"><p>Discrição</p> <p>2000</p></div>
+            <div class="text-container"><p>Discrição</p> <div id="kpiDiscricao"></div></div>
             
           </div>
         </div>
@@ -116,13 +117,7 @@
             <p>Sobre</p>
           </div>
           <div class="text-class">
-            <p>
-              Você segue o Caminho. Pragmático, focado e letal, você é um
-              matador de monstros profissional. Você não se importa com a
-              política mesquinha dos reis ou com as ambições dos magos. Seu
-              código é seu guia, suas espadas são suas ferramentas, e o mundo é
-              o seu contrato. Bem-vindo à Escola do Lobo.
-            </p>
+            <div id="sobreClasse"></div>
           </div>
         </div>
 
@@ -143,6 +138,12 @@
 
   
 const kpiVitalidade = document.getElementById("kpiVitalidade");
+const kpiCombate = document.getElementById("kpiCombate");
+const kpiInfluencia = document.getElementById("kpiInfluencia");
+const kpiConhecimento = document.getElementById("kpiConhecimento");
+const kpiDiscricao = document.getElementById("kpiDiscricao");
+const imgClasseUsuario = document.getElementById("imgClasseUsuario");
+const sobreClasse = document.getElementById("sobreClasse");
 
 const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
 
@@ -153,9 +154,8 @@ const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
 
   // window.onload = exibirAquariosDoUsuario;
 
-  function exibirAquariosDoUsuario() {
+  function iniciarKpiDash() {
 
-const kpiVitalidade = document.getElementById("kpiVitalidade");
 let proximaAtualizacao; // Mantém a variável de timing
 
 // Use a variável local DENTRO da função para forçar a leitura tardia do ID
@@ -164,16 +164,36 @@ let proximaAtualizacao; // Mantém a variável de timing
     // Leitura mais segura do ID, DENTRO da função onload
     const idUsuarioLogado = sessionStorage.ID_USUARIO;
 
-    console.log("Valor de ID_USUARIO lido:", idUsuarioLogado);
+    fetch("/dash/imgClasseUsuario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch imgClasseUsuario!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].urlClasse != undefined) {
+                    imgClasseUsuario.src = json[0].urlClasse;
+                } else {
+                    imgClasseUsuario.innerHTML = "URL DA IMAGEM nÂO encontrada";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            imgClasseUsuario.innerHTML = "Erro Server ao procurar img";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        imgClasseUsuario.innerHTML = "Falha";
+    });
 
-    if (!idUsuarioLogado) {
-        // Se o ID ainda for undefined (sinal de falha na sessão)
-        console.error("ERRO CRÍTICO: ID_USUARIO não encontrado. KPI não carregada.");
-        kpiVitalidade.innerHTML = "ID Ausente";
-        return; 
-    }
     
-    // FETCH DA KPI
+    // FETCH DAs KPIs
     fetch("/dash/kpiVitalidade", {
         method: "POST",
         headers: {
@@ -202,8 +222,161 @@ let proximaAtualizacao; // Mantém a variável de timing
         kpiVitalidade.innerHTML = "Falha";
     });
 
+
+
+    fetch("/dash/kpiCombate", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch kpiCombate!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].combateClasse != undefined) {
+                    kpiCombate.innerHTML = json[0].combateClasse;
+                } else {
+                    kpiCombate.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            kpiCombate.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        kpiCombate.innerHTML = "Falha";
+    });
+
+
+    fetch("/dash/kpiInfluencia", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch kpiInfluencia!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].influenciaClasse != undefined) {
+                    kpiInfluencia.innerHTML = json[0].influenciaClasse;
+                } else {
+                    kpiInfluencia.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            kpiInfluencia.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        kpiInfluencia.innerHTML = "Falha";
+    });
+
+
+    fetch("/dash/kpiConhecimento", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch kpiConhecimento!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].conhecimentoClasse != undefined) {
+                    kpiConhecimento.innerHTML = json[0].conhecimentoClasse;
+                } else {
+                    kpiConhecimento.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            kpiConhecimento.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        kpiConhecimento.innerHTML = "Falha";
+    });
+
+
+    fetch("/dash/kpiDiscricao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch kpiDiscricao!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].discricaoClasse != undefined) {
+                    kpiDiscricao.innerHTML = json[0].discricaoClasse;
+                } else {
+                    kpiDiscricao.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            kpiDiscricao.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        kpiDiscricao.innerHTML = "Falha";
+    });
+
+
+    fetch("/dash/sobreClasse", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch sobreClasse!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].descricaoClasse != undefined) {
+                    sobreClasse.innerHTML = json[0].descricaoClasse;
+                } else {
+                    sobreClasse.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            sobreClasse.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        sobreClasse.innerHTML = "Falha";
+    });
+
    
 }
+
+
+
+   
+
+
+
 
 
 

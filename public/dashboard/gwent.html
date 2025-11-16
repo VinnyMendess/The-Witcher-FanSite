@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body class="gwent">
+    <h1>Gwent</h1>
+
+    <button onclick="inicializarJogo()">inicializar Jogo</button>
+
+    <div id="div_exibir_total"></div>
+
+    <div class="container-table">
+      <div id="div_exibir_ad" class="box-cartas-adversario"></div>
+      <div id="div_exibir_tg" class="table-gwent"></div>
+      <div id="div_exibir_jv" class="box-cartas-jogador"></div>
+    </div>
+  </body>
+</html>
+<script>
+  maoJogador = [];
+  campoDeBatalha = [];
+  maoAdversario = [];
+  nomeCarta = []
+  descricaoCarta = []
+  ataqueCarta = []
+  pontuacaoJogador = []
+  pontuacaoAdversario = []
+  var mensagem_ad = "";
+  var mensagem_jv = "";
+
+  function inicializarJogo() {
+    var numeroAletorio = [];
+    var min = 1;
+    var max = 10;
+    var pontuacaoTotal = 0
+    var pontuacaoJogador = 0
+    var pontuacaoAdversario = 0
+
+    var cartas = [
+      ["Geralt de Rivia", "Um bruxo que derrota Monstros"],
+      ["Cirila", "A princesa de Cintra"],
+      ["Yennefer", "Uma feiticeira poderosa"],
+      ["Moira", "Uma das três moiras"],
+      ["Tris", "Uma poderosa Maga"],
+      ["Guarda-Real", "Leal guarda de Vizima"],
+      ["Dandelion", "Carismático bardo"],
+      ["Quimera", "Uma Fera Mutante"],
+      ["Ciclope", "Gigante de um olho só"],
+      ["Urso Feroz", "Apenas um urso"],
+    ];
+
+    
+
+    for (i = 0; i < cartas.length; i++) {
+      var numeroAtual = Math.floor(Math.random() * (max - min + 1)) + min;
+      numeroAletorio.push(numeroAtual);
+
+      var cartaCompleta = [cartas[i][0], numeroAtual, cartas[i][1]];
+
+      maoJogador.push(cartaCompleta);
+    }
+    for (i = 0; i < cartas.length; i++) {
+      var numeroAtual = Math.floor(Math.random() * (max - min + 1)) + min;
+      numeroAletorio.push(numeroAtual);
+
+      var cartaCompleta = [cartas[i][0], numeroAtual, cartas[i][1]];
+      
+      maoAdversario.push(cartaCompleta);
+    }
+    percorrerAdversario()
+    percorrerJogador()
+    calcularPontuacaoTotal
+
+
+
+    div_exibir_tg.innerHTML = '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
+        alert("O jogo foi iniciado! Jogue sua primeira carta.");
+
+    
+  }
+
+
+
+  
+  function jogarCartaAdversario(indice){
+    if(indice < 0 || indice >= maoAdversario.length){
+      alert('Essa carta ta inválida')
+    }
+
+    var cartaJogada = maoAdversario[indice]
+    var nome = cartaJogada[0];
+    var ataque = cartaJogada[1]
+
+    maoAdversario.splice(indice, 1)
+    campoDeBatalha.push(cartaJogada)
+
+    
+    div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
+
+    percorrerJogador()
+    
+  }
+
+  function jogarCartaJogador(indice){
+    if(indice < 0 || indice >= maoJogador.length){
+      alert('Essa carta ta inválida')
+    }
+
+    var cartaJogada = maoJogador[indice]
+    var nome = cartaJogada[0];
+    var ataque = cartaJogada[1]
+
+    maoJogador.splice(indice, 1)
+    campoDeBatalha.push(cartaJogada)
+
+    //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
+
+    atualizarCampoBatalha()
+    percorrerJogador()
+    calcularPontuacaoTotal()
+    jogarCartaAdversario()
+    
+    
+  }
+
+  function atualizarCampoBatalha(){
+    div_exibir_tg.innerHTML =''
+    for(var i = 0; i < campoDeBatalha.length; i++){
+    var cartaJogada = maoJogador[indice]
+    var nome = cartaJogada[0];
+    var ataque = cartaJogada[1]
+
+    div_exibir_tg.innerHTML += `<div class="card-item campo"><p>Nome ${nome}<br> ATK${ataque}</p>/div>`
+    }
+  }
+
+
+
+
+
+
+
+
+
+  function percorrerJogador(){
+    mensagem_jv = ''
+    
+    for (i = 0; i < maoJogador.length; i++) {
+      var cartaAtual = maoJogador[i];
+      
+      var nomeCarta = cartaAtual[0];
+      var ataqueCarta = cartaAtual[1];
+      var descricaoCarta = cartaAtual[2];
+      var pontuacaoJogador = cartaAtual[1]
+      mensagem_jv += `<button onclick="jogarCartaJogador(${i})"><div class="card-item"><p>Mão Jogador</p> Nome: ${nomeCarta}<br> ATK: ${ataqueCarta}<br> Descrição: ${descricaoCarta}</div></button>`;
+      
+    }
+    
+    div_exibir_jv.innerHTML = mensagem_jv;
+  }
+  function percorrerAdversario(){
+      mensagem_ad = ''
+    for (i = 0; i < maoAdversario.length; i++) {
+      cartaAtual = maoAdversario[i];
+      
+      nomeCarta = cartaAtual[0];
+      ataqueCarta = cartaAtual[1];
+      descricaoCarta = cartaAtual[2];
+      pontuacaoAdversario += cartaAtual[1]
+      mensagem_ad += `<button onclick="jogarCartaAdversario(${i})"><div class="card-item"><p>Mão Adversário</p> Nome: ${nomeCarta}<br> ATK: ${ataqueCarta}<br> Descrição: ${descricaoCarta}</div></button>`;
+    }
+    div_exibir_ad.innerHTML = mensagem_ad;
+  }
+  
+
+
+
+
+
+
+
+
+  function calcularPontuacaoTotal(){
+    var pontuacaoTotal = 0
+
+    for(var i = 0; i < campoDeBatalha.length; i++){
+      pontuacaoTotal+= campoDeBatalha[i][1]
+    }
+
+    div_exibir_total.innerHTML = `Pontuação Total: ${pontuacaoTotal}`
+  }
+
+  function checarFimTurno(){
+    var maxRodada = 3
+
+    
+  }
+</script>

@@ -12,7 +12,7 @@ font-family: "Lora", serif;
 
 @font-face {
   font-family: "the witcher";
-  src: url(/public/assets/Thewitcher-jnOj.ttf) format("truetype");
+  src: url(../assets/Thewitcher-jnOj.ttf) format("truetype");
 }
 body {
   margin: 0;
@@ -189,21 +189,21 @@ font-weight: 400;
 }
 
 #box-01{
-  background: url(/public/assets/imgs/icon-wolf.png),
+  background: url(../assets/imgs/icon-wolf.png),
   #fff;
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
 }
 #box-02{
-  background: url(/public/assets/imgs/icon-war.png),
+  background: url(../assets/imgs/icon-war.png),
   #fff;
   background-size: 90%;
   background-repeat: no-repeat;
   background-position: center;
 }
 #box-03{
-  background: url(/public/assets/imgs/icon-witcher.png),
+  background: url(../assets/imgs/icon-witcher.png),
   #fff;
   background-size: 80%;
   background-repeat: no-repeat;
