@@ -4,62 +4,284 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./assets/icon/favicon-32x32.png" />
+    <link rel="stylesheet" href="../css/style.css" />
     <title>The Witcher</title>
   </head>
   <body class="quiz">
-    <div class="reference-img">
-      <img src="../assets/imgs/quiz-banner-01.png" alt="" />
-    </div>
+    <!--Header-->
+    <header>
+      <div class="logo">
+        <img src="../assets/imgs/logo-bruxo.png" alt="logo-bruxo" />
+      </div>
+      <!--Navegação-->
+      <nav>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">sobre</a></li>
+          <li><a href="">Conteúdo</a></li>
+          <li><a href="">Quiz</a></li>
+        </ul>
+        <ul>
+          <li><a href="./login.html">Entrar</a></li>
+          <li><a href="./cadastro.html">Cadastrar</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <div class="title-quiz"><h1>1.</h1></div>
-    <div class="quest-text">
-      <p>
-        Você está atrasado para uma reunião crucial com um nobre influente que
-        pode mudar sua sorte. No caminho, você vê seu melhor amigo sendo
-        espancado por cinco guardas da cidade. O que você faz?
-      </p>
-    </div>
-    <div class="container-answer">
-      <div class="box-answer">
-        <div class="icon"></div>
-        <div class="answer">
-          <p>
-            Saco a espada. Resolvo rápido, pego meu amigo e sigo para a reunião.
-          </p>
-        </div>
+    <div class="quiz-container">
+      <div class="reference-img">
+        <img src="../assets/imgs/quiz-banner-01.png" alt="" />
       </div>
-      <div class="box-answer">
-        <div class="icon"></div>
-        <div class="answer">
-          <p>
-            Uso meu título. "Parem! Sabem com quem estão falando?"
-          </p>
+
+      <div class="section-quiz">
+        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+        <div class="title-quiz"><h1>1.</h1></div>
+        <div id="perguntaDaQuestaoAtual" class="padding-8">
+          <span id="spanQuestaoExibida" class="text-bold"></span>
         </div>
-      </div>
-      <div class="box-answer">
-        <div class="icon"></div>
-        <div class="answer">
-          <p>
-            Um feitiço rápido paralisa os guardas. Puxo meu amigo e sigo em frente.
-          </p>
-        </div>
-      </div>
-      <div class="box-answer">
-        <div class="icon"></div>
-        <div class="answer">
-          <p>
-            Crio uma distração. Jogo uma bomba de fumaça e fujo com ele pelos becos.
-          </p>
-        </div>
-      </div>
-      <div class="box-answer">
-        <div class="icon"></div>
-        <div class="answer">
-          <p>
-            Faço um escândalo! Minto que ele é sobrinho do Duque para resolver na lábia.
-          </p>
+        <div class="container-answer">
+          <div class="all-answer">
+            <div id="opcoes" class="flex-colunar padding-8">
+              <span>
+                <input
+                  type="radio"
+                  id="primeiraOpcao"
+                  name="option"
+                  class="radio"
+                  value="alternativaA"
+                />
+                <label
+                  for="primeiraOpcao"
+                  class="option"
+                  id="labelOpcaoUm"
+                ></label>
+              </span>
+              <span>
+                <input
+                  type="radio"
+                  id="segundaOpcao"
+                  name="option"
+                  class="radio"
+                  value="alternativaB"
+                />
+                <label
+                  for="segundaOpcao"
+                  class="option"
+                  id="labelOpcaoDois"
+                ></label>
+              </span>
+              <span>
+                <input
+                  type="radio"
+                  id="terceiraOpcao"
+                  name="option"
+                  class="radio"
+                  value="alternativaC"
+                />
+                <label
+                  for="terceiraOpcao"
+                  class="option"
+                  id="labelOpcaoTres"
+                ></label>
+              </span>
+              <span>
+                <input
+                  type="radio"
+                  id="quartaOpcao"
+                  name="option"
+                  class="radio"
+                  value="alternativaD"
+                />
+                <label
+                  for="quartaOpcao"
+                  class="option"
+                  id="labelOpcaoQuatro"
+                ></label>
+              </span>
+            </div>
+          </div>
+          <div class="buttons">
+            <button onclick="avancar()" id="btnProx" disabled>
+              Avançar para próxima questão
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+<script>
+  var listaQuestos = [
+    {
+      pergunta:
+        "Você está atrasado para uma reunião crucial com um nobre influente que pode mudar sua sorte. No caminho, você vê seu melhor amigo sendo espancado por cinco guardas da cidade. O que você faz?",
+      alternativaA: {
+        texto:
+          "Saco a espada. Resolvo rápido, pego meu amigo e sigo para a reunião.",
+        categoria: "bruxo",
+      },
+      alternativaB: {
+        texto: "Uso meu título. Parem! Sabem com quem estão falando?",
+        categoria: "nobre",
+      },
+      alternativaC: {
+        texto:
+          "Um feitiço rápido paralisa os guardas. Puxo meu amigo e sigo em frente.",
+        categoria: "feiticeira",
+      },
+      alternativaD: {
+        texto:
+          "Crio uma distração. Jogo uma bomba de fumaça e fujo com ele pelos becos.",
+        categoria: "criminoso",
+      },
+      alternativaE: {
+        texto:
+          "Faço um escândalo! Minto que ele é sobrinho do Duque para resolver na lábia.",
+        categoria: "bardo",
+      },
+    },
+
+    {
+      pergunta: "PERGUNTA 02",
+      alternativaA: {
+        texto:
+          "Saco a espada. Resolvo rápido, pego meu amigo e sigo para a reunião.",
+        categoria: "bruxo",
+      },
+      alternativaB: {
+        texto: "Uso meu título. Parem! Sabem com quem estão falando?",
+        categoria: "nobre",
+      },
+      alternativaC: {
+        texto:
+          "Um feitiço rápido paralisa os guardas. Puxo meu amigo e sigo em frente.",
+        categoria: "feiticeira",
+      },
+      alternativaD: {
+        texto:
+          "Crio uma distração. Jogo uma bomba de fumaça e fujo com ele pelos becos.",
+        categoria: "criminoso",
+      },
+      alternativaE: {
+        texto:
+          "Faço um escândalo! Minto que ele é sobrinho do Duque para resolver na lábia.",
+        categoria: "bardo",
+      },
+    },
+  ];
+
+  let numeroDaQuestaoAtual = 0;
+  let pontuacaPorCategoria = {
+    bruxo: 0,
+    nobre: 0,
+    brado: 0,
+    feiticeira: 0,
+    criminoso: 0,
+  };
+  function iniciarQuiz() {
+        document.getElementById('pontuacao').style.display = "flex"
+        document.getElementById('jogo').style.display = "flex"
+        document.getElementById('btnIniciarQuiz').style.display = "none"
+
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = true
+    }
+
+  let quantidadeDeQuestoes = listaDeQuestoes.length;
+  function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+    }
+
+  function checarResposta() {
+    const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]; // questão atual
+    const respostaQuestaoAtual = questaoAtual.alternativaCorreta; // qual é a resposta correta da questão atual
+    let alternativaSelecionadaValue = null;
+    let labelId = null;
+
+    for (let i = 0; i < options.length; i++) {
+      if (option[i].checked) {
+        alternativaSelecionadaValue = options[i].value;
+        labelId = options[i].labels[0].id;
+        break;
+      }
+    }
+
+    if (alternativaSelecionadaValue) {
+      //seleciona a categoria associada a alterinativa
+      const categoriaEscolhida =
+        questaoAtual[alternativaSelecionadaValue].categoria;
+      //acumula o ponto
+      pontuacaoPorCategoria[categoriaEscolhida]++;
+
+      documento.getElementById(labelId).classList.add("text-selected-choice");
+
+      //indo pra proxima questão
+      numeroDaQuestaoAtual++;
+    }
+  }
+  function avancar() {
+    btnProx.disabled = true;
+    btnSubmeter.disabled = false;
+
+    desmarcarRadioButtons();
+
+    if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+      preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual);
+    } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+      alert("Atenção... a próxima é a ultima questão!");
+      preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual);
+    } else {
+      finalizarJogo();
+    }
+    limparCoresBackgroundOpcoes();
+  }
+  function limparCoresBackgroundOpcoes() {
+    const options = document.getElementsByName("option");
+    options.forEach((option) => {
+      document
+        .getElementById(option.labels[0].id)
+        .classList.remove("text-danger-with-bg");
+      document
+        .getElementById(option.labels[0].id)
+        .classList.remove("text-success-with-bg");
+    });
+  }
+  function desmarcarRadioButtons() {
+    const options = document.getElementsByName("option");
+    for (let i = 0; i < options.length; i++) {
+      options[i].checked = false;
+    }
+  }
+
+  //função  pra verificar qual categoria ganhou
+  function finalizarJogo() {
+    let classeFinal = null;
+    let pontuacaoMaxima = -1;
+
+    for (const [categoria, pontuacao] of Object.entries(
+      pontuacaoPorCategoria
+    )) {
+      if (pontuacao > pontuacaoMaxima) {
+        pontuacaoMaxima = pontuacao;
+        classeFinal = categoria;
+      }
+      var resultado = `Parabéns já conseguimos encontrar sua classe ideal, mas para descobrir qual é acesse a dashboard!`;
+    }
+  }
+</script>

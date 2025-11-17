@@ -7,14 +7,55 @@
     <title>Document</title>
   </head>
   <body class="gwent">
-    <h1>Gwent</h1>
+    
 
-    <button onclick="inicializarJogo()">inicializar Jogo</button>
 
-    <div id="div_exibir_total"></div>
+    <aside>
+      <div class="player">
+        <div class="div-card-leader">
+        <img src="../assets/Gwent-Cards/foltest-gwent.webp" alt="" />
+      </div>
+      <div class="box-oponent">
+        <div class="img-oponent"><img src="../assets/icon/geralt-icon.jpg" alt=""></div>
+        <div class="text-oponent">
+          <p>Oponente</p>
+          <p>Northern Realms</p>
+        </div>
+        <div class="features-oponent">
+          <p>1</p>
+          <div class="life-oponent"></div>
+          <div class="points-oponent"></div>
+        </div>
+      </div>
+      </div>
+
+      <!--  
+      <div class="player">
+        <div class="div-card-leader">
+        <img src="../assets/Gwent-Cards/foltest-gwent.webp" alt="" />
+      </div>
+      <div class="box-player">
+        <div class="img-player"></div>
+        <div class="text-oponent">
+          <p>Jogador</p>
+          <p>Northern Realms</p>
+        </div>
+        <div class="features-player">
+          <p>1</p>
+          <div class="life-oponent"></div>
+          <div class="points-oponent"></div>
+        </div>
+      </div>
+      </div>
+      -->
+    </aside>
+  
 
     <div class="container-table">
       <div id="div_exibir_ad" class="box-cartas-adversario"></div>
+      <div id="div_table_artillery" class="table-artillery">
+        <h5>Artilharia</h5>
+      </div>
       <div id="div_exibir_tg" class="table-gwent"></div>
       <div id="div_exibir_jv" class="box-cartas-jogador"></div>
     </div>
@@ -24,179 +65,236 @@
   maoJogador = [];
   campoDeBatalha = [];
   maoAdversario = [];
-  nomeCarta = []
-  descricaoCarta = []
-  ataqueCarta = []
-  pontuacaoJogador = []
-  pontuacaoAdversario = []
+  nomeCarta = [];
+  descricaoCarta = [];
+  ataqueCarta = [];
+  pontuacaoJogador = [];
+  pontuacaoAdversario = [];
   var mensagem_ad = "";
   var mensagem_jv = "";
+  const cartas = [
+    // [ Nome Completo, ATK, Caminho da Imagem ]
+    ["Geralt de Rivia", 15, "../assets/Gwent-Cards/geralt-gwent.webp"],
+    ["Cirila Fiona Elen Riannon", 15, "../assets/Gwent-Cards/ciri-gwent.png"],
+    ["Yennefer de Vengerberg", 7, "../assets/Gwent-Cards/yennefer-gwent.png"],
+    ["Triss Merigold", 7, "../assets/Gwent-Cards/triss-gwent.webp"],
+    ["Foltest, O Ardente", 10, "../assets/Gwent-Cards/foltest-gwent.webp"],
+
+    ["Ves", 5, "../assets/Gwent-Cards/ves-gwent.png"],
+    ["Schirru", 5, "../assets/Gwent-Cards/schirru-gwent.webp"],
+    ["Milva", 5, "../assets/Gwent-Cards/milva-gwent.webp"],
+    ["Keira Metz", 5, "../assets/Gwent-Cards/keira-gwent.webp"],
+    ["Cynthia", 4, "../assets/Gwent-Cards/cynthia-gwent.webp"],
+
+    ["Redanian Foot Soldier", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
+    ["Black Infantry Archer", 10, "../assets/Gwent-Cards/infantry-gwent.webp"],
+    [
+      "Impéria Brigade Guard",
+      3,
+      "../assets/Gwent-Cards/impera-guard-gwent.webp",
+    ],
+    ["Don Banner Medic", 5, "../assets/Gwent-Cards/medic-gwent.webp"],
+
+    ["Balista", 6, "../assets/Gwent-Cards/balista-gwent.webp"],
+    ["Trebuchet", 6, "../assets/Gwent-Cards/trebuchet.webp"],
+
+    // Repetindo algumas unidades para garantir 20 cartas iniciais.
+    ["Unidade de Suporte", 4, "../assets/Gwent-Cards/mysterious-gwent.webp"],
+    ["Espiã Oculta", 0, "../assets/Gwent-Cards/mysterious-gwent.webp"],
+    ["Soldado Auxiliar I", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
+    ["Soldado Auxiliar II", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
+  ];
 
   function inicializarJogo() {
-    var numeroAletorio = [];
-    var min = 1;
-    var max = 10;
-    var pontuacaoTotal = 0
-    var pontuacaoJogador = 0
-    var pontuacaoAdversario = 0
+    maoJogador = [];
+    campoDeBatalha = [];
+    maoAdversario = [];
 
-    var cartas = [
-      ["Geralt de Rivia", "Um bruxo que derrota Monstros"],
-      ["Cirila", "A princesa de Cintra"],
-      ["Yennefer", "Uma feiticeira poderosa"],
-      ["Moira", "Uma das três moiras"],
-      ["Tris", "Uma poderosa Maga"],
-      ["Guarda-Real", "Leal guarda de Vizima"],
-      ["Dandelion", "Carismático bardo"],
-      ["Quimera", "Uma Fera Mutante"],
-      ["Ciclope", "Gigante de um olho só"],
-      ["Urso Feroz", "Apenas um urso"],
+    var baralhoCompleto = [
+      // [ Nome Completo, ATK, Caminho da Imagem ]
+      ["Geralt de Rivia", 15, "../assets/Gwent-Cards/geralt-gwent.webp"],
+      ["Cirila Fiona Elen Riannon", 15, "../assets/Gwent-Cards/ciri-gwent.png"],
+      ["Yennefer de Vengerberg", 7, "../assets/Gwent-Cards/yennefer-gwent.png"],
+      ["Triss Merigold", 7, "../assets/Gwent-Cards/triss-gwent.webp"],
+      ["Foltest, O Ardente", 10, "../assets/Gwent-Cards/foltest-gwent.webp"],
+
+      ["Ves", 5, "../assets/Gwent-Cards/ves-gwent.png"],
+      ["Schirru", 5, "../assets/Gwent-Cards/schirru-gwent.webp"],
+      ["Milva", 5, "../assets/Gwent-Cards/milva-gwent.webp"],
+      ["Keira Metz", 5, "../assets/Gwent-Cards/keira-gwent.webp"],
+      ["Cynthia", 4, "../assets/Gwent-Cards/cynthia-gwent.webp"],
+
+      ["Redanian Foot Soldier", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
+      [
+        "Black Infantry Archer",
+        10,
+        "../assets/Gwent-Cards/infanrty-gwent.webp",
+      ],
+      [
+        "Impéria Brigade Guard",
+        3,
+        "../assets/Gwent-Cards/impera-guard-gwent.webp",
+      ],
+      ["Don Banner Medic", 5, "../assets/Gwent-Cards/medic-gwent.webp"],
+
+      ["Balista", 6, "../assets/Gwent-Cards/balista-gwent.webp"],
+      ["Trebuchet", 6, "../assets/Gwent-Cards/trebuchet.webp"],
+
+      // Repetindo algumas unidades para garantir 20 cartas iniciais.
+      ["Unidade de Suporte", 4, "../assets/Gwent-Cards/mysterious-gwent.webp"],
+      ["Espiã Oculta", 0, "../assets/Gwent-Cards/mysterious-gwent.webp"],
+      ["Soldado Auxiliar I", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
+      ["Soldado Auxiliar II", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
     ];
+    //recebe o baralho como parametro e usa na funçao embaralhar
+    embaralhar(baralhoCompleto);
 
-    
+    //O ponto de corte é metade do baralho
+    const pontoCorte = baralhoCompleto.length / 2;
 
-    for (i = 0; i < cartas.length; i++) {
-      var numeroAtual = Math.floor(Math.random() * (max - min + 1)) + min;
-      numeroAletorio.push(numeroAtual);
+    //distribuindo as cartas de fortma aleatória, a mao do jogador começa com 10
+    maoJogador = baralhoCompleto.slice(0, pontoCorte);
+    //mesma coisa mas ele pega o restante
+    maoAdversario = baralhoCompleto.slice(pontoCorte);
 
-      var cartaCompleta = [cartas[i][0], numeroAtual, cartas[i][1]];
+    percorrerAdversario();
+    percorrerJogador();
+    atualizarCampoBatalha();
+    calcularPontuacaoTotal();
 
-      maoJogador.push(cartaCompleta);
-    }
-    for (i = 0; i < cartas.length; i++) {
-      var numeroAtual = Math.floor(Math.random() * (max - min + 1)) + min;
-      numeroAletorio.push(numeroAtual);
-
-      var cartaCompleta = [cartas[i][0], numeroAtual, cartas[i][1]];
-      
-      maoAdversario.push(cartaCompleta);
-    }
-    percorrerAdversario()
-    percorrerJogador()
-    calcularPontuacaoTotal
-
-
-
-    div_exibir_tg.innerHTML = '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
-        alert("O jogo foi iniciado! Jogue sua primeira carta.");
-
-    
+    div_exibir_tg.innerHTML =
+      '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
+    alert(
+      "O jogo foi iniciado! Jogue sua primeira carta e as cartas embaralhadas."
+    );
   }
 
+  //embaralha o vetor
+  function embaralhar(vetor) {
+    var indiceAtual = vetor.length;
+    var valorTemporario;
+    var indiceAleatorio;
 
+    //verifica se tem mais itens para embaralhar
+    while (indiceAtual != 0) {
+      indiceAleatorio = Math.floor(Math.random() * indiceAtual);
+      indiceAtual--;
 
-  
-  function jogarCartaAdversario(indice){
-    if(indice < 0 || indice >= maoAdversario.length){
-      alert('Essa carta ta inválida')
+      //faz as trocas
+      valorTemporario = vetor[indiceAtual];
+      vetor[indiceAtual] = vetor[indiceAleatorio];
+      vetor[indiceAleatorio] = valorTemporario;
     }
-
-    var cartaJogada = maoAdversario[indice]
-    var nome = cartaJogada[0];
-    var ataque = cartaJogada[1]
-
-    maoAdversario.splice(indice, 1)
-    campoDeBatalha.push(cartaJogada)
-
-    
-    div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
-
-    percorrerJogador()
-    
+    return vetor;
   }
 
-  function jogarCartaJogador(indice){
-    if(indice < 0 || indice >= maoJogador.length){
-      alert('Essa carta ta inválida')
+  function jogarCartaAdversario(indice) {
+    if (maoAdversario.length === 0) {
+      return;
+    }
+    indice = indice === undefined ? 0 : indice;
+    if (indice < 0 || indice >= maoAdversario.length) {
+      return;
     }
 
-    var cartaJogada = maoJogador[indice]
-    var nome = cartaJogada[0];
-    var ataque = cartaJogada[1]
+    var cartaJogada = maoAdversario[indice];
 
-    maoJogador.splice(indice, 1)
-    campoDeBatalha.push(cartaJogada)
+    maoAdversario.splice(indice, 1); // Remove da mão
+    campoDeBatalha.push(cartaJogada); // Adiciona ao campo
+
+    percorrerAdversario(); // Atualiza a mão do adversário
+    atualizarCampoBatalha();
+    calcularPontuacaoTotal();
+  }
+
+  function jogarCartaJogador(indice) {
+    if (indice < 0 || indice >= maoJogador.length) {
+      alert("Essa carta ta inválida");
+      return;
+    }
+
+    var cartaJogada = maoJogador[indice];
+    var nome = cartaJogada[0];
+    var ataque = cartaJogada[1];
+
+    maoJogador.splice(indice, 1);
+
+    campoDeBatalha.push(cartaJogada);
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
+    atualizarCampoBatalha();
+    percorrerJogador();
+    calcularPontuacaoTotal();
 
-    atualizarCampoBatalha()
-    percorrerJogador()
-    calcularPontuacaoTotal()
-    jogarCartaAdversario()
-    
-    
+    var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
+    jogarCartaAdversario(indiceAdversario);
   }
 
-  function atualizarCampoBatalha(){
-    div_exibir_tg.innerHTML =''
-    for(var i = 0; i < campoDeBatalha.length; i++){
-    var cartaJogada = maoJogador[indice]
-    var nome = cartaJogada[0];
-    var ataque = cartaJogada[1]
+  function atualizarCampoBatalha() {
+    div_exibir_tg.innerHTML = "";
+    for (let i = 0; i < campoDeBatalha.length; i++) {
+      var cartaJogada = campoDeBatalha[i];
+      var nome = cartaJogada[0];
+      var ataque = cartaJogada[1];
+      var caminhoImagem = cartaJogada[2];
 
-    div_exibir_tg.innerHTML += `<div class="card-item campo"><p>Nome ${nome}<br> ATK${ataque}</p>/div>`
+      div_exibir_tg.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`;
     }
   }
 
+  function percorrerJogador() {
+    mensagem_jv = "";
 
-
-
-
-
-
-
-
-  function percorrerJogador(){
-    mensagem_jv = ''
-    
-    for (i = 0; i < maoJogador.length; i++) {
+    for (let i = 0; i < maoJogador.length; i++) {
       var cartaAtual = maoJogador[i];
-      
+
       var nomeCarta = cartaAtual[0];
       var ataqueCarta = cartaAtual[1];
-      var descricaoCarta = cartaAtual[2];
-      var pontuacaoJogador = cartaAtual[1]
-      mensagem_jv += `<button onclick="jogarCartaJogador(${i})"><div class="card-item"><p>Mão Jogador</p> Nome: ${nomeCarta}<br> ATK: ${ataqueCarta}<br> Descrição: ${descricaoCarta}</div></button>`;
-      
+      //var descricaoCarta = cartaAtual[2];
+      //var pontuacaoJogador = cartaAtual[1];
+      var caminhoImagem = cartaAtual[2];
+      //para adicionar as fotinhos das cartas
+      mensagem_jv += `
+    <button onclick="jogarCartaJogador(${i})">
+        <div class="card-item">
+            <img src="${caminhoImagem}" alt="${nomeCarta}">
+        </div>
+    </button>
+`;
     }
-    
+
     div_exibir_jv.innerHTML = mensagem_jv;
   }
-  function percorrerAdversario(){
-      mensagem_ad = ''
-    for (i = 0; i < maoAdversario.length; i++) {
+  function percorrerAdversario() {
+    mensagem_ad = "";
+    for (let i = 0; i < maoAdversario.length; i++) {
       cartaAtual = maoAdversario[i];
-      
+
       nomeCarta = cartaAtual[0];
       ataqueCarta = cartaAtual[1];
-      descricaoCarta = cartaAtual[2];
-      pontuacaoAdversario += cartaAtual[1]
-      mensagem_ad += `<button onclick="jogarCartaAdversario(${i})"><div class="card-item"><p>Mão Adversário</p> Nome: ${nomeCarta}<br> ATK: ${ataqueCarta}<br> Descrição: ${descricaoCarta}</div></button>`;
+
+      var caminhoImagem = cartaAtual[2];
+      mensagem_ad += `
+        <div class="card-item">
+            <img src="${caminhoImagem}" alt="${nomeCarta}">
+        </div>
+`;
     }
-    div_exibir_ad.innerHTML = mensagem_ad;
+    div_exibir_ad.innerHTML = `${maoAdversario.length} ` + mensagem_ad;
   }
-  
 
+  function calcularPontuacaoTotal() {
+    var pontuacaoTotal = 0;
 
-
-
-
-
-
-
-  function calcularPontuacaoTotal(){
-    var pontuacaoTotal = 0
-
-    for(var i = 0; i < campoDeBatalha.length; i++){
-      pontuacaoTotal+= campoDeBatalha[i][1]
+    for (let i = 0; i < campoDeBatalha.length; i++) {
+      pontuacaoTotal += campoDeBatalha[i][1];
     }
 
-    div_exibir_total.innerHTML = `Pontuação Total: ${pontuacaoTotal}`
+    div_exibir_total.innerHTML = `Pontuação Total: ${pontuacaoTotal}`;
   }
 
-  function checarFimTurno(){
-    var maxRodada = 3
-
-    
+  function checarFimTurno() {
+    var maxRodada = 3;
   }
+  inicializarJogo();
 </script>
