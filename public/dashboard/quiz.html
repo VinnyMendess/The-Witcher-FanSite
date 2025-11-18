@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <title>The Witcher</title>
   </head>
-  <body class="quiz">
+  <body onload="onloadEsconder()" class="quiz">
     <!--Header-->
     <header>
       <div class="logo">
@@ -32,86 +32,117 @@
       <div class="reference-img">
         <img src="../assets/imgs/quiz-banner-01.png" alt="" />
       </div>
+      <button id="btnIniciarQuiz" onclick="iniciarQuiz()">
+            INICIAR QUIZ
+          </button>
+      <div id="jogo" class="container-quiz">
+        <div id="infoQuestao" class="padding-8">
+          
+          <span
+            >Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de
+            <span id="qtdQuestoes"></span> questões.</span
+          >
+        </div>
 
-      <div class="section-quiz">
-        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
-        <div class="title-quiz"><h1>1.</h1></div>
         <div id="perguntaDaQuestaoAtual" class="padding-8">
           <span id="spanQuestaoExibida" class="text-bold"></span>
         </div>
-        <div class="container-answer">
-          <div class="all-answer">
-            <div id="opcoes" class="flex-colunar padding-8">
-              <span>
-                <input
-                  type="radio"
-                  id="primeiraOpcao"
-                  name="option"
-                  class="radio"
-                  value="alternativaA"
-                />
-                <label
-                  for="primeiraOpcao"
-                  class="option"
-                  id="labelOpcaoUm"
-                ></label>
-              </span>
-              <span>
-                <input
-                  type="radio"
-                  id="segundaOpcao"
-                  name="option"
-                  class="radio"
-                  value="alternativaB"
-                />
-                <label
-                  for="segundaOpcao"
-                  class="option"
-                  id="labelOpcaoDois"
-                ></label>
-              </span>
-              <span>
-                <input
-                  type="radio"
-                  id="terceiraOpcao"
-                  name="option"
-                  class="radio"
-                  value="alternativaC"
-                />
-                <label
-                  for="terceiraOpcao"
-                  class="option"
-                  id="labelOpcaoTres"
-                ></label>
-              </span>
-              <span>
-                <input
-                  type="radio"
-                  id="quartaOpcao"
-                  name="option"
-                  class="radio"
-                  value="alternativaD"
-                />
-                <label
-                  for="quartaOpcao"
-                  class="option"
-                  id="labelOpcaoQuatro"
-                ></label>
-              </span>
-            </div>
-          </div>
-          <div class="buttons">
-            <button onclick="avancar()" id="btnProx" disabled>
-              Avançar para próxima questão
-            </button>
-          </div>
+
+        <div id="infoAlternativas" class="padding-8">
+          <span><em>Escolha uma opção dentre as abaixo:</em></span>
+        </div>
+
+        <div id="opcoes" class="flex-colunar padding-8">
+          <span>
+            <input
+              type="radio"
+              id="primeiraOpcao"
+              name="option"
+              class="radio"
+              value="alternativaA"
+            />
+            <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+          </span>
+          <span>
+            <input
+              type="radio"
+              id="segundaOpcao"
+              name="option"
+              class="radio"
+              value="alternativaB"
+            />
+            <label
+              for="segundaOpcao"
+              class="option"
+              id="labelOpcaoDois"
+            ></label>
+          </span>
+          <span>
+            <input
+              type="radio"
+              id="terceiraOpcao"
+              name="option"
+              class="radio"
+              value="alternativaC"
+            />
+            <label
+              for="terceiraOpcao"
+              class="option"
+              id="labelOpcaoTres"
+            ></label>
+          </span>
+          <span>
+            <input
+              type="radio"
+              id="quartaOpcao"
+              name="option"
+              class="radio"
+              value="alternativaD"
+            />
+            <label
+              for="quartaOpcao"
+              class="option"
+              id="labelOpcaoQuatro"
+            ></label>
+          </span>
+          <span>
+            <input
+              type="radio"
+              id="quintaOpcao"
+              name="option"
+              class="radio"
+              value="alternativaE"
+            />
+            <label
+              for="quintaOpcao"
+              class="option"
+              id="labelOpcaoCinco"
+            ></label>
+          </span>
+        </div>
+
+        <div id="botoes" class="flex-button padding-8">
+          <button class="btnQuiz" onclick="submeter()" id="btnSubmeter">
+            Submeter
+          </button>
+          <button class="btnQuiz" onclick="avancar()" id="btnProx">
+            Avançar
+          </button>
+          <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+          <button
+            class="btnQuiz"
+            onclick="tentarNovamente()"
+            id="btnTentarNovamente"
+          >
+            Tentar Novamente
+          </button>
         </div>
       </div>
     </div>
   </body>
 </html>
 <script>
-  var listaQuestos = [
+  var listaDeQuestoes = [
     {
       pergunta:
         "Você está atrasado para uma reunião crucial com um nobre influente que pode mudar sua sorte. No caminho, você vê seu melhor amigo sendo espancado por cinco guardas da cidade. O que você faz?",
@@ -142,80 +173,190 @@
     },
 
     {
-      pergunta: "PERGUNTA 02",
+      pergunta:
+        "Você é contratado para caçar um monstro, mas descobre que ele é o espírito vingativo de um aldeão injustiçado. Qual é a sua prioridade?",
       alternativaA: {
         texto:
-          "Saco a espada. Resolvo rápido, pego meu amigo e sigo para a reunião.",
+          "Contrato é contrato. Preparo meu óleo e minha espada para lidar com o problema de forma definitiva.",
         categoria: "bruxo",
       },
       alternativaB: {
-        texto: "Uso meu título. Parem! Sabem com quem estão falando?",
+        texto:
+          "Uso a situação para negociar. Exijo mais ouro dos aldeões para 'lidar com o problema de forma discreta'.",
+        categoria: "criminoso",
+      },
+      alternativaC: {
+        texto:
+          "Reúno a história. Uso meu fascínio para acalmar o espírito e persuadir os anciãos da vila a fazerem um funeral adequado.",
+        categoria: "bardo",
+      },
+      alternativaD: {
+        texto:
+          "Convenço o chefe da vila a armar o povo e liderar um ataque maciço, mostrando a força da autoridade contra a ameaça.",
+        categoria: "nobre",
+      },
+      alternativaE: {
+        texto:
+          "Pesquiso as causas da vingança. Encontro o item que liga o espírito a este plano e, com um ritual complexo, liberto sua alma.",
+        categoria: "feiticeira",
+      },
+    },
+    {
+      pergunta:
+        "Você está em uma festa real quando um nobre é publicamente acusado de traição. O rei pede sua opinião sobre como lidar com o traidor.",
+      alternativaA: {
+        texto:
+          "Sugiro um interrogatório físico imediato para descobrir se ele está sozinho ou se faz parte de uma conspiração maior.",
+        categoria: "bruxo",
+      },
+      alternativaB: {
+        texto:
+          "Declaro que a honra do nobre deve ser respeitada. Insisto em um julgamento formal e público, para manter a ordem da Coroa.",
         categoria: "nobre",
       },
       alternativaC: {
         texto:
-          "Um feitiço rápido paralisa os guardas. Puxo meu amigo e sigo em frente.",
+          "Envio discretamente uma mensagem cifrada. Preciso saber se a acusação tem fundamento ou é uma armação política antes de falar.",
         categoria: "feiticeira",
       },
       alternativaD: {
         texto:
-          "Crio uma distração. Jogo uma bomba de fumaça e fujo com ele pelos becos.",
+          "Ofereço-me para fazer o 'trabalho sujo': tirar o nobre da festa e vendê-lo ao inimigo do rei.",
         categoria: "criminoso",
       },
       alternativaE: {
         texto:
-          "Faço um escândalo! Minto que ele é sobrinho do Duque para resolver na lábia.",
+          "Uso o momento para compor uma balada dramática sobre o evento, transformando a crise em um espetáculo moralista.",
         categoria: "bardo",
+      },
+    },
+    {
+      pergunta:
+        "Você encontra um baú antigo lacrado com selos mágicos e runas desconhecidas. Ele contém um artefato de grande poder. Qual é a sua ação imediata?",
+      alternativaA: {
+        texto:
+          "Não toco. Marco a localização e volto com os recursos e informações corretas para desarmar a magia com segurança.",
+        categoria: "feiticeira",
+      },
+      alternativaB: {
+        texto:
+          "Abro à força. Se estiver amaldiçoado, a espada resolve. Se for algo útil, eu o vendo na primeira cidade por um bom preço.",
+        categoria: "bruxo",
+      },
+      alternativaC: {
+        texto:
+          "Eu me disfarço de estudioso e convenço o governador local a fornecer uma escolta armada para levar o artefato para a capital.",
+        categoria: "nobre",
+      },
+      alternativaD: {
+        texto:
+          "Eu o roubo. Uso ferramentas de ladrão para abrir o baú sem tocar nos selos mágicos, vendendo o conteúdo para o melhor licitante.",
+        categoria: "criminoso",
+      },
+      alternativaE: {
+        texto:
+          "Canto uma canção de ninar para o baú. Quem sabe se a magia antiga não se acalma com a melodia?",
+        categoria: "bardo",
+      },
+    },
+    {
+      pergunta:
+        "Você fez um juramento de proteger um indivíduo, mas ele agora planeja um ataque que causará sofrimento a muitos inocentes. O que você faz?",
+      alternativaA: {
+        texto:
+          "Mantenho minha palavra. Não quebro juramentos, mesmo que o indivíduo seja um monstro. Minha neutralidade é a minha regra.",
+        categoria: "bruxo",
+      },
+      alternativaB: {
+        texto:
+          "Crio um palco: revelo a traição publicamente em um festival, transformando minha quebra de juramento em um ato heroico para a plebe.",
+        categoria: "bardo",
+      },
+      alternativaC: {
+        texto:
+          "Uso meu poder para impedir o ataque, mesmo que isso signifique prender ou incapacitar meu protegido. O bem maior prevalece.",
+        categoria: "feiticeira",
+      },
+      alternativaD: {
+        texto:
+          "Uso minha influência para mudar o alvo do ataque, direcionando a violência para um inimigo político que merece ser deposto.",
+        categoria: "nobre",
+      },
+      alternativaE: {
+        texto:
+          "Fujo com o indivíduo. Vendo as informações do plano para as vítimas em potencial e depois vendo a localização do indivíduo para os perseguidores.",
+        categoria: "criminoso",
       },
     },
   ];
 
   let numeroDaQuestaoAtual = 0;
-  let pontuacaPorCategoria = {
+  let pontuacaoPorCategoria = {
     bruxo: 0,
     nobre: 0,
-    brado: 0,
+    bardo: 0, // Corrigido de 'brado' para 'bardo'
     feiticeira: 0,
     criminoso: 0,
   };
-  function iniciarQuiz() {
-        document.getElementById('pontuacao').style.display = "flex"
-        document.getElementById('jogo').style.display = "flex"
-        document.getElementById('btnIniciarQuiz').style.display = "none"
-
-        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
-
-        preencherHTMLcomQuestaoAtual(0)
-
-        btnSubmeter.disabled = false
-        btnProx.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = true
-    }
-
   let quantidadeDeQuestoes = listaDeQuestoes.length;
-  function preencherHTMLcomQuestaoAtual(index) {
-        habilitarAlternativas(true)
-        const questaoAtual = listaDeQuestoes[index]
-        numeroDaQuestaoAtual = index
-        console.log("questaoAtual")
-        console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
-        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
-        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
-        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
-        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
-    }
 
-  function checarResposta() {
-    const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]; // questão atual
-    const respostaQuestaoAtual = questaoAtual.alternativaCorreta; // qual é a resposta correta da questão atual
+  // 2. Função onloadEsconder Adicionada
+  function onloadEsconder() {
+    document.getElementById("jogo").style.display = "none";
+    // O botão iniciar está dentro de #infoQuestao, então ele fica visível
+  }
+
+  function iniciarQuiz() {
+    document.getElementById("jogo").style.display = "flex";
+    document.getElementById("btnIniciarQuiz").style.display = "none";
+
+    document.getElementById("qtdQuestoes").innerHTML = quantidadeDeQuestoes;
+
+    preencherHTMLcomQuestaoAtual(0);
+
+    // Estado inicial: Submeter Habilitado, Avançar Desabilitado
+    document.getElementById("btnSubmeter").disabled = false;
+    document.getElementById("btnProx").disabled = true;
+    document.getElementById("btnTentarNovamente").disabled = true;
+  }
+
+  function preencherHTMLcomQuestaoAtual(index) {
+    const questaoAtual = listaDeQuestoes[index];
+    numeroDaQuestaoAtual = index;
+    document.getElementById("spanNumeroDaQuestaoAtual").innerHTML =
+      Number(index) + 1 + ".";
+    document.getElementById("spanQuestaoExibida").innerHTML =
+      questaoAtual.pergunta;
+
+    document.getElementById("labelOpcaoUm").innerHTML =
+      questaoAtual.alternativaA.texto;
+    document.getElementById("labelOpcaoDois").innerHTML =
+      questaoAtual.alternativaB.texto;
+    document.getElementById("labelOpcaoTres").innerHTML =
+      questaoAtual.alternativaC.texto;
+    document.getElementById("labelOpcaoQuatro").innerHTML =
+      questaoAtual.alternativaD.texto;
+    document.getElementById("labelOpcaoCinco").innerHTML =
+      questaoAtual.alternativaE.texto; // 5ª opção
+
+    habilitarAlternativas(false); // Reabilita os inputs
+    limparCoresBackgroundOpcoes();
+    desmarcarRadioButtons();
+
+    // Volta o estado dos botões para a nova questão
+    document.getElementById("btnSubmeter").disabled = false;
+    document.getElementById("btnProx").disabled = true;
+  }
+
+  // 3. Função submeter() reintegrada e corrigida
+  function submeter() {
+    const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual];
+    const options = document.getElementsByName("option");
     let alternativaSelecionadaValue = null;
     let labelId = null;
 
     for (let i = 0; i < options.length; i++) {
-      if (option[i].checked) {
+      if (options[i].checked) {
         alternativaSelecionadaValue = options[i].value;
         labelId = options[i].labels[0].id;
         break;
@@ -223,45 +364,67 @@
     }
 
     if (alternativaSelecionadaValue) {
-      //seleciona a categoria associada a alterinativa
       const categoriaEscolhida =
         questaoAtual[alternativaSelecionadaValue].categoria;
-      //acumula o ponto
+      // Usa a variável com nome correto
       pontuacaoPorCategoria[categoriaEscolhida]++;
 
-      documento.getElementById(labelId).classList.add("text-selected-choice");
+      document.getElementById(labelId).classList.add("text-selected-choice");
 
-      //indo pra proxima questão
-      numeroDaQuestaoAtual++;
+      // Lógica dos Botões: Habilita Avançar, Desabilita Submeter
+      document.getElementById("btnSubmeter").disabled = true;
+      document.getElementById("btnProx").disabled = false;
+
+      habilitarAlternativas(true); // Desabilita os radio buttons
+    } else {
+      alert("Por favor, selecione uma opção para submeter.");
     }
   }
+
+  function checarResposta() {
+    // Esta função não precisa mais existir isoladamente.
+    // A lógica de acumular ponto foi movida para submeter().
+    // Mantive-a vazia por precaução se outras partes do seu código a chamarem, mas você deve removê-la para simplificar.
+    return true;
+  }
+
+  function habilitarAlternativas(trueOrFalse) {
+    let opcaoEscolhida = trueOrFalse;
+    document.getElementById("primeiraOpcao").disabled = opcaoEscolhida;
+    document.getElementById("segundaOpcao").disabled = opcaoEscolhida;
+    document.getElementById("terceiraOpcao").disabled = opcaoEscolhida;
+    document.getElementById("quartaOpcao").disabled = opcaoEscolhida;
+    document.getElementById("quintaOpcao").disabled = opcaoEscolhida; // Garante 5ª opção
+  }
+
   function avancar() {
-    btnProx.disabled = true;
-    btnSubmeter.disabled = false;
+    // A função avançar não precisa mais chamar checarResposta(), pois o ponto
+    // já foi acumulado no submeter().
 
-    desmarcarRadioButtons();
+    numeroDaQuestaoAtual++; // Incrementa para a próxima questão
 
-    if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
-      preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual);
-    } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
-      alert("Atenção... a próxima é a ultima questão!");
+    if (numeroDaQuestaoAtual < quantidadeDeQuestoes) {
       preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual);
     } else {
       finalizarJogo();
     }
-    limparCoresBackgroundOpcoes();
   }
+
+  function tentarNovamente() {
+    window.location.reload();
+  }
+
   function limparCoresBackgroundOpcoes() {
     const options = document.getElementsByName("option");
     options.forEach((option) => {
-      document
-        .getElementById(option.labels[0].id)
-        .classList.remove("text-danger-with-bg");
-      document
-        .getElementById(option.labels[0].id)
-        .classList.remove("text-success-with-bg");
+      // Verifica se o label existe antes de remover a classe
+      const label = option.labels[0];
+      if (label) {
+        label.classList.remove("text-selected-choice");
+      }
     });
   }
+
   function desmarcarRadioButtons() {
     const options = document.getElementsByName("option");
     for (let i = 0; i < options.length; i++) {
@@ -269,7 +432,6 @@
     }
   }
 
-  //função  pra verificar qual categoria ganhou
   function finalizarJogo() {
     let classeFinal = null;
     let pontuacaoMaxima = -1;
@@ -281,7 +443,26 @@
         pontuacaoMaxima = pontuacao;
         classeFinal = categoria;
       }
-      var resultado = `Parabéns já conseguimos encontrar sua classe ideal, mas para descobrir qual é acesse a dashboard!`;
-    }
+    } // Esconde elementos do jogo (Você precisará de uma div com id="resultadoFinal" no seu HTML)
+
+    document.getElementById("infoQuestao").style.display = "none";
+    document.getElementById("perguntaDaQuestaoAtual").style.display = "none";
+    document.getElementById("infoAlternativas").style.display = "none";
+    document.getElementById("opcoes").style.display = "none";
+    document.getElementById("botoes").style.display = "none"; // document.getElementById("resultadoFinal").style.display = "block";
+
+    // Se você não tem essa div no HTML, o código abaixo vai falhar.
+    // Crie a div <div id="resultadoFinal" style="display: none;"><h2 id="msgFinal"></h2></div>
+    var resultadoMsg = `Parabéns! Suas escolhas definiram a classe **${classeFinal.toUpperCase()}** como dominante. O resultado completo e sua descrição estão disponíveis na sua Dashboard!`; // document.getElementById("msgFinal").innerHTML = resultadoMsg;
+    // Habilita o botão Tentar Novamente
+    document.getElementById("btnTentarNovamente").disabled = false;
+
+    console.log("Pontuação Final:", pontuacaoPorCategoria);
+    console.log("Classe Dominante:", classeFinal);
+
+    
+
+    
+    
   }
 </script>

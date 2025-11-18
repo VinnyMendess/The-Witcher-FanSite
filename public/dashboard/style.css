@@ -38,6 +38,7 @@ aside{
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background: url('../assets/Gwent-Cards/texture-wood.avif');
 }
 .box-cartas-adversario {
   display: flex;
@@ -103,6 +104,8 @@ aside{
   border: 2px solid #5e5d5d;
   display: flex;
   width: 70%;
+    background: url('../assets/Gwent-Cards/texture-wood-light-2.jpg');
+
   box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
 -webkit-box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
 -moz-box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
@@ -114,7 +117,14 @@ aside{
   border: 2px solid #5e5d5d;
   display: flex;
   width: 70%;
+    
+  box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
+-webkit-box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
+-moz-box-shadow: -7px -92px 75px -40px rgba(0,0,0,1) inset;
+  background: url('../assets/Gwent-Cards/texture-wood-light-2.jpg');
 }
+
+
 
 .card-item img {
   width: 70px;
