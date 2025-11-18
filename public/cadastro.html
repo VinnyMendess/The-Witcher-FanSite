@@ -57,6 +57,15 @@
             type="password"
             id="confirmacao_senha_input"
           />
+          <p>Qual Classe você se identifica</p>
+          <select name="" id="select_classe">
+            <option selected disabled value="#">Selecione uma Opção</option>
+            <option value="1">Bruxo</option>
+            <option value="3">Feiticeira</option>
+            <option value="2">Bardo</option>
+            <option value="4">Nobre</option>
+            <option value="5">Criminoso</option>
+          </select>
           <div class="button">
             <a href="">ja tenho login</a>
             <button onclick="cadastrar()">Cadastrar</button>
@@ -86,13 +95,15 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var fkClasseVar = select_classe.value
 
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+      confirmacaoSenhaVar == ""||
+      fkClasseVar == "#"
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -119,6 +130,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
+        fkClasseServer: fkClasseVar 
       }),
     })
       .then(function (resposta) {

@@ -99,7 +99,7 @@
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    gap: 50px;
+    gap: 0px;
 }
 .flex-button{
     display: flex;
