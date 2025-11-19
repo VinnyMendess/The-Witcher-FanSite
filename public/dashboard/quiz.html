@@ -318,6 +318,19 @@
         btnSubmeter.disabled = true
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = false
+        var quiz = 1
+        fetch("/quiz/cadastrarQuest", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                percAcertosServer: porcentagemFinalDeAcertos,
+                pontuacaoServer: pontuacaoFinal,    
+                quizServer : quiz,
+                idUsuarioServer: sessionStorage.ID_USUARIO
 
+            })
+        })
     }
 </script> 

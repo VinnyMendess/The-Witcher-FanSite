@@ -55,7 +55,7 @@
 
     <div class="Dashboard-features">
       <section class="section-title">
-        <h1>Bem Vindo XXXXX a Corvo Bianco</h1>
+        <h1>Bem Vindo <span id="nomeTitulo"></span> a Corvo Bianco</h1>
       </section>
 
       <section class="section-stats">
@@ -144,6 +144,7 @@ const kpiConhecimento = document.getElementById("kpiConhecimento");
 const kpiDiscricao = document.getElementById("kpiDiscricao");
 const imgClasseUsuario = document.getElementById("imgClasseUsuario");
 const sobreClasse = document.getElementById("sobreClasse");
+const nomeTitulo = document.getElementById("nomeTitulo");
 
 const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
 
@@ -158,11 +159,40 @@ const ID_USUARIO_GLOBAL = sessionStorage.ID_USUARIO;
 
 let proximaAtualizacao; // Mantém a variável de timing
 
-// Use a variável local DENTRO da função para forçar a leitura tardia do ID
+const idUsuarioLogado = sessionStorage.ID_USUARIO;
+
+fetch("/dash/nomeTitulo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioLogado 
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO fetch nomeTitulo!");
+  
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                if (json && json.length > 0 && json[0].nomeUsuario != undefined) {
+                    nomeTitulo.innerHTML = json[0].nomeUsuario;
+                } else {
+                    nomeTitulo.innerHTML = "0";
+                }
+            });
+        } else {
+            resposta.text().then(text => console.error("Detalhes do Erro no Server:", text));
+            nomeTitulo.innerHTML = "Erro Server";
+        }
+    }).catch(function (erro) {
+        console.error("Erro no fetch da KPI:", erro);
+        nomeTitulo.innerHTML = "Falha";
+    });
+
 
     
     // Leitura mais segura do ID, DENTRO da função onload
-    const idUsuarioLogado = sessionStorage.ID_USUARIO;
+    
 
     fetch("/dash/imgClasseUsuario", {
         method: "POST",

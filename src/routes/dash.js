@@ -7,6 +7,10 @@ router.post("/kpiVitalidade", function (req, res) {
     dashController.kpiVitalidade(req, res);
 })
 
+router.post("/nomeTitulo", function (req, res) {
+    dashController.nomeTitulo(req, res);
+})
+
 router.post("/kpiCombate", function (req, res) {
     dashController.kpiCombate(req, res);
 })

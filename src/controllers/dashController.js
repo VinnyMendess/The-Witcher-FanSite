@@ -1,5 +1,19 @@
 var dashModel = require("../models/dashModel");
 
+function nomeTitulo(req, res) {
+  var idUsuario = req.body.idUsuarioServer;
+  dashModel
+    .nomeTitulo(idUsuario)
+    .then(function (resultado) {
+      //aqui precisa informar que o resultado vai voltar para o front em resposta JSON
+      console.log("O controller recebeu o idUsuario", idUsuario);
+      res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function kpiVitalidade(req, res) {
   var idUsuario = req.body.idUsuarioServer;
   dashModel
@@ -105,5 +119,6 @@ module.exports = {
   kpiConhecimento,
   kpiDiscricao,
   imgClasseUsuario,
-  sobreClasse
+  sobreClasse,
+  nomeTitulo
 };

@@ -8,6 +8,14 @@ function kpiVitalidade(idUsuario) {
   return database.executar(instrucao);
 }
 
+function nomeTitulo(idUsuario) {
+  var instrucao = `
+        SELECT nomeUsuario FROM usuario WHERE idUsuario = ${idUsuario};
+    `;
+  console.log("Executando a instrução SQL: \n" + instrucao);
+  return database.executar(instrucao);
+}
+
 function kpiCombate(idUsuario) {
   var instrucao = `
         SELECT combateClasse
@@ -81,5 +89,6 @@ module.exports = {
   kpiConhecimento,
   kpiDiscricao,
   imgClasseUsuario,
-  sobreClasse
+  sobreClasse,
+  nomeTitulo
 };
