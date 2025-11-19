@@ -36,8 +36,11 @@ FOREIGN KEY (fkClasse)
 REFERENCES classeQuiz (idClasse)
 );
 
+ALTER TABLE Estatisticas MODIFY COLUMN idEstatistica INT AUTO_INCREMENT;
+ALTER TABLE Estatisticas ADD COLUMN Acertos
+
 INSERT INTO Estatisticas VALUES
-(2, 250, 211, 2, 2);
+(1, 250, 211, 1, 1);
 
 
 
@@ -91,17 +94,35 @@ UPDATE Estatisticas SET fkClasse = (
 SELECT * FROM usuario;
 
 
+
 SELECT *
 FROM Estatisticas 
 JOIN classeQuiz ON idClasse = fkClasse
-WHERE fkUsuario = 2;
+WHERE fkUsuario = 1;
 
 SELECT * FROM Estatisticas;
+
+SELECT * FROM ClasseQuiz;
 
 SELECT influenciaClasse
 FROM Estatisticas 
 JOIN classeQuiz ON idClasse = fkClasse
-WHERE fkUsuario = 2;
+WHERE fkUsuario = 1;
+
+CREATE TABLE Quiz (
+idQuiz INT PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE respostaQuiz (
+fkQuiz INT,
+fkUsuario INT,
+acertos INT,
+pontuacao INT,
+CONSTRAINT pkQuiz
+PRIMARY KEY (fkQuiz, fkUsuario)
+);
+
+ALTER TABLE respostaQuiz MODIFY COLUMN pontuacao decimal (2,2);
 
 
 
