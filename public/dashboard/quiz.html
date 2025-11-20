@@ -16,10 +16,10 @@
       <!--Navegação-->
       <nav>
         <ul>
-          <li><a href="">Home</a></li>
+          <li><a href="../index.html">Home</a></li>
           <li><a href="">sobre</a></li>
           <li><a href="">Conteúdo</a></li>
-          <li><a href="">Quiz</a></li>
+          <li><a href="#">Quiz</a></li>
         </ul>
         <ul>
           <li><a href="./login.html">Entrar</a></li>
@@ -153,6 +153,15 @@
     }
 
     function iniciarQuiz() {
+        var idUsuario = sessionStorage.ID_USUARIO
+
+        if(idUsuario == null || idUsuario == undefined){
+            alert('Você precisa fazer o login para fazer o quiz mero mortal!')
+            window.location.href = "./login.html"
+
+            return
+        }else{
+
         document.getElementById('pontuacao').style.display = "flex"
         document.getElementById('jogo').style.display = "flex"
         document.getElementById('btnIniciarQuiz').style.display = "none"
@@ -165,6 +174,10 @@
         btnProx.disabled = true
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = true
+
+        }
+
+        
     }
 
     function preencherHTMLcomQuestaoAtual(index) {
@@ -288,6 +301,9 @@
     }
 
     function finalizarJogo() {
+
+
+        
         let textoParaMensagemFinal = null
         let classComCoresParaMensagemFinal = null
         const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes

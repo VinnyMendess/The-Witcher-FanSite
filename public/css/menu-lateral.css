@@ -45,11 +45,12 @@ aside .aside-logo{
 }
 .nav-container a{
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #fff;
-    width: 100%;
+    width: 90%;
     padding: 5px 0px 5px 0px;
     text-align: center;
+    border: 2px solid rgb(12, 12, 12);
 
 }
 

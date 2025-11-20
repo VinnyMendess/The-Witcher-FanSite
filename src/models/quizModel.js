@@ -1,8 +1,8 @@
 var database = require("../database/config");
 
-function cadastrarQuest(fkQuiz,idUsuario, pontuacao, acertos){
+function cadastrarQuest(fkQuiz,idUsuario, acertos, pontuacao){
     var instrucaoSql = `
-        INSERT INTO respostaQuiz (fkQuiz, fkUsuario, acertos, pontuacao) VALUES ('${fkQuiz}', '${fkUsuario}', '${acertos}', '${pontuacao}')
+        INSERT INTO respostaQuiz (fkQuiz, fkUsuario, acertos, pontuacao) VALUES (${fkQuiz}, ${idUsuario}, ${acertos}, ${pontuacao})
     `;
 
     console.log("ACESSEI O CADASTRAR QUIZ MODEL");
