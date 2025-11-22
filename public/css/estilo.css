@@ -218,9 +218,7 @@ font-weight: 400;
   height: 250vh;
 }
 
-.section-02-title{
 
-}
 .section-03-title h4{
  font-size: 20rem;
  font-family: the witcher;
@@ -240,10 +238,7 @@ background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
 
 }
 
-.section-03-container-img{
 
-
-}
 
 .section-03 .container{
   width: 100%;
@@ -281,7 +276,7 @@ background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
   font-size: 10rem;
   padding-bottom: 60px;
   background: linear-gradient(to right, #0f0505 0%, #EA1814 93%);
--webkit-background-clip: text;
+  -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
   
 
