@@ -9,15 +9,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./assets/icon/favicon-32x32.png" />
-    <title>The Witcher</title>
+    <link rel="icon" href="../assets/icon/favicon-32x32.png" />
+    <title>The Witcher | Dashboard</title>
 
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./../js/alerta.js"></script>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
@@ -458,32 +457,7 @@
     obterDadosGrafico(idUsuarioLogado);
   }
 
-  //   var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-  //   aquarios.forEach((item) => {
-  //     document.getElementById("btnAquario").innerHTML += `
-  //           <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
-  //           `;
-
-  //     document.getElementById("graficos").innerHTML += `
-  //               <div id="grafico${item.id}" class="display-none">
-  //                   <h3 class="tituloGraficos">
-  //                       <span id="tituloAquario${item.id}">${item.descricao}</span>
-  //                   </h3>
-  //                   <div class="graph">
-  //                       <canvas id="myChartCanvas${item.id}"></canvas>
-  //                   </div>
-  //                   <div class="label-captura">
-  //                       <p id="avisoCaptura${item.id}" style="color: white"></p>
-  //                   </div>
-  //               </div>
-  //           `;
-
-  //     obterDadosGrafico(item.id);
-  //   });
-
-  //   if (aquarios.length > 0) {
-  //     exibirAquario(aquarios[0].id);
-  //   }
+  //   
 
   // O gráfico é construído com três funções:
   // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
@@ -500,13 +474,14 @@
     // alterarTitulo(idUsuarioLogado);
 
     //Verificação pra saber se a chamadad do grafico esta entrando na função
-    console.log(`➡️ 1. INICIANDO BUSCA DO GRÁFICO para ID: ${idUsuarioLogado}`);
 
-    if (proximaAtualizacao != undefined) {
-      clearTimeout(proximaAtualizacao);
-    }
+
+    // if (proximaAtualizacao != undefined) {
+    //   clearTimeout(proximaAtualizacao);
+    // }
 
     fetch(`/graph/grafico1/${idUsuarioLogado}`, { cache: "no-store" })
+
       .then(function (response) {
         if (response.ok) {
           response.json().then(function (resposta) {
@@ -635,14 +610,13 @@
       labels: labels,
       datasets: [
         {
-          data: [totalAcertos, totalErros], // ⬅️ DADOS REAIS AQUI
+          data: [totalAcertos, totalErros],
           borderWidth: 0,
-          backgroundColor: ["#60088F", "#0A0A0A"], // Ex: Verde e Vermelho
+          backgroundColor: ["#60088F", "#0A0A0A"], 
         },
       ],
     };
 
-    // ➡️ 3. ESTRUTURA DE CONFIGURAÇÃO (options)
     const options = {
       plugins: {
         legend: {
@@ -655,7 +629,7 @@
         },
         title: {
           display: true,
-          text: `Acertos nos Quizes (Total de ${totalQuestoes} Questões)`, // ⬅️ Título Dinâmico
+          text: `Acertos nos Quizes (Total de ${totalQuestoes} Questões)`,
           color: "#fff",
         },
       },
@@ -663,7 +637,6 @@
       maintainAspectRatio: false,
     };
 
-    // ➡️ 4. PLOTAGEM
     const config = {
       type: "pie", // Tipo PIZZA
       data: dados,
@@ -673,7 +646,7 @@
     // Altere a div do gráfico de pizza se ela for 'myChart' ou 'quiz-graph'
     let ctx = new Chart(document.getElementById("quiz-graph"), config);
 
-    // ❌ REMOVA A CHAMADA ATUALIZARGRAFICO E O TIMEOUT DAQUI
+
     // Se o gráfico do quiz for estático, você não precisa de setTimeout e atualizarGrafico
   }
 
