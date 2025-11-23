@@ -21,7 +21,7 @@ function limparSessao() {
 
 // carregamento (loading)
 function aguardar() {
-    var divAguardar = document.getElementById("div_aguardar");
+    var divAguardar = document.getElementById("loading-video");
     divAguardar.style.display = "flex";
 }
 

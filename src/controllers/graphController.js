@@ -2,13 +2,10 @@ var graphModel = require("../models/graphModel");
 
 function buscarUltimasPorcentagem(req, res) {
 
-    const limite_linhas = 7;
 
     var idUsuarioLogado = req.params.idUsuarioLogado;
 
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
-
-    graphModel.buscarUltimasPorcentagem(idUsuarioLogado, limite_linhas).then(function (resultado) {
+    graphModel.buscarUltimasPorcentagem(idUsuarioLogado).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
