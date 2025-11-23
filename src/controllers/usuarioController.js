@@ -51,6 +51,10 @@ function cadastrar(req, res) {
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
   var fkClasse = req.body.fkClasseServer;
+  var origem = req.body.origemServer;
+  var personagem = req.body.personagemServer;
+  var site = req.body.siteServer;
+  var sinal = req.body.sinalServer;
 
   // Faça as validações dos valores
   if (nome == undefined) {
@@ -61,10 +65,18 @@ function cadastrar(req, res) {
     res.status(400).send("Sua senha está undefined!");
   }else if (fkClasse == undefined) {
     res.status(400).send("Sua Classe está undefined!");
+  }else if (origem == undefined) {
+    res.status(400).send("Sua origem está undefined!");
+  }else if (personagem == undefined) {
+    res.status(400).send("Sua personagem está undefined!");
+  }else if (site == undefined) {
+    res.status(400).send("Sua site está undefined!");
+  }else if (sinal == undefined) {
+    res.status(400).send("Sua sinal está undefined!");
   } else {
     // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
     usuarioModel
-      .cadastrar(nome, email, senha, fkClasse)
+      .cadastrar(nome, email, senha, fkClasse, origem, personagem, site, sinal)
       .then(function (resultado) {
         res.json(resultado);
       })

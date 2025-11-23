@@ -1,5 +1,7 @@
 var database = require("../database/config")
 
+var novoIdUsuario = 0; 
+
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
     var instrucaoSql = `
@@ -10,7 +12,7 @@ function autenticar(email, senha) {
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function cadastrar(nome, email, senha, fkClasse) {
+function cadastrar(nome, email, senha, fkClasse, origem, personagem, site, sinal) {
     console.log("ACESSEI O USUARIO MODEL");
     console.log("Cadastrando usuário:", nome, email, senha);
     
@@ -23,7 +25,7 @@ function cadastrar(nome, email, senha, fkClasse) {
     return database.executar(instrucaoSql1)
         .then(function(resultado) {
             // Ele pega o id da primeira instrução que foi criada e usa nesse novo insert
-            var novoIdUsuario = resultado.insertId; 
+            novoIdUsuario = resultado.insertId; 
             
             console.log("ID do Usuário recém-cadastrado (insertId):", novoIdUsuario);
         
@@ -39,8 +41,18 @@ function cadastrar(nome, email, senha, fkClasse) {
             // O controlador (controller) receberá o resultado desta segunda Promise.
             return database.executar(instrucaoSql2);
         })
+        .then(function (){
+
+            var instrucaoSql3 = `
+            INSERT INTO sobre (porOndeConheceu, personagemFavorito, interessePrincipalSite, sinal, fkUsuario) 
+            VALUES ('${origem}', '${personagem}', '${site}', '${sinal}', ${novoIdUsuario});
+            `
+            console.log("Executando a instrução SQL 3 (Sobre): \n" + instrucaoSql3);
+
+            return database.executar(instrucaoSql3);
+        })
         .catch(function(erro) {
-            console.error("Houve um erro no cadastro do usuário ou das estatísticas: ", erro);
+            console.error("Houve um erro no cadastro do usuário ou das estatísticas ou sobre: ", erro);
             // Lança o erro para que o Controller possa notificar o cliente
             throw erro; 
         });

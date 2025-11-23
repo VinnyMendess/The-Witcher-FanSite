@@ -15,12 +15,12 @@
   </head>
 
   <body>
-    <div class="cadastro">
+    <div id="cadastroUser" class="cadastro">
       <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
+        <div class="card_erro" id="cardErro">
         <span id="mensagem_erro"></span>
-      </div>
-    </div>
+        </div>
+        </div>
 
 
       <div class="banner-img">
@@ -80,11 +80,215 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+    <!--AQUI INICIA A PARTE 2 DO CADASTRO!!!!--->
+
+    <div id="about_user" class="about-user">
+    <div class="reference-img-abt-user">
+        <img src="./assets/imgs/bg-about-user.png" alt="" />
+    </div>
+
+    <div class="container-abt-user">
+        <div class="title">NOS CONTE UM POUCO SOBRE A SUA <br />EXPERIÊNCIA PARA SE CADASTRAR</div>
+
+        <div class="container-quest-abt-user">
+            <div class="box-quest-abt">
+                <div class="opcoes-abt">
+                    <p>como você conheceu The Witcher</p>
+                    <span>
+                      <input type="radio" id="conheceu_livros" name="origemConhecimento" class="radio" value="Livros" />Os Livros de Andrej Sapkowski
+                      <label for="conheceu_livros" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="conheceu_tw3" name="origemConhecimento" class="radio" value="Witcher3" />The Witcher 3 Wild Hunt
+                      <label for="conheceu_tw3" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="conheceu_tw12" name="origemConhecimento" class="radio" value="Witcher1ou2" />The Witcher 1 ou 2
+                      <label for="conheceu_tw12" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="conheceu_serie" name="origemConhecimento" class="radio" value="Serie" />A Série
+                      <label for="conheceu_serie" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="conheceu_gwent" name="origemConhecimento" class="radio" value="Gwent" />Gwent
+                      <label for="conheceu_gwent" class="option"></label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="box-quest-abt">
+                <div class="opcoes-abt">
+                    <p>O destino te liga a um personagem</p>
+                    <span>
+                      <input type="radio" id="pers_geralt" name="personagemFavorito" class="radio" value="Geralt" />Geralt de Rívia
+                      <label for="pers_geralt" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="pers_ciri" name="personagemFavorito" class="radio" value="Ciri" />Ciri
+                      <label for="pers_ciri" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="pers_yennefer" name="personagemFavorito" class="radio" value="Yennefer" />Yennefer de Vengerberg
+                      <label for="pers_yennefer" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="pers_jaskier" name="personagemFavorito" class="radio" value="Jaskier" />Jaskier
+                      <label for="pers_jaskier" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="pers_triss" name="personagemFavorito" class="radio" value="Triss" />Triss Merigold
+                      <label for="pers_triss" class="option"></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-quest-abt-user">
+            <div class="box-quest-abt">
+                <div class="opcoes-abt">
+                    <p>O que você epsera do Site</p>
+                    <span>
+                      <input type="radio" id="espera_bestiario" name="esperaSite" class="radio" value="Bestiario" />Ver um bestiário
+                      <label for="espera_bestiario" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="espera_lore" name="esperaSite" class="radio" value="Lore" />Explorar a lore
+                      <label for="espera_lore" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="espera_personagens" name="esperaSite" class="radio" value="Personagens" />Ver os Personagens
+                      <label for="espera_personagens" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="espera_quiz" name="esperaSite" class="radio" value="Quiz" />Fazer Quiz
+                      <label for="espera_quiz" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="espera_outros" name="esperaSite" class="radio" value="Outros" />Outros
+                      <label for="espera_outros" class="option"></label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="box-quest-abt">
+                <div class="opcoes-abt">
+                    <p>Qual seu sinal favorito</p>
+                    <span>
+                      <input type="radio" id="sinal_aard" name="sinalFavorito" class="radio" value="Aard" />Aard
+                      <label for="sinal_aard" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="sinal_igni" name="sinalFavorito" class="radio" value="Igni" />Igni
+                      <label for="sinal_igni" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="sinal_yrden" name="sinalFavorito" class="radio" value="Yrden" />Yrden
+                      <label for="sinal_yrden" class="option" ></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="sinal_quen" name="sinalFavorito" class="radio" value="Quen" />Quen
+                      <label for="sinal_quen" class="option"></label>
+                    </span>
+
+                    <span>
+                      <input type="radio" id="sinal_axii" name="sinalFavorito" class="radio" value="Axii" />Axii
+                      <label for="sinal_axii" class="option"></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-abt-user">
+            <button onclick="cadastrarSobre()">Próximo</button>
+        </div>
+    </div>
+</div>
+
+
   </body>
 </html>
 
 <script>
   // Array para armazenar empresas cadastradas para validação de código de ativação
+  sessionStorage.ORIGEM = ''
+    sessionStorage.PERSONAGEM = ''
+    sessionStorage.SITE = ''
+    sessionStorage.SINAL = ''
+
+    function cadastrarSobre(){
+
+
+    var origem = document.querySelector('input[name="origemConhecimento"]:checked');
+    var personagem = document.querySelector('input[name="personagemFavorito"]:checked');
+    var site = document.querySelector('input[name="esperaSite"]:checked');
+    var sinal = document.querySelector('input[name="sinalFavorito"]:checked');
+
+
+    //if pra verificar se o valor existe pra pegar e se não é nulo (ele começa null)
+    var origemVar = null; 
+    if (origem) {
+        origemVar = origem.value;
+    }
+
+    var personagemVar = null;
+    if (personagem) {
+        personagemVar = personagem.value;
+    }
+
+    var siteVar = null;
+    if (site) {
+        siteVar = site.value;
+    }
+    
+    var sinalVar = null;
+    if (sinal) {
+        sinalVar = sinal.value;
+    }
+
+
+    if (!origemVar || !personagemVar || !siteVar || !sinalVar) {
+        alert("Por favor, responda todas as perguntas para continuar!");
+        
+        console.log('EI TEM Q BOTAR TODOAS AS PERGUNTAS')
+        return;
+    }
+
+    sessionStorage.ORIGEM = origemVar
+    sessionStorage.PERSONAGEM = personagemVar
+    sessionStorage.SITE = siteVar
+    sessionStorage.SINAL = sinalVar
+
+    cadastroUser.style.display = "flex";
+    about_user.style.display = "none";
+
+  }
+
+
 
   function cadastrar() {
     aguardar();
@@ -130,7 +334,11 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        fkClasseServer: fkClasseVar 
+        fkClasseServer: fkClasseVar, 
+        origemServer: sessionStorage.ORIGEM,
+        personagemServer: sessionStorage.PERSONAGEM,
+        siteServer: sessionStorage.SITE, 
+        sinalServer: sessionStorage.SINAL,
       }),
     })
       .then(function (resposta) {
@@ -160,6 +368,10 @@
     return false;
   }
 
+
+  
+
+  
   // Listando empresas cadastradas
 
   function sumirMensagem() {

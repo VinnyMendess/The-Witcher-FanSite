@@ -41,11 +41,16 @@
     margin-top: 50px;
 }
 
-.button-home-quiz a{
+.button-home-quiz button{
     text-decoration: none;
     color: #fff;
     background-color: black;
     padding: 20px 40px 20px 40px;
     font-family: the witcher;
     font-size: 1rem;
+}
+
+.button-home-quiz button:hover{
+    background-color: #fff;
+    color: black;
 }

@@ -95,6 +95,59 @@ header nav ul a {
   
 }
 
+
+
+.hero-video{
+  width: 100%;
+  height: 150vh;
+  z-index: 5;
+}
+
+.hero-video  video{
+  width: 100%;
+}
+
+.button-video{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.button-video button{
+  border: none;
+  background-color: #f8f8f8;
+  padding: 15px 30px 15px 30px;
+  font-family: theWitcher;
+  font-size: 20px;
+  transition: 0.5s ease-in-out;
+  transform: scale(1);
+}
+
+/*HOVER ANIMATIONS*/
+
+.button-video button:hover{
+  background-color: #0f0505;
+  color: #f3ffec;
+  box-shadow: 1px 1px 2px 0px#f3ffec;
+  transform: scale(1.1);
+}
+
+.hero-title a:hover{
+  background-color: #f8f8f8;
+  color: #0f0505;
+  box-shadow: 1px 1px 2px 0px#0f0505;
+  transform: scale(1.1);
+}
+
+.section-07 .container .box-text a:hover{
+  background-color: #0f0505;
+  color: #f8f8f8;
+  box-shadow: 1px 1px 2px 0px#f8f8f8;
+  transform: scale(1.1);
+
+}
+
+
 .hero {
   display: flex;
   padding-top: 5rem;
@@ -138,7 +191,10 @@ header nav ul a {
   padding: 10px;
   font-family: the witcher;
   text-align: center;
+  transition: 0.5s ease-in-out;
+  transform: scale(1);
 }
+
 .hero-box {
   display: flex;
   height: 100%;
@@ -580,6 +636,8 @@ background: rgba(222, 20, 20, 0.30);
   font-family: "MedievalSharp", cursive;
   color: #000000;
   padding: 10px 50px 10px 50px;
+  transition: 0.5s ease-in-out;
+  transform: scale(1.0);
 }
 
 

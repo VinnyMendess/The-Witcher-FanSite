@@ -1,8 +1,7 @@
 var database = require("../database/config");
 
-
 function buscarUltimasPorcentagem(idUsuarioLogado) {
-    var instrucaoSql = `
+  var instrucaoSql = `
         SELECT 
             r.acertos,
             q.perguntas,
@@ -11,10 +10,21 @@ function buscarUltimasPorcentagem(idUsuarioLogado) {
         JOIN Quiz AS q ON r.fkQuiz = q.idQuiz
         WHERE r.fkUsuario = ${idUsuarioLogado} 
         ORDER BY r.fkQuiz DESC;`;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
+function buscarGraficoSinal() {
+  var instrucaoSql = `
+    SELECT sinal as nomeSinal, COUNT(*) as quantidade
+FROM sobre
+GROUP BY sinal;`;
+
+console.log("Executando a instrução SQL:  \n"+ instrucaoSql);
+return database.executar(instrucaoSql);
 }
 
 module.exports = {
-    buscarUltimasPorcentagem
-}
+  buscarUltimasPorcentagem,
+  buscarGraficoSinal
+};

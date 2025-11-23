@@ -38,6 +38,17 @@
     </header>
 
 
+    <div class="hero-video">
+      <video playinline loop muted autoplay="true" id="HeroVideo">
+      <source src="./assets/videos/TW3 Hero Cortado.mp4" type="video/mp4" />
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="button-video">
+      <button onclick="parar()">Parar Video</button>
+      <button id="btnAudio" onclick="ativarSom()">Ligar/Desligar Som</button>
+    </div>
+    </div>
+    
     
     <!--Hero Section-->
     <section class="hero">
@@ -331,6 +342,32 @@
 </html>
 
 <script>
+
+  function ativarSom(){
+    var video =  document.getElementById('HeroVideo')
+    var btnAudio = document.getElementById('btnAudio')
+
+
+      if(video.muted == true){
+        video.muted = false
+      }else{
+        video.muted = true
+      }
+    
+
+
+  }
+
+  function parar(){
+    var video =  document.getElementById('HeroVideo')
+
+    if(video.paused){
+      video.play();
+    }else{
+      video.pause()
+    }
+  }
+
   function estender_01() {
     if (panel_1.style.display == "block") {
       panel_1.style.display = "none";
