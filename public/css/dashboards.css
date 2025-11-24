@@ -127,13 +127,28 @@ html .Dashboard {
   padding: 10px;
   border-radius: 10px;
   height: 150px;
-  width: 50%;
+  width: 47%;
   font-size: 0.9rem;
   font-weight: 500;
   box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
 }
+
+.info-graph-bar{
+background-color: #27272765;
+  border-radius: 5px;
+  padding: 10px;
+  width: 47%;
+  box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
+}
+.container-stats-contracts{
+  width: 100%;
+  margin-right: 50px;
+}
+
 
 .info-graph {
   background-color: #27272765;
@@ -204,6 +219,8 @@ html .Dashboard {
   border-left: 6px solid #e30000;
   transition: 0.2s ease-in-out;
 }
+
+
 
 #bg-vitalidade:hover {
   transform: scale(1.2);

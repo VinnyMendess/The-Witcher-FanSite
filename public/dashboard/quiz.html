@@ -165,9 +165,9 @@
             Avançar para próxima questão
           </button>
           <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-          <!-- <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>
+          <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>
             Tentar novamente
-          </button> -->
+          </button>
         </div>
       </div>
     </div>
@@ -440,7 +440,6 @@
     // btnConcluir.disabled = true
     btnTentarNovamente.disabled = false;
     var quiz = 1;
-    
     fetch("/quiz/cadastrarQuest", {
       method: "POST",
       headers: {

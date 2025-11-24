@@ -113,7 +113,8 @@
           </div>
         </div>
 
-        <div class="box-stats">
+        <div class="container-stats-contracts">
+          <div class="box-stats">
           <p class="title-stats">Contratos</p>
           <div id="bg-vitalidade" class="container-contracts">
             <img class="icon-dash" src="../assets/imgs/garra.png" alt="" />
@@ -130,6 +131,19 @@
             </div>
           </div>
         </div>
+
+        <div class="box-status">
+          <p class="title-stats">Toxidade</p>
+          <div id="bg-vitalidade" class="container-contracts">
+            <img class="icon-dash" src="../assets/imgs/garra.png" alt="" />
+            <div class="text-container">
+              <p>2000</p>
+            </div>
+          </div>
+
+        </div>
+        </div>
+        
 
         <div class="info-graph">
           <div>
@@ -148,7 +162,7 @@
           </div>
         </div>
 
-        <div class="info-graph">
+        <div class="info-graph-bar">
           <div>
             <canvas id="myChart"></canvas>
           </div>
@@ -457,6 +471,7 @@
       });
 
     obterDadosGrafico(idUsuarioLogado);
+    obterDadosGraficoSinais();
   }
 
   //   
@@ -472,15 +487,39 @@
 
   //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
   //     Para ajustar o "select", ajuste o comando sql em src/models
+  
+  
+  
+  function obterDadosGraficoSinais(){
+
+    //GRAFICO DE BARRAS 
+
+  fetch(`/graph/graficoSinal`, { cache: "no-store" })
+
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGraficoSinais(resposta);
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`
+        );
+      });
+
+    
+  }
+  
+  
   function obterDadosGrafico(idUsuarioLogado) {
-    // alterarTitulo(idUsuarioLogado);
-
-    //Verificação pra saber se a chamadad do grafico esta entrando na função
-
-
-    // if (proximaAtualizacao != undefined) {
-    //   clearTimeout(proximaAtualizacao);
-    // }
+    
 
 
     // GRAFICO DE PIZZA DAS RESPOSTAS
@@ -488,9 +527,14 @@
 
       .then(function (response) {
         if (response.ok) {
+          if (response.status == 204) {
+              console.warn("Nenhum resultado de Quiz encontrado para este usuário (Status 204).");
+
+              return; 
+          }
+
           response.json().then(function (resposta) {
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resposta.reverse();
 
             plotarGrafico(resposta, idUsuarioLogado);
           });
@@ -505,119 +549,167 @@
       });
   }
 
-  //GRAFICO DE BARRAS 
 
-  fetch(`/graph/graficoSinal/${idUsuarioLogado}`, { cache: "no-store" })
-
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (resposta) {
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resposta.reverse();
-
-            plotarGrafico(resposta, idUsuarioLogado);
-          });
-        } else {
-          console.error("Nenhum dado encontrado ou erro na API");
-        }
-      })
-      .catch(function (error) {
-        console.error(
-          `Erro na obtenção dos dados p/ gráfico: ${error.message}`
-        );
-      });
 
   // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
   // Configura o gráfico (cores, tipo, etc), materializa-o na página e,
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-      function plotarGrafico(resposta, idUsuarioLogado) {
+      
+  function plotarGraficoSinais(resposta) { // 1. Adicionado o parametro 'resposta'
     console.log("iniciando plotagem do gráfico...");
 
-    // Criando estrutura para plotar gráfico - labels
-    //GRAFICO DOS QUIZ
+    var labels = [];
+    var dados = [];
+    var cores = [];
 
+    for (var i = 0; i < resposta.length; i++) {
+        var registro = resposta[i]; // 2. Mudei o nome para 'registro' para bater com o resto
 
-        
+        labels.push(registro.nomeSinal);
+        dados.push(registro.quantidade);
 
-        const ctq = document.getElementById("quiz-graph");
-    new Chart(ctq, {
+        // 3. O if/else das cores AGORA está DENTRO do for
+        if (registro.nomeSinal == 'Igni') {
+            cores.push('#e30000'); // Vermelho
+        } else if (registro.nomeSinal == 'Aard') {
+            cores.push('rgba(54, 162, 235, 0.8)'); // Azul
+        } else if (registro.nomeSinal == 'Yrden') {
+            cores.push('#60088f'); // Roxo
+        } else if (registro.nomeSinal == 'Quen') {
+            cores.push('#cb980b'); // Amarelo
+        } else if (registro.nomeSinal == 'Axii') {
+            cores.push('#06a40d'); // Verde Água
+        } else {
+            cores.push('#808080');
+        }
+    } // Fim do for é AQUI
+
+    const dataConfig = {
+        labels: labels,
+        datasets: [{
+            label: 'Preferência dos Bruxos',
+            data: dados,
+            backgroundColor: cores,
+            borderWidth: 1,
+            
+        }]
+    };
+
+    const config = {
         type: "bar",
-        data: {
-          labels: [""],
-          datasets: [
-            {
-              label: "Quiz 1",
-              data: [],
-              borderWidth: 1,
-              backgroundColor: "#DE1414",
-              borderColor: "#DE1414",
-              borderRadius: 50,
-            },
-            {
-              label: "Quiz 2",
-              data: [],
-              borderWidth: 0,
-              backgroundColor: "#60088F",
-              borderColor: "#60088F",
-              borderRadius: 50,
-            },
-            {
-              label: "Quiz 3",
-              data: [],
-              borderWidth: 0,
-              backgroundColor: "#2A862E",
-              borderColor: "#2A862E",
-              borderRadius: 50,
-
-            }
-          ],
-        },
+        data: dataConfig,
         options: {
-          layout: {
-            padding: {
-              bottom: 9
-            }
-          },
-          plugins:{
-            legend:{
-              position: 'bottom',
-              labels:{
-                usePointStyle: true,
-                pointStyle: 'circle',
-                font: {
-                  size: 12
-                },
-                color: '#fff',
-              }
-            }
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              min: 0,
-              max: 20,
-              ticks: {
-                font: {
-                  size: 12,
-                },
-                color: '#fff',
-              },
-              grid:{
-                color: '#ffffff50'
-              }
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Sinais Favoritos da Escola',
+                    color: '#c76a00',
+                    font: { size: 16 }
+                }
             },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#fff' },
+                    grid: { color: '#333' }
+                },
+                x: {
+                    ticks: { color: '#c76a00' },
+                    grid: { display: false }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    };
 
-            x: {
-              ticks: {
-                font: {
-                  size: 7,
-                },
-              },
-            },
-          },
-        },
-      });
+    new Chart(document.getElementById("myChart"), config);
+}
+  
+  
+  function plotarGrafico(resposta, idUsuarioLogado) {
+    
+
+        // const ctq = document.getElementById("quiz-graph");
+    // new Chart(ctq, {
+    //     type: "bar",
+    //     data: {
+    //       labels: labels,
+    //       datasets: [
+    //         {
+    //           label: "Quiz 1",
+    //           data: [],
+    //           borderWidth: 1,
+    //           backgroundColor: "#DE1414",
+    //           borderColor: "#DE1414",
+    //           borderRadius: 50,
+    //         },
+    //         {
+    //           label: "Quiz 2",
+    //           data: [],
+    //           borderWidth: 0,
+    //           backgroundColor: "#60088F",
+    //           borderColor: "#60088F",
+    //           borderRadius: 50,
+    //         },
+    //         {
+    //           label: "Quiz 3",
+    //           data: [],
+    //           borderWidth: 0,
+    //           backgroundColor: "#2A862E",
+    //           borderColor: "#2A862E",
+    //           borderRadius: 50,
+
+    //         }
+    //       ],
+    //     },
+    //     options: {
+    //       layout: {
+    //         padding: {
+    //           bottom: 9
+    //         }
+    //       },
+    //       plugins:{
+    //         legend:{
+    //           position: 'bottom',
+    //           labels:{
+    //             usePointStyle: true,
+    //             pointStyle: 'circle',
+    //             font: {
+    //               size: 12
+    //             },
+    //             color: '#fff',
+    //           }
+    //         }
+    //       },
+    //       responsive: true,
+    //       maintainAspectRatio: false,
+    //       scales: {
+    //         y: {
+    //           min: 0,
+    //           max: 20,
+    //           ticks: {
+    //             font: {
+    //               size: 12,
+    //             },
+    //             color: '#fff',
+    //           },
+    //           grid:{
+    //             color: '#ffffff50'
+    //           }
+    //         },
+
+    //         x: {
+    //           ticks: {
+    //             font: {
+    //               size: 7,
+    //             },
+    //           },
+    //         },
+    //       },
+    //     },
+    //   });
 
     if (!resposta || resposta.length === 0) {
       console.warn("Nenhum dado de quiz encontrado para plotar.");
