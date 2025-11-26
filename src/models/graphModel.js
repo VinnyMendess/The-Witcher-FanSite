@@ -6,7 +6,7 @@ function buscarUltimasPorcentagem(idUsuarioLogado) {
             r.acertos,
             q.perguntas,
             r.pontuacao 
-        FROM RespostaQuiz AS r 
+        FROM respostaQuiz AS r 
         JOIN Quiz AS q ON r.fkQuiz = q.idQuiz
         WHERE r.fkUsuario = ${idUsuarioLogado} 
         ORDER BY r.fkQuiz DESC;`;

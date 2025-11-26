@@ -96,35 +96,35 @@ UPDATE Estatisticas SET fkClasse = (
     SELECT idClasse FROM classeQuiz WHERE nomeClasse = 'Bardo'
 ) WHERE fkUsuario = 1;
 
-SELECT * FROM usuario;
-SELECT vitalidade FROM Estatisticas WHERE fkUsuario = 1;
-SELECT * FROM Estatisticas;
-SELECT * FROM ClasseQuiz;
+    SELECT * FROM usuario;
+    SELECT vitalidade FROM Estatisticas WHERE fkUsuario = 1;
+    SELECT * FROM Estatisticas;
+    SELECT * FROM ClasseQuiz;
 
-SELECT *
-FROM Estatisticas 
-JOIN classeQuiz ON idClasse = fkClasse
-WHERE fkUsuario = 1;
+    SELECT *
+    FROM Estatisticas 
+    JOIN classeQuiz ON idClasse = fkClasse
+    WHERE fkUsuario = 1;
 
-SELECT influenciaClasse
-FROM Estatisticas 
-JOIN classeQuiz ON idClasse = fkClasse
-WHERE fkUsuario = 1;
+    SELECT influenciaClasse
+    FROM Estatisticas 
+    JOIN classeQuiz ON idClasse = fkClasse
+    WHERE fkUsuario = 1;
 
 
 
-SELECT * FROM RespostaQuiz;
-SELECT * FROM Usuario;
+    SELECT * FROM RespostaQuiz;
+    SELECT * FROM Usuario;
 
-SELECT r.pontuacao, q.perguntas 
-FROM RespostaQuiz AS r 
-JOIN Quiz AS q ON q.idQuiz = r.fkQuiz
-WHERE r.fkUsuario = 1;
+    SELECT r.pontuacao, q.perguntas 
+    FROM RespostaQuiz AS r 
+    JOIN Quiz AS q ON q.idQuiz = r.fkQuiz
+    WHERE r.fkUsuario = 1;
 
-SELECT r.pontuacao, r.acertos, r.fkQuiz 
-FROM RespostaQuiz r
-WHERE r.fkUsuario = 1;
+    SELECT r.pontuacao, r.acertos, r.fkQuiz 
+    FROM RespostaQuiz r
+    WHERE r.fkUsuario = 1;
 
-SELECT * FROM Quiz;
+    SELECT * FROM Quiz;
 
-DESC Quiz;
+    DESC Quiz;

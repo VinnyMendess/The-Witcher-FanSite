@@ -1,4 +1,4 @@
-var database = require("../database/config");
+ var database = require("../database/config");
 
 function cadastrarQuest(fkQuiz,idUsuario, acertos, pontuacao){
     var instrucaoSql = `

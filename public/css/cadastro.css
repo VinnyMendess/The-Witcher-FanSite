@@ -16,12 +16,17 @@
   width: 750px;
 }
 
+.container-features h1 {
+  font-family: theWitcher;
+  padding: 15px;
+  margin: 0;  
+}
 .login .container-features .button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10px;
-  gap: 40px;
+  margin-top: 5px;
+  gap: 20px;
 }
 
 .login .container-features .button button {
@@ -117,7 +122,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
-  gap: 40px;
+  gap: 15px;
 }
 
 .cadastro .container-features .button button {
