@@ -30,6 +30,9 @@
       </div>
       </div>
 
+
+      
+
       <!--  
       <div class="player">
         <div class="div-card-leader">
@@ -50,103 +53,84 @@
       </div>
       -->
     </aside>
-  
+    
 
     <div class="container-table">
       <div id="div_exibir_ad" class="box-cartas-adversario"></div>
-      <div id="div_table_artillery" class="table-artillery">
+      <div id="div_mesa_cerco_ad" class="mesa-distancia"></div>
+      <div id="div_mesa_distancia_ad" class="mesa-distancia"></div>
+      <div id="div_mesa_corpo_ad" class="mesa-distancia"></div>
+      <div id="div_mesa_corpo_jv" class="mesa-distancia"></div>
+      <div id="div_mesa_distancia_jv" class="mesa-distancia">
         <h5>Artilharia</h5>
       </div>
-      <div id="div_exibir_tg" class="table-gwent"></div>
+      <div id="div_mesa_cerco_jv" class="mesa-distancia"></div>
       <div id="div_exibir_jv" class="box-cartas-jogador"></div>
     </div>
+
+    
   </body>
 </html>
 <script>
   maoJogador = [];
   campoDeBatalha = [];
   maoAdversario = [];
-  nomeCarta = [];
-  descricaoCarta = [];
   ataqueCarta = [];
-  pontuacaoJogador = [];
   pontuacaoAdversario = [];
+
+  //campos de batalhas do jogador
+  campoCorpoJogador = []
+  campoDistanciaJogador = []
+  campoCercoJogador = []
+
+  //campos de batalhas do Oponente
+  campoCorpoAdversario = []
+  campoDistanciaAdversario = []
+  campoCercoAdversario = []
+
   var mensagem_ad = "";
   var mensagem_jv = "";
-  const cartas = [
-    // [ Nome Completo, ATK, Caminho da Imagem ]
-    ["Geralt de Rivia", 15, "../assets/Gwent-Cards/geralt-gwent.webp"],
-    ["Cirila Fiona Elen Riannon", 15, "../assets/Gwent-Cards/ciri-gwent.png"],
-    ["Yennefer de Vengerberg", 7, "../assets/Gwent-Cards/yennefer-gwent.png"],
-    ["Triss Merigold", 7, "../assets/Gwent-Cards/triss-gwent.webp"],
-    ["Foltest, O Ardente", 10, "../assets/Gwent-Cards/foltest-gwent.webp"],
-
-    ["Ves", 5, "../assets/Gwent-Cards/ves-gwent.png"],
-    ["Schirru", 5, "../assets/Gwent-Cards/schirru-gwent.webp"],
-    ["Milva", 5, "../assets/Gwent-Cards/milva-gwent.webp"],
-    ["Keira Metz", 5, "../assets/Gwent-Cards/keira-gwent.webp"],
-    ["Cynthia", 4, "../assets/Gwent-Cards/cynthia-gwent.webp"],
-
-    ["Redanian Foot Soldier", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-    ["Black Infantry Archer", 10, "../assets/Gwent-Cards/infantry-gwent.webp"],
-    [
-      "Impéria Brigade Guard",
-      3,
-      "../assets/Gwent-Cards/impera-guard-gwent.webp",
-    ],
-    ["Don Banner Medic", 5, "../assets/Gwent-Cards/medic-gwent.webp"],
-
-    ["Balista", 6, "../assets/Gwent-Cards/balista-gwent.webp"],
-    ["Trebuchet", 6, "../assets/Gwent-Cards/trebuchet.webp"],
-
-    // Repetindo algumas unidades para garantir 20 cartas iniciais.
-    ["Unidade de Suporte", 4, "../assets/Gwent-Cards/mysterious-gwent.webp"],
-    ["Espiã Oculta", 0, "../assets/Gwent-Cards/mysterious-gwent.webp"],
-    ["Soldado Auxiliar I", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-    ["Soldado Auxiliar II", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-  ];
+  const cartasBase = [
+    // [ Nome, ATK, Imagem, Tipo ] --> MUDOU PARA { chave: valor }
+    { nome: "Geralt de Rivia", atk: 15, caminhoImagem: "../assets/Gwent-Cards/geralt-gwent.webp", tipo: 'corpo' },
+    { nome: "Cirila Fiona Elen Riannon", atk: 15, caminhoImagem: "../assets/Gwent-Cards/ciri-gwent.png", tipo: 'corpo' },
+    { nome: "Yennefer de Vengerberg", atk: 7, caminhoImagem: "../assets/Gwent-Cards/yennefer-gwent.png", tipo: 'distancia' },
+    { nome: "Triss Merigold", atk: 7, caminhoImagem: "../assets/Gwent-Cards/triss-gwent.webp", tipo: 'corpo' },
+    { nome: "Foltest, O Ardente", atk: 10, caminhoImagem: "../assets/Gwent-Cards/foltest-gwent.webp", tipo: 'mandante' },
+    { nome: "Ves", atk: 5, caminhoImagem: "../assets/Gwent-Cards/ves-gwent.png", tipo: 'corpo' }, 
+    { nome: "Schirru", atk: 5, caminhoImagem: "../assets/Gwent-Cards/schirru-gwent.webp", tipo: 'cerco' },
+    { nome: "Milva", atk: 5, caminhoImagem: "../assets/Gwent-Cards/milva-gwent.webp", tipo: 'distancia' },
+    { nome: "Keira Metz", atk: 5, caminhoImagem: "../assets/Gwent-Cards/keira-gwent.webp", tipo: 'distancia' },
+    { nome: "Cynthia", atk: 4, caminhoImagem: "../assets/Gwent-Cards/cynthia-gwent.webp", tipo: 'distancia' },
+    { nome: "Redanian Foot Soldier", atk: 1, caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp", tipo: 'corpo' },
+    { nome: "Black Infantry Archer", atk: 10, caminhoImagem: "../assets/Gwent-Cards/infantry-gwent.webp", tipo: 'distancia' },
+    { nome: "Impéria Brigade Guard", atk: 3, caminhoImagem: "../assets/Gwent-Cards/impera-guard-gwent.webp", tipo: 'corpo' },
+    { nome: "Don Banner Medic", atk: 5, caminhoImagem: "../assets/Gwent-Cards/medic-gwent.webp", tipo: 'cerco' },
+    { nome: "Balista", atk: 6, caminhoImagem: "../assets/Gwent-Cards/balista-gwent.webp", tipo: 'cerco' },
+    { nome: "Trebuchet", atk: 6, caminhoImagem: "../assets/Gwent-Cards/trebuchet.webp", tipo: 'cerco' },
+    { nome: "Unidade de Suporte", atk: 4, caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp", tipo: 'cerco' },
+    { nome: "Espiã Oculta", atk: 0, caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp", tipo: 'distancia' },
+    { nome: "Soldado Auxiliar I", atk: 1, caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp", tipo: 'corpo' },
+    { nome: "Soldado Auxiliar II", atk: 1, caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp", tipo: 'corpo' }
+];
 
   function inicializarJogo() {
+    
+    campoCorpoJogador = [];
+    campoDistanciaJogador = [];
+    campoCercoJogador = [];
+
+    campoCorpoAdversario = [];
+    campoDistanciaAdversario = [];
+    campoCercoAdversario = [];
+
+    var baralhoCompleto = cartasBase.slice()
+
     maoJogador = [];
     campoDeBatalha = [];
     maoAdversario = [];
 
-    var baralhoCompleto = [
-      // [ Nome Completo, ATK, Caminho da Imagem ]
-      ["Geralt de Rivia", 15, "../assets/Gwent-Cards/geralt-gwent.webp"],
-      ["Cirila Fiona Elen Riannon", 15, "../assets/Gwent-Cards/ciri-gwent.png"],
-      ["Yennefer de Vengerberg", 7, "../assets/Gwent-Cards/yennefer-gwent.png"],
-      ["Triss Merigold", 7, "../assets/Gwent-Cards/triss-gwent.webp"],
-      ["Foltest, O Ardente", 10, "../assets/Gwent-Cards/foltest-gwent.webp"],
-
-      ["Ves", 5, "../assets/Gwent-Cards/ves-gwent.png"],
-      ["Schirru", 5, "../assets/Gwent-Cards/schirru-gwent.webp"],
-      ["Milva", 5, "../assets/Gwent-Cards/milva-gwent.webp"],
-      ["Keira Metz", 5, "../assets/Gwent-Cards/keira-gwent.webp"],
-      ["Cynthia", 4, "../assets/Gwent-Cards/cynthia-gwent.webp"],
-
-      ["Redanian Foot Soldier", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-      [
-        "Black Infantry Archer",
-        10,
-        "../assets/Gwent-Cards/infanrty-gwent.webp",
-      ],
-      [
-        "Impéria Brigade Guard",
-        3,
-        "../assets/Gwent-Cards/impera-guard-gwent.webp",
-      ],
-      ["Don Banner Medic", 5, "../assets/Gwent-Cards/medic-gwent.webp"],
-
-      ["Balista", 6, "../assets/Gwent-Cards/balista-gwent.webp"],
-      ["Trebuchet", 6, "../assets/Gwent-Cards/trebuchet.webp"],
-
-      // Repetindo algumas unidades para garantir 20 cartas iniciais.
-      ["Unidade de Suporte", 4, "../assets/Gwent-Cards/mysterious-gwent.webp"],
-      ["Espiã Oculta", 0, "../assets/Gwent-Cards/mysterious-gwent.webp"],
-      ["Soldado Auxiliar I", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-      ["Soldado Auxiliar II", 1, "../assets/Gwent-Cards/redanian-gwent.webp"],
-    ];
+    
     //recebe o baralho como parametro e usa na funçao embaralhar
     embaralhar(baralhoCompleto);
 
@@ -160,11 +144,11 @@
 
     percorrerAdversario();
     percorrerJogador();
-    atualizarCampoBatalha();
+    // atualizarCampoBatalha();
     calcularPontuacaoTotal();
 
-    div_exibir_tg.innerHTML =
-      '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
+    // div_exibir_tg.innerHTML =
+    //   '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
     alert(
       "O jogo foi iniciado! Jogue sua primeira carta e as cartas embaralhadas."
     );
@@ -201,10 +185,23 @@
     var cartaJogada = maoAdversario[indice];
 
     maoAdversario.splice(indice, 1); // Remove da mão
-    campoDeBatalha.push(cartaJogada); // Adiciona ao campo
+
+    var tipo = cartaJogada.tipo;
+
+     if(tipo == 'corpo'){
+      campoCorpoAdversario.push(cartaJogada)
+    }else if(tipo == 'distancia'){
+      campoDistanciaAdversario.push(cartaJogada)
+    }else if(tipo == 'cerco'){
+      campoCercoAdversario.push(cartaJogada)
+    }else{
+      //tirar isso depois
+      campoCorpoAdversario.push(cartaJogada)
+    }
+    // campoDeBatalha.push(cartaJogada); // Adiciona ao campo
 
     percorrerAdversario(); // Atualiza a mão do adversário
-    atualizarCampoBatalha();
+    // atualizarCampoBatalha();
     calcularPontuacaoTotal();
   }
 
@@ -215,33 +212,128 @@
     }
 
     var cartaJogada = maoJogador[indice];
-    var nome = cartaJogada[0];
-    var ataque = cartaJogada[1];
+    var nome = cartaJogada.nome;
+    var ataque = cartaJogada.atk;
+    var tipo = cartaJogada.tipo;
 
     maoJogador.splice(indice, 1);
+    
+    //Verificar qual carta ele jogou para selecionar a mesa:
+    if(tipo == 'corpo'){
+      campoCorpoJogador.push(cartaJogada)
+    }else if(tipo == 'distancia'){
+      campoDistanciaJogador.push(cartaJogada)
+    }else if(tipo == 'cerco'){
+      campoCercoJogador.push(cartaJogada)
+    }else{
+      //tirar isso depois
+      campoCorpoAdversario.push(cartaJogada)
+    }
 
-    campoDeBatalha.push(cartaJogada);
+    // campoDeBatalha.push(cartaJogada);
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
-    atualizarCampoBatalha();
+    // atualizarCampoBatalha();
+    exibirCorpoJogador();
+    exibirDistanciaJogador();
+    exibirCercoJogador();
     percorrerJogador();
+
+    exibirCorpoAdversario();
+    exibirDistanciaAdversario();
+    exibirCercoAdversario();
+
     calcularPontuacaoTotal();
 
     var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
     jogarCartaAdversario(indiceAdversario);
   }
 
-  function atualizarCampoBatalha() {
-    div_exibir_tg.innerHTML = "";
-    for (let i = 0; i < campoDeBatalha.length; i++) {
-      var cartaJogada = campoDeBatalha[i];
-      var nome = cartaJogada[0];
-      var ataque = cartaJogada[1];
-      var caminhoImagem = cartaJogada[2];
 
-      div_exibir_tg.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`;
+
+
+  // FUNÇÔES DE EXIBIXÃO JOGADOR
+
+  function exibirCorpoJogador(){
+    div_mesa_corpo_jv.innerHTML = ''
+    for(let i = 0; i < campoCorpoJogador.length; i++){
+      var cartaJogada = campoCorpoJogador[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.caminhoImagem;
+
+
+      div_mesa_corpo_jv.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
+    }
+    
+  }
+  function exibirDistanciaJogador(){
+    div_mesa_distancia_jv.innerHTML = ''
+    for(let i = 0; i < campoDistanciaJogador.length; i++){
+      var cartaJogada = campoDistanciaJogador[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.caminhoImagem;
+
+      div_mesa_distancia_jv.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
     }
   }
+  function exibirCercoJogador(){
+    div_mesa_cerco_jv.innerHTML = ''
+    for(let i = 0; i < campoCercoJogador.length; i++){
+      var cartaJogada = campoCercoJogador[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.caminhoImagem;
+
+      div_mesa_cerco_jv.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
+    }
+  }
+
+  // ADV
+  function exibirCorpoAdversario(){
+    for(let i = 0; i < campoCorpoAdversario.length; i++){
+      var cartaJogada = campoCorpoAdversario[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.caminhoImagem;
+
+      div_mesa_corpo_ad.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
+    }
+    
+  }
+  function exibirDistanciaAdversario(){
+    for(let i = 0; i < campoDistanciaAdversario.length; i++){
+      var cartaJogada = campoDistanciaAdversario[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.caminhoImagem;
+
+      div_mesa_distancia_ad.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
+    }
+  }
+  function exibirCercoAdversario(){
+    for(let i = 0; i < campoCercoAdversario.length; i++){
+      var cartaJogada = campoCercoAdversario[i];
+      var nome = cartaJogada.nome;
+      var ataque = cartaJogada.atk;
+      var caminhoImagem = cartaJogada.tipo;
+
+      div_mesa_cerco_ad.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
+    }
+  }
+
+  // function atualizarCampoBatalha() {
+  //   div_exibir_tg.innerHTML = "";
+  //   for (let i = 0; i < campoDeBatalha.length; i++) {
+  //     var cartaJogada = campoDeBatalha[i];
+  //     var nome = cartaJogada[0];
+  //     var ataque = cartaJogada[1];
+  //     var caminhoImagem = cartaJogada[2];
+
+  //     div_exibir_tg.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`;
+  //   }
+  // }
 
   function percorrerJogador() {
     mensagem_jv = "";
@@ -249,11 +341,11 @@
     for (let i = 0; i < maoJogador.length; i++) {
       var cartaAtual = maoJogador[i];
 
-      var nomeCarta = cartaAtual[0];
-      var ataqueCarta = cartaAtual[1];
+      var nomeCarta = cartaAtual.nome;
+      var ataqueCarta = cartaAtual.atk;
       //var descricaoCarta = cartaAtual[2];
       //var pontuacaoJogador = cartaAtual[1];
-      var caminhoImagem = cartaAtual[2];
+      var caminhoImagem = cartaAtual.caminhoImagem;
       //para adicionar as fotinhos das cartas
       mensagem_jv += `
     <button onclick="jogarCartaJogador(${i})">
@@ -271,10 +363,9 @@
     for (let i = 0; i < maoAdversario.length; i++) {
       cartaAtual = maoAdversario[i];
 
-      nomeCarta = cartaAtual[0];
-      ataqueCarta = cartaAtual[1];
-
-      var caminhoImagem = cartaAtual[2];
+      nomeCarta = cartaAtual.nome;
+      ataqueCarta = cartaAtual.atk;
+      var caminhoImagem = cartaAtual.caminhoImagem;
       mensagem_ad += `
         <div class="card-item">
             <img src="${caminhoImagem}" alt="${nomeCarta}">
@@ -284,15 +375,34 @@
     div_exibir_ad.innerHTML = `${maoAdversario.length} ` + mensagem_ad;
   }
 
-  function calcularPontuacaoTotal() {
-    var pontuacaoTotal = 0;
+  //pega o vetor do campo do jogador pra somar os ataques
+  function somarPontosCampo(campo){
+    var soma = 0
 
-    for (let i = 0; i < campoDeBatalha.length; i++) {
-      pontuacaoTotal += campoDeBatalha[i][1];
+    //percorrer o indice campo
+    for(var i =0; i < campo.length; i++){
+      soma += campo[i].atk
     }
 
-    div_exibir_total.innerHTML = `Pontuação Total: ${pontuacaoTotal}`;
+    //Eu uso o return pra usar o resultado na função q calcula o total
+    return soma
   }
+
+  function calcularPontuacaoTotal() {
+    
+    //passando o indice de cada campo e somando o resultado dele
+    var pontuacaoJogador =  somarPontosCampo(campoCorpoJogador)+somarPontosCampo(campoDistanciaJogador)+ somarPontosCampo(campoCercoJogador)
+    
+    
+    
+    var pontuacaoAdversario = 0
+
+    var pontuacaoTotal = 0;
+
+    
+  }
+  
+
 
   function checarFimTurno() {
     var maxRodada = 3;
