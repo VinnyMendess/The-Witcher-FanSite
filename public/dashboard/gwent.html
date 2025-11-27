@@ -23,7 +23,7 @@
           <p>Northern Realms</p>
         </div>
         <div class="features-oponent">
-          <p>1</p>
+          <div id="div_exibir_total"></div>
           <div class="life-oponent"></div>
           <div class="points-oponent"></div>
         </div>
@@ -115,6 +115,9 @@
 ];
 
   function inicializarJogo() {
+    maoJogador = [];
+    campoDeBatalha = [];
+    maoAdversario = [];
     
     campoCorpoJogador = [];
     campoDistanciaJogador = [];
@@ -124,11 +127,10 @@
     campoDistanciaAdversario = [];
     campoCercoAdversario = [];
 
+
     var baralhoCompleto = cartasBase.slice()
 
-    maoJogador = [];
-    campoDeBatalha = [];
-    maoAdversario = [];
+    
 
     
     //recebe o baralho como parametro e usa na funçao embaralhar
@@ -292,6 +294,7 @@
 
   // ADV
   function exibirCorpoAdversario(){
+    div_mesa_corpo_ad.innerHTML = '';
     for(let i = 0; i < campoCorpoAdversario.length; i++){
       var cartaJogada = campoCorpoAdversario[i];
       var nome = cartaJogada.nome;
@@ -303,6 +306,7 @@
     
   }
   function exibirDistanciaAdversario(){
+    div_mesa_distancia_ad.innerHTML = '';
     for(let i = 0; i < campoDistanciaAdversario.length; i++){
       var cartaJogada = campoDistanciaAdversario[i];
       var nome = cartaJogada.nome;
@@ -313,11 +317,12 @@
     }
   }
   function exibirCercoAdversario(){
+    div_mesa_cerco_ad.innerHTML = '';
     for(let i = 0; i < campoCercoAdversario.length; i++){
       var cartaJogada = campoCercoAdversario[i];
       var nome = cartaJogada.nome;
       var ataque = cartaJogada.atk;
-      var caminhoImagem = cartaJogada.tipo;
+      var caminhoImagem = cartaJogada.caminhoImagem;
 
       div_mesa_cerco_ad.innerHTML += `<div class="card-item campo"><img src="${caminhoImagem}" alt="${nome}"></div>`
     }
@@ -392,12 +397,12 @@
     
     //passando o indice de cada campo e somando o resultado dele
     var pontuacaoJogador =  somarPontosCampo(campoCorpoJogador)+somarPontosCampo(campoDistanciaJogador)+ somarPontosCampo(campoCercoJogador)
-    
-    
-    
-    var pontuacaoAdversario = 0
+    var pontuacaoAdversario =  somarPontosCampo(campoCorpoAdversario)+somarPontosCampo(campoDistanciaAdversario)+ somarPontosCampo(campoCercoAdversario)
 
-    var pontuacaoTotal = 0;
+    div_exibir_total.innerHTML = `
+    <h3>Pontuação Total:</h3><p>Jogador: ${pontuacaoJogador}</p> <p>Adversario: ${pontuacaoAdversario}</p>
+    `
+
 
     
   }
