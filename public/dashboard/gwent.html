@@ -15,13 +15,13 @@
             <img src="../assets/icon/icon-wild-hunt.png" alt="" />
           </div>
           <div class="text-oponent">
-            <p>Oponente</p>
+            <p class="title">Oponente</p>
             <p>Northern Realms</p>
           </div>
           <div class="features-oponent">
             <div id="div_exibir_total"></div>
             <div class="life-oponent"></div>
-            <div id="exibir_pontos_adversario" class="points-oponent"></div>
+            <div id="exibir_pontos_adversario" class="points-game"></div>
           </div>
         </div>
       </div>
@@ -32,15 +32,17 @@
             <img src="../assets/icon/geralt-icon.jpg" alt="" />
           </div>
           <div class="text-oponent">
-            <p>Jogador</p>
+            <p class="title" id="nome"></p>
             <p>Northern Realms</p>
           </div>
           <div class="features-player">
             <div class="life-oponent"></div>
-            <div id="exibir_pontos_jogador" class="points-oponent"></div>
+            <div id="exibir_pontos_jogador" class="points-game"></div>
           </div>
         </div>
       </div>
+
+      <div id="div_exibir_passou"></div>
     </aside>
 
     <div class="container-table">
@@ -69,6 +71,10 @@
   </body>
 </html>
 <script>
+  nomeJogador = sessionStorage.NOME_USUARIO;
+
+  nome.innerHTML = nomeJogador;
+
   jogadorAtual = "jogador";
   jogadorPassou = false;
   adversarioPassou = false;
@@ -214,6 +220,102 @@
       caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
       tipo: "corpo",
     },
+    {
+      nome: "Vesemir",
+      atk: 6,
+      caminhoImagem: "../assets/Gwent-Cards/vesemir-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "Zoltan",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/zoltan-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "Vesemir",
+      atk: 2,
+      caminhoImagem: "../assets/Gwent-Cards/dandelion-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "Vesemir",
+      atk: 6,
+      caminhoImagem: "../assets/Gwent-Cards/elemental-gwent.png",
+      tipo: "cerco",
+    },
+    {
+      nome: "ghoul",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/ghoul-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "ghoul-2",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/ghoul-2-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "Infantry Archer",
+      atk: 10,
+      caminhoImagem: "../assets/Gwent-Cards/infantry-archer-gwent.png",
+      tipo: "distancia",
+    },
+    {
+      nome: "Infantry Archer",
+      atk: 10,
+      caminhoImagem: "../assets/Gwent-Cards/infantry-archer-2-gwent.png",
+      tipo: "distancia",
+    },
+    {
+      nome: "gargoyle",
+      atk: 2,
+      caminhoImagem: "../assets/Gwent-Cards/gargoyle-gwent.png",
+      tipo: "distancia",
+    },
+    {
+      nome: "foglet",
+      atk: 2,
+      caminhoImagem: "../assets/Gwent-Cards/floget-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "wyvern",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/wyvern-gwent.png",
+      tipo: "distancia",
+    },
+    {
+      nome: "siege tower",
+      atk: 6,
+      caminhoImagem: "../assets/Gwent-Cards/siege-tower-gwent.png",
+      tipo: "cerco",
+    },
+    {
+      nome: "denesle",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/densesle-gwent.png",
+      tipo: "corpo",
+    },
+    {
+      nome: "catapult",
+      atk: 8,
+      caminhoImagem: "../assets/Gwent-Cards/catapult-gwent.png",
+      tipo: "cerco",
+    },
+    {
+      nome: "siege",
+      atk: 0,
+      caminhoImagem: "../assets/Gwent-Cards/siege-gwent.png",
+      tipo: "cerco",
+    },
+    {
+      nome: "etolian",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/etolian-gwent.png",
+      tipo: "distancia",
+    },
   ];
 
   function inicializarJogo() {
@@ -227,18 +329,18 @@
     campoCorpoAdversario = [];
     campoDistanciaAdversario = [];
 
-    var baralhoCompleto = cartasBase.slice();
+    
+    var baralhoCompleto = cartasBase.slice(0, 20);
 
     //recebe o baralho como parametro e usa na funçao embaralhar
     embaralhar(baralhoCompleto);
 
-    //O ponto de corte é metade do baralho
-    const pontoCorte = baralhoCompleto.length / 2;
 
+    var cartasPorJogador = 10;
     //distribuindo as cartas de fortma aleatória, a mao do jogador começa com 10
-    maoJogador = baralhoCompleto.slice(0, pontoCorte);
+    maoJogador = baralhoCompleto.slice(0, cartasPorJogador);
     //mesma coisa mas ele pega o restante
-    maoAdversario = baralhoCompleto.slice(pontoCorte);
+    maoAdversario = baralhoCompleto.slice(cartasPorJogador);
 
     percorrerAdversario();
     percorrerJogador();
@@ -302,21 +404,34 @@
   }
 
   function passarTurno() {
+    
     jogadorPassou = true;
-
+    
     if (adversarioPassou) {
       encerrarTurno();
+      
     } else {
       jogadorAtual = "adversario";
+      
+      
       setTimeout(turnoAdversario, 1000);
     }
+
+    
   }
 
   function jogarCartaJogador(indice) {
+    //verificação pra saber se ele ja jogou
+    // if(jogadorAtual != 'jogador '|| jogadorPassou){
+    //   alert('Não é seu turno você já passou patrão')
+    //   return
+    // }
+    
     if (indice < 0 || indice >= maoJogador.length) {
       alert("Essa carta ta inválida");
       return;
     }
+    
 
     var cartaJogada = maoJogador[indice];
     var nome = cartaJogada.nome;
@@ -339,15 +454,12 @@
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
     // atualizarCampoBatalha();
+    jogadorAtual = "adversario";
+    setTimeout(turnoAdversario, 1000);
     exibirCorpoJogador();
     exibirDistanciaJogador();
 
     percorrerJogador();
-
-    exibirCorpoAdversario();
-    exibirDistanciaAdversario();
-
-    calcularPontuacaoTotal();
 
     var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
     // jogarCartaAdversario(indiceAdversario);
@@ -356,6 +468,18 @@
   function turnoAdversario() {
     if (maoAdversario.length == 0 || adversarioPassou) {
       adversarioPassou = true;
+
+
+      var pontuacoes = calcularPontuacaoTotal()
+
+      //Se o adversario estiver perdendo de 20 pontos ou o jogador passou ele passa tambem
+      if(pontuacoes.adversario < pontuacoes.jogador - 20|| jogadorPassou){
+
+        adversarioPassou = true
+        alert('O Oponente passou a vez')
+        encerrarTurno()
+        return
+      }
       encerrarTurno();
       return;
     }
@@ -364,6 +488,9 @@
     var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
     jogarCartaAdversario(indiceAdversario);
 
+    exibirCorpoAdversario();
+    exibirDistanciaAdversario();
+    calcularPontuacaoTotal();
     jogadorAtual = "jogador";
   }
 
@@ -470,6 +597,7 @@
 
   function encerrarTurno() {
     //if pra ver se ambos passaram ou se as mão acabaram
+    alert("A rodada só pode ser encerrada se ambos os jogadores passarem a vez");
     if (!jogadorPassou && !adversarioPassou) {
       return;
     }
@@ -493,6 +621,7 @@
     alert(
       `Rodada Encerada! Vencedor ${vitoria}. Placar ${pontuacoes.jogador} X ${pontuacoes.adversario}`
     );
+    verificarFimJogo()
   }
 
   //pega o vetor do campo do jogador pra somar os ataques

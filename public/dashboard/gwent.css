@@ -20,18 +20,39 @@ aside {
   display: flex;
   align-items: center;
   width: 100%;
-
+  gap: 20px;
   justify-content: 4;
 }
 .box-oponent img {
   width: 70px;
   border-radius: 50%;
+  
+}
+
+#div_exibir_passou{
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+ 
+  padding: 10px;
 }
 
 .div-card-leader img {
   width: 50px;
 }
 
+.text-oponent .title{
+  font-family: theWitcher;
+  font-size: 20px;
+}
+
+.points-game{
+  font-size: 30px;
+  font-family: theWitcher;
+  color: firebrick;
+}
 .container-table {
   flex-grow: 1;
   display: flex;
