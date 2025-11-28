@@ -1,7 +1,7 @@
 // sessão
 function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
-    var nome = sessionStorage.NOME_USUARIO;
+    var nomeUsuario = sessionStorage.NOME_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
 
 
