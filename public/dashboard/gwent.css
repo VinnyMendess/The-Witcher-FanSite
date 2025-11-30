@@ -226,6 +226,13 @@ aside {
   align-items: center;
 }
 
+.vidas-adversario .vida-2{
+  display: none;
+}
+.vidas-adversario .vida-3{
+  display: none;
+}
+
 
 .vidas-adversario img{
   width: 50px;

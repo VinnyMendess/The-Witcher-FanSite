@@ -58,8 +58,18 @@
 
     <div class="direita-mesa">
       <div class="vidas-adversario">
-        <div id="vida-0"><img src="../assets/imgs/life-1.png" alt=""></div>
-        <div id="vida-1"><img src="../assets/imgs/life-1.png" alt=""></div>
+        <div id="vida_j0" class="vida-0">
+          <img src="../assets/imgs/life-1.png" alt="" />
+        </div>
+        <div id="vida_j1" class="vida-1">
+          <img src="../assets/imgs/life-1.png" alt="" />
+        </div>
+        <div id="vida_j2" class="vida-2">
+          <img src="../assets/imgs/life-0.png" alt="" />
+        </div>
+        <div id="vida_j3" class="vida-3">
+          <img src="../assets/imgs/life-0.png" alt="" />
+        </div>
       </div>
       <div class="buttons-acao">
         <button onclick="passarTurno()">
@@ -73,8 +83,18 @@
       </div>
       <div class="vidas-adversario">
         <div class="title"><p>Sua Vida</p></div>
-        <div class="vida-0"><img src="../assets/imgs/life-1.png" alt=""></div>
-        <div class="vida-1"><img src="../assets/imgs/life-1.png" alt=""></div>
+        <div id="vida_a0" class="vida-0">
+          <img src="../assets/imgs/life-1.png" alt="" />
+        </div>
+        <div id="vida_a1" class="vida-1">
+          <img src="../assets/imgs/life-1.png" alt="" />
+        </div>
+        <div id="vida_a2" class="vida-2">
+          <img src="../assets/imgs/life-0.png" alt="" />
+        </div>
+        <div id="vida_a3" class="vida-3">
+          <img src="../assets/imgs/life-0.png" alt="" />
+        </div>
       </div>
     </div>
   </body>
@@ -338,12 +358,10 @@
     campoCorpoAdversario = [];
     campoDistanciaAdversario = [];
 
-    
     var baralhoCompleto = cartasBase.slice(0, 20);
 
     //recebe o baralho como parametro e usa na funçao embaralhar
     embaralhar(baralhoCompleto);
-
 
     var cartasPorJogador = 10;
     //distribuindo as cartas de fortma aleatória, a mao do jogador começa com 10
@@ -413,20 +431,20 @@
   }
 
   function passarTurno() {
-    
-    jogadorPassou = true;
-    
-    if (adversarioPassou) {
-      encerrarTurno();
-      
-    } else {
-      jogadorAtual = "adversario";
-      
-      
-      setTimeout(turnoAdversario, 1000);
+    if (jogadorPassou) {
+      alert("Você passou");
+      return;
     }
 
-    
+    jogadorPassou = true;
+
+    if (adversarioPassou) {
+      encerrarTurno();
+    } else {
+      jogadorAtual = "adversario";
+
+      setTimeout(turnoAdversario, 1000);
+    }
   }
 
   function jogarCartaJogador(indice) {
@@ -435,12 +453,11 @@
     //   alert('Não é seu turno você já passou patrão')
     //   return
     // }
-    
+
     if (indice < 0 || indice >= maoJogador.length) {
       alert("Essa carta ta inválida");
       return;
     }
-    
 
     var cartaJogada = maoJogador[indice];
     var nome = cartaJogada.nome;
@@ -475,32 +492,40 @@
   }
 
   function turnoAdversario() {
-    if (maoAdversario.length == 0 || adversarioPassou) {
+    if (adversarioPassou) {
+      //se o cabra passou n fazer nada
+      jogadorAtual = "jogador";
+      return;
+    }
+
+    var pontuacoes = calcularPontuacaoTotal();
+
+    //se a mão acabou ou o jogador passoue a pontuação está multo alta, não vale apena continaur jogando mais
+    if (
+      maoAdversario.length == 0 ||
+      jogadorPassou ||
+      pontuacoes.adversario < pontuacoes.jogador - 15
+    ) {
       adversarioPassou = true;
-
-
-      var pontuacoes = calcularPontuacaoTotal()
-
-      //Se o adversario estiver perdendo de 20 pontos ou o jogador passou ele passa tambem
-      if(pontuacoes.adversario < pontuacoes.jogador - 20|| jogadorPassou){
-
-        adversarioPassou = true
-        alert('O Oponente passou a vez')
-        encerrarTurno()
-        return
-      }
+      alert("Adversario passou");
       encerrarTurno();
       return;
     }
 
-    //deixando a alietoriedade jogar as cartas do advversario
+    //se ele não passar ele joga alguma carta
     var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
     jogarCartaAdversario(indiceAdversario);
 
     exibirCorpoAdversario();
     exibirDistanciaAdversario();
     calcularPontuacaoTotal();
-    jogadorAtual = "jogador";
+    
+
+    if(!jogadorPassou){
+      jogadorAtual = "jogador";
+    }else{
+      //se o jogador passar e o adversario jogou, o adversario continua jogando
+    }
   }
 
   // FUNÇÔES DE EXIBIXÃO JOGADOR
@@ -606,8 +631,10 @@
 
   function encerrarTurno() {
     //if pra ver se ambos passaram ou se as mão acabaram
-    alert("A rodada só pode ser encerrada se ambos os jogadores passarem a vez");
-    if (!jogadorPassou && !adversarioPassou) {
+    console.log("Cheguei no encerrar turno");
+    if (!jogadorPassou || !adversarioPassou) {
+      //se ambos os jogadores não passaram, as maãos não acabara e não encerra
+      //se passar da validação ele vai sair da função
       return;
     }
 
@@ -630,7 +657,36 @@
     alert(
       `Rodada Encerada! Vencedor ${vitoria}. Placar ${pontuacoes.jogador} X ${pontuacoes.adversario}`
     );
-    verificarFimJogo()
+    atualizarExibicaoVidas();
+    verificarFimJogo();
+
+    if (vidasJogador > 0 && vidasAdversario > 0) {
+      reiniciarRodada();
+    }
+  }
+
+  function reiniciarRodada() {
+    jogadorPassou = false;
+    adversarioPassou = false;
+    jogadorAtual = "jogador";
+
+    //limpando os campos
+    campoCorpoJogador = [];
+    campoDistanciaJogador = [];
+    campoCorpoAdversario = [];
+    campoDistanciaAdversario = [];
+
+    exibirCorpoJogador();
+    exibirDistanciaJogador();
+    exibirCorpoAdversario();
+    exibirDistanciaAdversario();
+
+    //redistribuição de cartas
+    percorrerJogador();
+    percorrerAdversario();
+    calcularPontuacaoTotal();
+
+    alert("Nova rodada iniciada");
   }
 
   //pega o vetor do campo do jogador pra somar os ataques
@@ -681,5 +737,52 @@
       inicializarJogo();
     }
   }
+
+  function atualizarExibicaoVidas() {
+    if (vidasAdversario <= 1) {
+      if (vidasAdversario1) {
+        vida_a2.style.display = "block";
+      }
+    }
+    if (vidasAdversario <= 0) {
+      if (vidasAdversario0) {
+        vida_a3.style.display = "block";
+      }
+    }
+
+    if (vidasJogador <= 1) {
+      if (vidasJogador1) {
+        vida_j2.style.display = "block";
+      }
+    }
+    if (vidasJogador <= 0) {
+      if (vidasJogador0) {
+        vida_j3.style.display = "block";
+      }
+    }
+  }
   inicializarJogo();
+
+  function salvarJogo(vencedor, vidasJogadorFinal, vidasAdversarioFinal){
+
+
+    fetch('/jogo/gwent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        vencedorServer: vencedor,
+        vidasJogadorFinalServer : vidasJogadorFinal,
+        vidasAdversarioFinalServer : vidasAdversarioFinal,
+        idUsuarioServer: sessionStorage.ID_USUARIO
+      })
+    })
+    .catch(erro => {
+        console.error("Erro ao salvar dados do jogo:", erro);
+        alert("Houve um erro ao tentar salvar os dados do jogo.");
+    });
+
+
+  }
 </script>
