@@ -1,6 +1,6 @@
 var jogoModel = require("../models/jogoModel");
 
-function cadastrarQuest(req, res) {
+function cadastrarGwent(req, res) {
   var idUsuario = req.body.idUsuarioServer;
   var vencedor = req.body.vencedorServer;
   var vidasJogador = req.body.vidasJogadorFinalServer;

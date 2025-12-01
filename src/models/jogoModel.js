@@ -3,7 +3,7 @@
 function cadastrarGwent(vencedor,vidasJogador, vidasAdversario, idUsuario){
     var instrucaoSql = `
         INSERT INTO Gwent (vencedor, vidasJogador, vidasAdversario, fkUsuario, dtPartida) VALUES
-('${vencedor}', ${vidasJogador}, ${vidasAdversario}, ${idUsuario}, current_date,);
+('${vencedor}', ${vidasJogador}, ${vidasAdversario}, ${idUsuario}, current_date);
     `;
 
     console.log("ACESSEI O CADASTRAR QUIZ MODEL");

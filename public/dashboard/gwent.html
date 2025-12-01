@@ -884,7 +884,7 @@
       var vencedorFinal;
 
       if (vidasJogador > vidasAdversario) {
-        vencedorFinal = "JOGADOR";
+        vencedorFinal = sessionStorage.NOME_USUARIO;
       } else if (vidasAdversario > vidasJogador) {
         vencedorFinal = "ADVERSARIO";
       } else {
@@ -938,9 +938,17 @@
         vidasAdversarioFinalServer: vidasAdversarioFinal,
         idUsuarioServer: sessionStorage.ID_USUARIO,
       }),
-    }).catch((erro) => {
-      console.error("Erro ao salvar dados do jogo:", erro);
-      alert("Houve um erro ao tentar salvar os dados do jogo.");
-    });
-  }
+    })
+    .then(function (resposta) {
+        if (resposta.ok) {
+            setTimeout(function () {
+                window.location = "../dashboard/dash.html"; 
+            }, 1500); 
+        } 
+        else {
+             alert("Erro ao salvar a partida. Verifique o console.");
+        }
+    })
+    
+}
 </script>
