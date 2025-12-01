@@ -80,6 +80,9 @@
           Encerrar<br />
           Turno
         </button>
+        <button id="btnReorganizar" onclick="iniciarMulligan()">
+          Reorganizar <br />( <span id="mulliganCount">0</span> )
+        </button>
       </div>
       <div class="vidas-adversario">
         <div class="title"><p>Sua Vida</p></div>
@@ -125,225 +128,273 @@
   campoCorpoAdversario = [];
   campoDistanciaAdversario = [];
 
+  baralhoDeCompra = []
+   cartasParaComprar = [];
+   
+  mulligansRestantes = 0;
+  rodadaAtual = 1;
+
   var mensagem_ad = "";
   var mensagem_jv = "";
+
+  // bonus 1: è normal e aumenta em 1
+  // bonus 3: è rara e aumenta em 2
+  // bonus 3: è lendária e aumenta em 5
+
   const cartasBase = [
-    // [ Nome, ATK, Imagem, Tipo ] --> MUDOU PARA { chave: valor }
+    // Heróis (Rara: Bônus5)
     {
       nome: "Geralt de Rivia",
       atk: 15,
       caminhoImagem: "../assets/Gwent-Cards/geralt-gwent.webp",
       tipo: "corpo",
+      habilidade: "bonus5",
     },
     {
       nome: "Cirila Fiona Elen Riannon",
       atk: 15,
       caminhoImagem: "../assets/Gwent-Cards/ciri-gwent.png",
       tipo: "corpo",
-    },
+      habilidade: "bonus5",
+    }, // Bônus 2
     {
       nome: "Yennefer de Vengerberg",
       atk: 7,
       caminhoImagem: "../assets/Gwent-Cards/yennefer-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus2",
     },
     {
       nome: "Triss Merigold",
       atk: 7,
       caminhoImagem: "../assets/Gwent-Cards/triss-gwent.webp",
       tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Foltest, O Ardente",
       atk: 10,
       caminhoImagem: "../assets/Gwent-Cards/foltest-gwent.webp",
-      tipo: "mandante",
+      tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Ves",
       atk: 5,
       caminhoImagem: "../assets/Gwent-Cards/ves-gwent.png",
       tipo: "corpo",
-    },
-    {
-      nome: "Schirru",
-      atk: 5,
-      caminhoImagem: "../assets/Gwent-Cards/schirru-gwent.webp",
-      tipo: "cerco",
-    },
-    {
-      nome: "Milva",
-      atk: 5,
-      caminhoImagem: "../assets/Gwent-Cards/milva-gwent.webp",
-      tipo: "distancia",
-    },
-    {
-      nome: "Keira Metz",
-      atk: 5,
-      caminhoImagem: "../assets/Gwent-Cards/keira-gwent.webp",
-      tipo: "distancia",
-    },
-    {
-      nome: "Cynthia",
-      atk: 4,
-      caminhoImagem: "../assets/Gwent-Cards/cynthia-gwent.webp",
-      tipo: "distancia",
-    },
-    {
-      nome: "Redanian Foot Soldier",
-      atk: 1,
-      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
-      tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Black Infantry Archer",
       atk: 10,
       caminhoImagem: "../assets/Gwent-Cards/infanrty-gwent.webp",
       tipo: "distancia",
-    },
-    {
-      nome: "Impéria Brigade Guard",
-      atk: 3,
-      caminhoImagem: "../assets/Gwent-Cards/impera-guard-gwent.webp",
-      tipo: "corpo",
-    },
-    {
-      nome: "Don Banner Medic",
-      atk: 5,
-      caminhoImagem: "../assets/Gwent-Cards/medic-gwent.webp",
-      tipo: "cerco",
+      habilidade: "bonus2",
     },
     {
       nome: "Balista",
       atk: 6,
       caminhoImagem: "../assets/Gwent-Cards/balista-gwent.webp",
       tipo: "cerco",
+      habilidade: "bonus2",
     },
     {
       nome: "Trebuchet",
       atk: 6,
       caminhoImagem: "../assets/Gwent-Cards/trebuchet.webp",
       tipo: "cerco",
-    },
-    {
-      nome: "Unidade de Suporte",
-      atk: 4,
-      caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp",
-      tipo: "cerco",
-    },
-    {
-      nome: "Espiã Oculta",
-      atk: 0,
-      caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp",
-      tipo: "distancia",
-    },
-    {
-      nome: "Soldado Auxiliar I",
-      atk: 1,
-      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
-      tipo: "corpo",
-    },
-    {
-      nome: "Soldado Auxiliar II",
-      atk: 1,
-      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
-      tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Vesemir",
       atk: 6,
       caminhoImagem: "../assets/Gwent-Cards/vesemir-gwent.png",
       tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Zoltan",
       atk: 5,
       caminhoImagem: "../assets/Gwent-Cards/zoltan-gwent.png",
       tipo: "corpo",
-    },
-    {
-      nome: "Vesemir",
-      atk: 2,
-      caminhoImagem: "../assets/Gwent-Cards/dandelion-gwent.png",
-      tipo: "corpo",
-    },
-    {
-      nome: "Vesemir",
-      atk: 6,
-      caminhoImagem: "../assets/Gwent-Cards/elemental-gwent.png",
-      tipo: "cerco",
-    },
-    {
-      nome: "ghoul",
-      atk: 1,
-      caminhoImagem: "../assets/Gwent-Cards/ghoul-gwent.png",
-      tipo: "corpo",
-    },
-    {
-      nome: "ghoul-2",
-      atk: 1,
-      caminhoImagem: "../assets/Gwent-Cards/ghoul-2-gwent.png",
-      tipo: "corpo",
+      habilidade: "bonus2",
     },
     {
       nome: "Infantry Archer",
       atk: 10,
       caminhoImagem: "../assets/Gwent-Cards/infantry-archer-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus2",
+    }, // Bônus 1
+
+    {
+      nome: "Schirru",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/schirru-gwent.webp",
+      tipo: "cerco",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Milva",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/milva-gwent.webp",
+      tipo: "distancia",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Keira Metz",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/keira-gwent.webp",
+      tipo: "distancia",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Cynthia",
+      atk: 4,
+      caminhoImagem: "../assets/Gwent-Cards/cynthia-gwent.webp",
+      tipo: "distancia",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Redanian Foot Soldier",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Impéria Brigade Guard",
+      atk: 3,
+      caminhoImagem: "../assets/Gwent-Cards/impera-guard-gwent.webp",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Don Banner Medic",
+      atk: 5,
+      caminhoImagem: "../assets/Gwent-Cards/medic-gwent.webp",
+      tipo: "cerco",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Unidade de Suporte",
+      atk: 4,
+      caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp",
+      tipo: "cerco",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Espiã Oculta",
+      atk: 0,
+      caminhoImagem: "../assets/Gwent-Cards/mysterious-gwent.webp",
+      tipo: "distancia",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Soldado Auxiliar I",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Soldado Auxiliar II",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/redanian-gwent.webp",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Vesemir",
+      atk: 2,
+      caminhoImagem: "../assets/Gwent-Cards/dandelion-gwent.png",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "Vesemir",
+      atk: 6,
+      caminhoImagem: "../assets/Gwent-Cards/elemental-gwent.png",
+      tipo: "cerco",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "ghoul",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/ghoul-gwent.png",
+      tipo: "corpo",
+      habilidade: "bonus1",
+    },
+    {
+      nome: "ghoul-2",
+      atk: 1,
+      caminhoImagem: "../assets/Gwent-Cards/ghoul-2-gwent.png",
+      tipo: "corpo",
+      habilidade: "bonus1",
     },
     {
       nome: "Infantry Archer",
       atk: 10,
       caminhoImagem: "../assets/Gwent-Cards/infantry-archer-2-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus1",
     },
     {
       nome: "gargoyle",
       atk: 2,
       caminhoImagem: "../assets/Gwent-Cards/gargoyle-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus1",
     },
     {
       nome: "foglet",
       atk: 2,
       caminhoImagem: "../assets/Gwent-Cards/floget-gwent.png",
       tipo: "corpo",
+      habilidade: "bonus1",
     },
     {
       nome: "wyvern",
       atk: 1,
       caminhoImagem: "../assets/Gwent-Cards/wyvern-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus1",
     },
     {
       nome: "siege tower",
       atk: 6,
       caminhoImagem: "../assets/Gwent-Cards/siege-tower-gwent.png",
       tipo: "cerco",
+      habilidade: "bonus1",
     },
     {
       nome: "denesle",
       atk: 5,
       caminhoImagem: "../assets/Gwent-Cards/densesle-gwent.png",
       tipo: "corpo",
+      habilidade: "bonus1",
     },
     {
       nome: "catapult",
       atk: 8,
       caminhoImagem: "../assets/Gwent-Cards/catapult-gwent.png",
       tipo: "cerco",
+      habilidade: "bonus1",
     },
     {
       nome: "siege",
       atk: 0,
       caminhoImagem: "../assets/Gwent-Cards/siege-gwent.png",
       tipo: "cerco",
+      habilidade: "bonus1",
     },
     {
       nome: "etolian",
       atk: 1,
       caminhoImagem: "../assets/Gwent-Cards/etolian-gwent.png",
       tipo: "distancia",
+      habilidade: "bonus1",
     },
   ];
 
@@ -351,14 +402,18 @@
     maoJogador = [];
     campoDeBatalha = [];
     maoAdversario = [];
+    baralhoDeCompra = [];
+   
 
     campoCorpoJogador = [];
     campoDistanciaJogador = [];
 
     campoCorpoAdversario = [];
     campoDistanciaAdversario = [];
+    vidasJogador = 2;
+    vidasAdversario = 2;
 
-    var baralhoCompleto = cartasBase.slice(0, 20);
+    var baralhoCompleto = [...cartasBase];
 
     //recebe o baralho como parametro e usa na funçao embaralhar
     embaralhar(baralhoCompleto);
@@ -367,7 +422,12 @@
     //distribuindo as cartas de fortma aleatória, a mao do jogador começa com 10
     maoJogador = baralhoCompleto.slice(0, cartasPorJogador);
     //mesma coisa mas ele pega o restante
-    maoAdversario = baralhoCompleto.slice(cartasPorJogador);
+    maoAdversario = baralhoCompleto.slice(
+      cartasPorJogador,
+      cartasPorJogador * 2
+    );
+
+    baralhoDeCompra = baralhoCompleto.slice(cartasPorJogador * 2)
 
     percorrerAdversario();
     percorrerJogador();
@@ -376,8 +436,11 @@
 
     // div_exibir_tg.innerHTML =
     //   '<p style="color: #ccc;">Cartas jogadas aparecerão aqui.</p>';
+    rodadaAtual = 1;
+    mulligansRestantes = 2;
+    atualizarMulliganDisplay();
     alert(
-      "O jogo foi iniciado! Jogue sua primeira carta e as cartas embaralhadas."
+      "O jogo foi iniciado! Jogue sua primeira carta e as cartas embaralhadas. Você pode reoganizar até 2 cartas"
     );
   }
 
@@ -400,6 +463,22 @@
     return vetor;
   }
 
+  function aplicarEfeitoBonus(carta, jogador) {
+    var bonus = 0;
+    if (carta.habilidade == "bonus1") {
+      bonus = 1;
+    } else if (carta.habilidade == "bonus2") {
+      bonus = 2;
+    } else if (carta.habilidade == "bonus5") {
+      bonus = 5;
+    }
+
+    if (bonus > 0) {
+      carta.atk += bonus;
+      alert(`Carta ${carta.nome} (${jogador}) ativou Bônus: +${bonus} ATK!`);
+    }
+  }
+
   function jogarCartaAdversario(indice) {
     if (maoAdversario.length === 0) {
       return;
@@ -410,6 +489,8 @@
     }
 
     var cartaJogada = maoAdversario[indice];
+
+    aplicarEfeitoBonus(cartaJogada, "Adversario");
 
     maoAdversario.splice(indice, 1); // Remove da mão
 
@@ -437,12 +518,13 @@
     }
 
     jogadorPassou = true;
+    atualizarMulliganDisplay();
 
     if (adversarioPassou) {
       encerrarTurno();
     } else {
       jogadorAtual = "adversario";
-
+      alert("Jogador Passou, agora é o oponente");
       setTimeout(turnoAdversario, 1000);
     }
   }
@@ -454,12 +536,24 @@
     //   return
     // }
 
+    if (jogadorPassou) {
+      alert("Você já passou a vez e não pode jogar cartas.");
+      return;
+    }
+
     if (indice < 0 || indice >= maoJogador.length) {
       alert("Essa carta ta inválida");
       return;
     }
 
+    // if(cartaJogada.habilidade == 'bonus'){
+    //   cartaJogada.atk += 1;
+    //   alert(`Carta ${cartaJogada.nome} ativou Bônus: +1 ATK!`)
+    // }
+
     var cartaJogada = maoJogador[indice];
+    aplicarEfeitoBonus(cartaJogada, "Jogador");
+
     var nome = cartaJogada.nome;
     var ataque = cartaJogada.atk;
     var tipo = cartaJogada.tipo;
@@ -476,18 +570,20 @@
       campoCorpoAdversario.push(cartaJogada);
     }
 
+    mulligansRestantes = 0;
+    atualizarMulliganDisplay();
     // campoDeBatalha.push(cartaJogada);
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
     // atualizarCampoBatalha();
-    jogadorAtual = "adversario";
-    setTimeout(turnoAdversario, 1000);
+
     exibirCorpoJogador();
     exibirDistanciaJogador();
-
+    calcularPontuacaoTotal();
     percorrerJogador();
 
-    var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
+    jogadorAtual = "adversario";
+    setTimeout(turnoAdversario, 1000);
     // jogarCartaAdversario(indiceAdversario);
   }
 
@@ -499,15 +595,18 @@
     }
 
     var pontuacoes = calcularPontuacaoTotal();
+    var diferenca = pontuacoes.jogador - pontuacoes.adversario;
 
-    //se a mão acabou ou o jogador passoue a pontuação está multo alta, não vale apena continaur jogando mais
+    //pouca chance de agressividade pra jogar mesmo perdendo por poucpo
+    const agressividade = Math.random();
+    //passa se a mão acabou OU o jogador passou OU a diferença de pontos é muito grande  ou seja maior que 20 OU ele tem poucas cardtas <=2 ou ele falhou no teste de agressividade
     if (
       maoAdversario.length == 0 ||
-      jogadorPassou ||
-      pontuacoes.adversario < pontuacoes.jogador - 15
+      (jogadorPassou &&
+        (diferenca > 20 || maoAdversario.length <= 2 || agressividade < 0.7))
     ) {
       adversarioPassou = true;
-      alert("Adversario passou");
+      alert("Oponente passou");
       encerrarTurno();
       return;
     }
@@ -519,12 +618,12 @@
     exibirCorpoAdversario();
     exibirDistanciaAdversario();
     calcularPontuacaoTotal();
-    
 
-    if(!jogadorPassou){
+    if (!jogadorPassou) {
       jogadorAtual = "jogador";
-    }else{
+    } else {
       //se o jogador passar e o adversario jogou, o adversario continua jogando
+      setTimeout(turnoAdversario, 1000);
     }
   }
 
@@ -635,6 +734,7 @@
     if (!jogadorPassou || !adversarioPassou) {
       //se ambos os jogadores não passaram, as maãos não acabara e não encerra
       //se passar da validação ele vai sair da função
+      // no final de tudo ele força o encerramento caso ambos passem
       return;
     }
 
@@ -668,7 +768,7 @@
   function reiniciarRodada() {
     jogadorPassou = false;
     adversarioPassou = false;
-    jogadorAtual = "jogador";
+    jogadorAtual = "jogador"; // JOgador sempre começa
 
     //limpando os campos
     campoCorpoJogador = [];
@@ -681,12 +781,71 @@
     exibirCorpoAdversario();
     exibirDistanciaAdversario();
 
-    //redistribuição de cartas
+    var cartasParaComprar = 3;
+
+    var cartasCompradasJogador = baralhoDeCompra.splice(0, cartasParaComprar);
+    maoJogador.push(...cartasCompradasJogador);
+    
+    var cartasCompradasAdversario = baralhoDeCompra.splice(0, cartasParaComprar);
+    maoAdversario.push(...cartasCompradasAdversario);
+    
+    var cartasCompradasTotal = cartasCompradasJogador.length;
+
+    //deifinido que só tem 1 mulligans restante
+    rodadaAtual++;
+    mulligansRestantes = 1;
+    atualizarMulliganDisplay();
+
+    //As mãos permanecem com as cartas que sobraram
     percorrerJogador();
     percorrerAdversario();
     calcularPontuacaoTotal();
 
-    alert("Nova rodada iniciada");
+   if (cartasCompradasTotal > 0) {
+    alert(`Nova rodada iniciada. ${cartasCompradasTotal} cartas adicionadas à sua mão Você pode reorganizar até 1 carta.`);
+} else {
+    alert("Nova rodada iniciada. O baralho de compra está vazio. Você pode reorganizar até 1 carta.");
+}
+  }
+
+  function atualizarMulliganDisplay() {
+    const countSpan = document.getElementById("mulliganCount");
+    const btn = document.getElementById("btnReorganizar");
+
+    if (countSpan) {
+        countSpan.innerHTML = mulligansRestantes;
+    }
+
+    if (btn) {
+  //desativa o botão se mulligasn Restantes for <= OU se o jogador ja passou
+        btn.disabled = mulligansRestantes <= 0 || jogadorPassou;
+    }
+  }
+
+  function iniciarMulligan() {
+    if (mulligansRestantes <= 0) {
+      alert("Você não tem reorganizações restantes.");
+      return;
+    }
+    if (
+      jogadorPassou ||
+      campoCorpoJogador.length > 0 ||
+      campoDistanciaJogador.length > 0
+    ) {
+      alert("Você só pode reorganizar as cartas no início da rodada.");
+      return;
+    }
+
+    alert(`Reorganizando ${mulligansRestantes} cartas  na mão`);
+    embaralhar(maoJogador);
+
+    mulligansRestantes--;
+
+    percorrerJogador();
+    atualizarMulliganDisplay();
+    alert(
+      `Mão reembaralhada. ${mulligansRestantes} trocas restantes nesta rodada.`
+    );
   }
 
   //pega o vetor do campo do jogador pra somar os ataques
@@ -717,6 +876,7 @@
     // div_exibir_total.innerHTML = `
     // <h3>Pontuação Total:</h3><p>Jogador: ${pontuacaoJogador}</p> <p>Adversario: ${pontuacaoAdversario}</p>
     // `;
+    return { jogador: pontuacaoJogador, adversario: pontuacaoAdversario };
   }
 
   function verificarFimJogo() {
@@ -732,57 +892,55 @@
       }
 
       alert(`O Jogo Acabou! O VENCEDOR FINAL é o ${vencedorFinal}!`);
-    } else {
-      //continuar o jogo
-      inicializarJogo();
+      salvarJogo(vencedorFinal, vidasJogador, vidasAdversario);
     }
+    //
   }
 
   function atualizarExibicaoVidas() {
-    if (vidasAdversario <= 1) {
-      if (vidasAdversario1) {
-        vida_a2.style.display = "block";
-      }
+    var vidaA_0 = document.getElementById("vida_j0").querySelector("img");
+    var vidaA_1 = document.getElementById("vida_j1").querySelector("img");
+    var vidaJ_0 = document.getElementById("vida_a0").querySelector("img");
+    var vidaJ_1 = document.getElementById("vida_a1").querySelector("img"); // Adversário (A_0, A_1)
+    
+    if (vidasAdversario < 2) {
+      if (vidaA_1) vidaA_1.src = "../assets/imgs/life-0.png";
+    } else {
+      if (vidaA_1) vidaA_1.src = "../assets/imgs/life-1.png";
     }
-    if (vidasAdversario <= 0) {
-      if (vidasAdversario0) {
-        vida_a3.style.display = "block";
-      }
+    if (vidasAdversario < 1) {
+      if (vidaA_0) vidaA_0.src = "../assets/imgs/life-0.png";
+    } else {
+      if (vidaA_0) vidaA_0.src = "../assets/imgs/life-1.png";
+    } // Jogador (J_0, J_1)
+    if (vidasJogador < 2) {
+      if (vidaJ_1) vidaJ_1.src = "../assets/imgs/life-0.png";
+    } else {
+      if (vidaJ_1) vidaJ_1.src = "../assets/imgs/life-1.png";
     }
-
-    if (vidasJogador <= 1) {
-      if (vidasJogador1) {
-        vida_j2.style.display = "block";
-      }
-    }
-    if (vidasJogador <= 0) {
-      if (vidasJogador0) {
-        vida_j3.style.display = "block";
-      }
+    if (vidasJogador < 1) {
+      if (vidaJ_0) vidaJ_0.src = "../assets/imgs/life-0.png";
+    } else {
+      if (vidaJ_0) vidaJ_0.src = "../assets/imgs/life-1.png";
     }
   }
   inicializarJogo();
 
-  function salvarJogo(vencedor, vidasJogadorFinal, vidasAdversarioFinal){
-
-
-    fetch('/jogo/gwent', {
-      method: 'POST',
+  function salvarJogo(vencedor, vidasJogadorFinal, vidasAdversarioFinal) {
+    fetch("/jogo/gwent", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         vencedorServer: vencedor,
-        vidasJogadorFinalServer : vidasJogadorFinal,
-        vidasAdversarioFinalServer : vidasAdversarioFinal,
-        idUsuarioServer: sessionStorage.ID_USUARIO
-      })
-    })
-    .catch(erro => {
-        console.error("Erro ao salvar dados do jogo:", erro);
-        alert("Houve um erro ao tentar salvar os dados do jogo.");
+        vidasJogadorFinalServer: vidasJogadorFinal,
+        vidasAdversarioFinalServer: vidasAdversarioFinal,
+        idUsuarioServer: sessionStorage.ID_USUARIO,
+      }),
+    }).catch((erro) => {
+      console.error("Erro ao salvar dados do jogo:", erro);
+      alert("Houve um erro ao tentar salvar os dados do jogo.");
     });
-
-
   }
 </script>
