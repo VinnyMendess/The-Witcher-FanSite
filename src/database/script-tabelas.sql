@@ -128,3 +128,20 @@ UPDATE Estatisticas SET fkClasse = (
     SELECT * FROM Quiz;
 
     DESC Quiz;
+
+
+    CREATE TABLE Gwent (
+idPartida INT PRIMARY KEY AUTO_INCREMENT,
+vencedor VARCHAR(45),
+vidasJogador INT,
+vidasAdversario INT,
+dtPartida DATE,	
+fkUsuario INT,
+CONSTRAINT fkUsuarioGwent
+	FOREIGN KEY (fkUsuario)
+	REFERENCES usuario (idUsuario)
+);
+
+
+
+SELECT * FROM Gwent;
