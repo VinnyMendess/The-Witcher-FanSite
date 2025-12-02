@@ -115,19 +115,16 @@
 
         <div class="container-stats-contracts">
           <div class="box-stats">
-          <p class="title-stats">Contratos</p>
+            
+          <p class="title-stats"><img class="icon-dash" src="../assets/imgs/provas.png" alt="" />Raking Gwent</p>
           <div id="bg-vitalidade" class="container-contracts">
-            <img class="icon-dash" src="../assets/imgs/garra.png" alt="" />
-            <div class="text-container">
-              <p>Monstros Abatidos</p>
-              <p>2000</p>
+            <div id="ranking" class="text-container">
+              
             </div>
           </div>
           <div id="bg-provas" class="container-contracts">
-            <img class="icon-dash" src="../assets/imgs/provas.png" alt="" />
+
             <div class="text-container">
-              <p>Provas Superadas</p>
-              <p>2000</p>
             </div>
           </div>
         </div>
@@ -468,6 +465,53 @@
       .catch(function (erro) {
         console.error("Erro no fetch da KPI:", erro);
         sobreClasse.innerHTML = "Falha";
+      });
+
+
+      fetch(`/jogo/rankGeral`, { cache: "no-store" })
+
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            var indice = 0
+            for(i = 0; i < resposta.length; i++){
+              indiceAtual = resposta[i]
+
+              const rankingItem = document.createElement('div');
+              rankingItem.classList.add('container-contracts')
+              const posicao = i + 1;
+              
+              rankingItem.innerHTML = `
+                        <span class="posicao">${posicao}º</span>
+                        <span class="participante">
+                            **${indiceAtual.vencedor}**
+                        </span>
+                        <span class="vitorias">
+                            Vitórias: **${indiceAtual.Vitorias}**
+                        </span><br>
+                    `;
+
+                    ranking   .appendChild(rankingItem);
+
+            }
+
+            for(var i = 0; i <resposta.length; i++){
+              indiceAtual = resposta[i]
+
+              
+            }
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`
+        );
       });
 
     obterDadosGrafico(idUsuarioLogado);

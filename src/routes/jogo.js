@@ -8,6 +8,11 @@ router.post("/gwent", function (req, res) {
     jogoController.cadastrarGwent(req, res);
 })
 
+router.get("/rankGeral", function (req, res) {
+    jogoController.buscarRankGeral(req, res);
+})
+
+
 
 
 module.exports = router;

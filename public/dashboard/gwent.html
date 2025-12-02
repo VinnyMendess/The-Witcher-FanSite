@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,6 +84,7 @@
           Reorganizar <br />( <span id="mulliganCount">0</span> )
         </button>
       </div>
+
       <div class="vidas-adversario">
         <div class="title"><p>Sua Vida</p></div>
         <div id="vida_a0" class="vida-0">
@@ -138,7 +139,7 @@
   var mensagem_jv = "";
 
   // bonus 1: è normal e aumenta em 1
-  // bonus 3: è rara e aumenta em 2
+  // bonus 2: è rara e aumenta em 2
   // bonus 3: è lendária e aumenta em 5
 
   const cartasBase = [
@@ -350,7 +351,7 @@
     {
       nome: "foglet",
       atk: 2,
-      caminhoImagem: "../assets/Gwent-Cards/floget-gwent.png",
+      caminhoImagem: "../assets/Gwent-Cards/foglet-gwent.png",
       tipo: "corpo",
       habilidade: "bonus1",
     },
@@ -571,7 +572,7 @@
     }
 
     mulligansRestantes = 0;
-    atualizarMulliganDisplay();
+     atualizarMulliganDisplay();
     // campoDeBatalha.push(cartaJogada);
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
@@ -813,13 +814,13 @@
     const btn = document.getElementById("btnReorganizar");
 
     if (countSpan) {
-        countSpan.innerHTML = mulligansRestantes;
-    }
+      countSpan.innerHTML = mulligansRestantes;
+    }
 
-    if (btn) {
+    if (btn) {
   //desativa o botão se mulligasn Restantes for <= OU se o jogador ja passou
-        btn.disabled = mulligansRestantes <= 0 || jogadorPassou;
-    }
+     btn.disabled = mulligansRestantes <= 0 || jogadorPassou;
+    }
   }
 
   function iniciarMulligan() {
