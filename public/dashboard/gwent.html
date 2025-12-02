@@ -5,9 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="gwent.css" />
     <link rel="icon" href="../assets/icon/favicon-32x32.png" />
-    <title>Document</title>
+    <title>The Wither || Gwent</title>
   </head>
   <body class="gwent">
+    <div id="tutorialModal" class="tutorial-modal">
+      <div class="tutorial-content">
+        <h2>Tutorial Rápido de Gwent (Meu Gwent)</h2>
+
+        <p>Bem-vindo ao Corvo Branco! DE uma olhada:</p>
+
+        <ol>
+          <li>
+            <p class="texto-modal">Objetivo:</p>
+            Vencer 2 de 3 rodadas. Cada jogador começa com 2 Vidas
+            (representadas pelas imagens de cristal).
+          </li>
+          <li>
+            <p class="texto-modal">Jogabilidade:</p>
+            Jogue uma carta por vez, clicando nela na sua mão. O Adversário irá
+            jogar em sequência
+          </li>
+          <li>
+            <p class="texto-modal">Campos:</p>
+            As cartas são jogadas em 2 campos:
+            <ul>
+              <li>Corpo a Corpo: Cartas com Espadas (Fila de cima).</li>
+              <li>
+                Distância/Cerco: Cartas com Arcos ou Balistas (Fila de baixo).
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p class="texto-modal">Passar:</p>
+            Clique em Passar Turno quando não quiser jogar mais cartas. O
+            adversário continua jogando até que ele também passe ou acabe as
+            cartas.
+          </li>
+          <li>
+            <p class="texto-modal">Vitória da Rodada:</p>
+            A rodada termina quando ambos os jogadores passam. Vence quem tiver
+            a maior pontuação total de ataque em campo.
+          </li>
+          <li>
+            Reorganizar (Mulligan): Você pode reembaralhar até até 2 cartas na
+            primeira rodada, e 1 carta nas rodadas seguintes. Use com sabedoria!
+          </li>
+          <li>
+            <p class="texto-modal">Habilidade</p>
+            O jogo atualmente conta com 3 tipos simples de habilidades, Bonus 1
+            que da +1 de ATK, Bonus 2 que dá mais 2 de ATK e o mais Raro Bonus 3
+            que dá 5 de ATK
+          </li>
+          <li>
+            <p class="texto-modal">Cartas</p>
+            Ambas as cartas são distribuídas de forma aleatória, as cartas
+            permanecem a cada rodada e são adicionadas mais 2, então vale mais
+            daquele que souber jogar com o que tem e saber parar no momento
+            certo.
+          </li>
+        </ol>
+
+        <button onclick="fecharTutorial()">Iniciar partida</button>
+      </div>
+    </div>
+
     <aside>
       <div class="player">
         <div class="box-oponent">
@@ -33,7 +94,7 @@
           </div>
           <div class="text-oponent">
             <p class="title" id="nome"></p>
-            <p>Northern Realms</p>
+            <p>Sptech Science</p>
           </div>
           <div class="features-player">
             <div class="life-oponent"></div>
@@ -76,12 +137,14 @@
           Passar<br />
           Turno
         </button>
-        <button onclick="encerrarTurno()">
-          Encerrar<br />
-          Turno
-        </button>
+
         <button id="btnReorganizar" onclick="iniciarMulligan()">
           Reorganizar <br />( <span id="mulliganCount">0</span> )
+        </button>
+
+        <button onclick="abrirTutorial()">
+          Regras do<br />
+          Gwent
         </button>
       </div>
 
@@ -129,9 +192,9 @@
   campoCorpoAdversario = [];
   campoDistanciaAdversario = [];
 
-  baralhoDeCompra = []
-   cartasParaComprar = [];
-   
+  baralhoDeCompra = [];
+  cartasParaComprar = [];
+
   mulligansRestantes = 0;
   rodadaAtual = 1;
 
@@ -399,12 +462,21 @@
     },
   ];
 
+  const tutorialModal = document.getElementById("tutorialModal");
+
+  function abrirTutorial() {
+    tutorialModal.style.display = "block";
+  }
+
+  function fecharTutorial() {
+    tutorialModal.style.display = "none";
+  }
+
   function inicializarJogo() {
     maoJogador = [];
     campoDeBatalha = [];
     maoAdversario = [];
     baralhoDeCompra = [];
-   
 
     campoCorpoJogador = [];
     campoDistanciaJogador = [];
@@ -414,6 +486,7 @@
     vidasJogador = 2;
     vidasAdversario = 2;
 
+    abrirTutorial();
     var baralhoCompleto = [...cartasBase];
 
     //recebe o baralho como parametro e usa na funçao embaralhar
@@ -428,7 +501,7 @@
       cartasPorJogador * 2
     );
 
-    baralhoDeCompra = baralhoCompleto.slice(cartasPorJogador * 2)
+    baralhoDeCompra = baralhoCompleto.slice(cartasPorJogador * 2);
 
     percorrerAdversario();
     percorrerJogador();
@@ -440,9 +513,6 @@
     rodadaAtual = 1;
     mulligansRestantes = 2;
     atualizarMulliganDisplay();
-    alert(
-      "O jogo foi iniciado! Jogue sua primeira carta e as cartas embaralhadas. Você pode reoganizar até 2 cartas"
-    );
   }
 
   //embaralha o vetor
@@ -572,7 +642,7 @@
     }
 
     mulligansRestantes = 0;
-     atualizarMulliganDisplay();
+    atualizarMulliganDisplay();
     // campoDeBatalha.push(cartaJogada);
 
     //div_exibir_tg.innerHTML += `<div style="background-Color: blue;" class="card-item">${nome} (${ataque} ATK)</div>`
@@ -786,10 +856,13 @@
 
     var cartasCompradasJogador = baralhoDeCompra.splice(0, cartasParaComprar);
     maoJogador.push(...cartasCompradasJogador);
-    
-    var cartasCompradasAdversario = baralhoDeCompra.splice(0, cartasParaComprar);
+
+    var cartasCompradasAdversario = baralhoDeCompra.splice(
+      0,
+      cartasParaComprar
+    );
     maoAdversario.push(...cartasCompradasAdversario);
-    
+
     var cartasCompradasTotal = cartasCompradasJogador.length;
 
     //deifinido que só tem 1 mulligans restante
@@ -802,11 +875,15 @@
     percorrerAdversario();
     calcularPontuacaoTotal();
 
-   if (cartasCompradasTotal > 0) {
-    alert(`Nova rodada iniciada. ${cartasCompradasTotal} cartas adicionadas à sua mão Você pode reorganizar até 1 carta.`);
-} else {
-    alert("Nova rodada iniciada. O baralho de compra está vazio. Você pode reorganizar até 1 carta.");
-}
+    if (cartasCompradasTotal > 0) {
+      alert(
+        `Nova rodada iniciada. ${cartasCompradasTotal} cartas adicionadas à sua mão Você pode reorganizar até 1 carta.`
+      );
+    } else {
+      alert(
+        "Nova rodada iniciada. O baralho de compra está vazio. Você pode reorganizar até 1 carta."
+      );
+    }
   }
 
   function atualizarMulliganDisplay() {
@@ -818,8 +895,8 @@
     }
 
     if (btn) {
-  //desativa o botão se mulligasn Restantes for <= OU se o jogador ja passou
-     btn.disabled = mulligansRestantes <= 0 || jogadorPassou;
+      //desativa o botão se mulligasn Restantes for <= OU se o jogador ja passou
+      btn.disabled = mulligansRestantes <= 0 || jogadorPassou;
     }
   }
 
@@ -903,7 +980,7 @@
     var vidaA_1 = document.getElementById("vida_j1").querySelector("img");
     var vidaJ_0 = document.getElementById("vida_a0").querySelector("img");
     var vidaJ_1 = document.getElementById("vida_a1").querySelector("img"); // Adversário (A_0, A_1)
-    
+
     if (vidasAdversario < 2) {
       if (vidaA_1) vidaA_1.src = "../assets/imgs/life-0.png";
     } else {
@@ -939,17 +1016,14 @@
         vidasAdversarioFinalServer: vidasAdversarioFinal,
         idUsuarioServer: sessionStorage.ID_USUARIO,
       }),
-    })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            setTimeout(function () {
-                window.location = "../dashboard/dash.html"; 
-            }, 1500); 
-        } 
-        else {
-             alert("Erro ao salvar a partida. Verifique o console.");
-        }
-    })
-    
-}
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        setTimeout(function () {
+          window.location = "../dashboard/dash.html";
+        }, 1500);
+      } else {
+        alert("Erro ao salvar a partida. Verifique o console.");
+      }
+    });
+  }
 </script>

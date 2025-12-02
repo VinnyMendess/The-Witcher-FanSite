@@ -12,7 +12,9 @@ router.get("/rankGeral", function (req, res) {
     jogoController.buscarRankGeral(req, res);
 })
 
-
+router.get("/rankUsuario:idUsuarioLogado", function (req, res) {
+    jogoController.buscarRankUsuario(req, res);
+})
 
 
 module.exports = router;

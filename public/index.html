@@ -14,9 +14,6 @@
   </head>
 
   <body>
-
-    
-
     <!--Header-->
     <header>
       <div class="logo">
@@ -36,19 +33,17 @@
       </nav>
     </header>
 
-
     <div class="hero-video">
       <video playinline loop muted autoplay="true" id="HeroVideo">
-      <source src="./assets/videos/TW3 Hero Cortado.mp4" type="video/mp4" />
-      Your browser does not support HTML5 video.
-    </video>
-    <div class="button-video">
-      <button onclick="parar()">Parar Video</button>
-      <button id="btnAudio" onclick="ativarSom()">Ligar/Desligar Som</button>
+        <source src="./assets/videos/TW3 Hero Cortado.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+      <div class="button-video">
+        <button onclick="parar()">Parar Video</button>
+        <button id="btnAudio" onclick="ativarSom()">Ligar/Desligar Som</button>
+      </div>
     </div>
-    </div>
-    
-    
+
     <!--Hero Section-->
     <section class="hero">
       <div class="elements-hero">
@@ -221,15 +216,14 @@
           </div>
         </div>
         <div class="elements">
-          <div class="title-text"><p>Amor Tempestuoso</p></div>
+          <div class="title-text"><p>A Criança do Destino</p></div>
           <div class="text">
             <p>
-              Uma das feiticeiras mais poderosas do Continente, Yennefer é
-              ambiciosa, orgulhosa e marcada por um passado trágico. Seu caminho
-              está ligado a Geralt por um desejo mágico, resultando em um
-              relacionamento complexo, apaixonado e muitas vezes caótico. Ela é
-              a figura materna de Ciri e fará absolutamente tudo para proteger
-              sua família.
+              Princesa de Cintra e neta da Rainha Calanthe, Ciri é a "Criança
+              Surpresa" de Geralt, ligada a ele pelo Destino antes mesmo de
+              nascer. Ela carrega o Sangue Antigo, um poder imenso capaz de
+              destruir ou salvar o mundo. Treinada em Kaer Morhen, ela é a filha
+              adotiva de Geralt e Yennefer, e o verdadeiro centro da saga.
             </p>
           </div>
         </div>
@@ -247,15 +241,13 @@
           </div>
         </div>
         <div class="elements">
-          <div class="title-text"><p>Amor Tempestuoso</p></div>
+          <div class="title-text"><p>O Amigo Leal</p></div>
           <div class="text">
             <p>
-              Uma das feiticeiras mais poderosas do Continente, Yennefer é
-              ambiciosa, orgulhosa e marcada por um passado trágico. Seu caminho
-              está ligado a Geralt por um desejo mágico, resultando em um
-              relacionamento complexo, apaixonado e muitas vezes caótico. Ela é
-              a figura materna de Ciri e fará absolutamente tudo para proteger
-              sua família.
+              O oposto exato de Geralt, Jaskier é um bardo extravagante, poeta e
+              mulherengo. Ele é o melhor (e talvez único) amigo de Geralt,
+              responsável por compor as baladas que limparam o nome do bruxo e o
+              tornaram uma lenda.
             </p>
           </div>
         </div>
@@ -277,31 +269,31 @@
     <section class="section-06">
       <p>Descubra que você seria no universo de The Witcher</p>
       <div class="container">
-        <div class="box-class">
+        <div style="background-color: #00000000; box-shadow: none; color: black;" class="box-class">
           <p>Bardo</p>
           <div id="bardo" class="background">
             <img src="./assets/imgs/bardo.png" alt="" />
           </div>
         </div>
-        <div class="box-class">
+        <div style="background-color: #00000000; box-shadow: none; color: black;" class="box-class">
           <p>Bruxo</p>
           <div class="background">
             <img src="./assets/imgs/bruxo.png" alt="" />
           </div>
         </div>
-        <div class="box-class">
+        <div style="background-color: #00000000; box-shadow: none; color: black;" class="box-class">
           <p>Feiticeira</p>
           <div id="feiticeira" class="background">
             <img src="./assets/imgs/feiticeira.png" alt="" />
           </div>
         </div>
-        <div class="box-class">
+        <div style="background-color: #00000000; box-shadow: none; color: black;" class="box-class">
           <p>Criminoso</p>
           <div id="criminoso" class="background">
             <img src="./assets/imgs/criminoso.png" alt="" />
           </div>
         </div>
-        <div class="box-class">
+        <div style="background-color: #00000000; box-shadow: none; color: black;" class="box-class">
           <p>Nobre</p>
           <div id="nobre" class="background">
             <img src="./assets/imgs/nobre.png" alt="" />
@@ -326,7 +318,7 @@
             Descubra se você é um Bruxo, um Feiticeiro, um Bardo, um Nobre ou um
             Criminoso.
           </p>
-          <a href="">INICIAR</a>
+          <a href="./cadastro.html">INICIAR</a>
         </div>
       </div>
     </section>
@@ -341,29 +333,24 @@
 </html>
 
 <script>
+  function ativarSom() {
+    var video = document.getElementById("HeroVideo");
+    var btnAudio = document.getElementById("btnAudio");
 
-  function ativarSom(){
-    var video =  document.getElementById('HeroVideo')
-    var btnAudio = document.getElementById('btnAudio')
-
-
-      if(video.muted == true){
-        video.muted = false
-      }else{
-        video.muted = true
-      }
-    
-
-
+    if (video.muted == true) {
+      video.muted = false;
+    } else {
+      video.muted = true;
+    }
   }
 
-  function parar(){
-    var video =  document.getElementById('HeroVideo')
+  function parar() {
+    var video = document.getElementById("HeroVideo");
 
-    if(video.paused){
+    if (video.paused) {
       video.play();
-    }else{
-      video.pause()
+    } else {
+      video.pause();
     }
   }
 
@@ -400,7 +387,6 @@
       panel_5.style.display = "none";
     } else {
       panel_5.style.display = "block";
-      
     }
   }
 </script>

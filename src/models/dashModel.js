@@ -73,8 +73,8 @@ WHERE fkUsuario = ${idUsuario};
 
 function sobreClasse(idUsuario) {
   var instrucao = `
-        SELECT descricaoClasse
-FROM Estatisticas 
+        SELECT nomeClasse, descricaoClasse
+FROM Estatisticas
 JOIN classeQuiz ON idClasse = fkClasse
 WHERE fkUsuario = ${idUsuario};
     `;

@@ -79,7 +79,7 @@
 
 
     function entrar() {
-        aguardar();
+        
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
@@ -120,7 +120,7 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.ID_USUARIO = json.idUsuario; 
                     
-
+                    aguardar();
                     setTimeout(function () {
                         window.location = "./dashboard/dash.html";
                     }, 7500); // apenas para exibir o loading

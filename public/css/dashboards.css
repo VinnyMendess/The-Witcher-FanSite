@@ -28,11 +28,12 @@ html .Dashboard {
   font-family: theWitcher;
 }
 
-.section-stats .box-class {
+.section-stats #classeBox {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1.5rem;
+  height: 85%;
 }
 .section-stats .box-class img {
   width: 150px;
@@ -84,10 +85,27 @@ html .Dashboard {
   flex-direction: column;
   gap: 5px;
   color: #c2b1a3;
+
   font-weight: 500;
   box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 1px 5px 6px rgba(0, 0, 0, 0.3);
+}
+.container-graph{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+#box-rank{
+      height: 95%;
+overflow: auto;
+}
+#rankUsuarioDiv{
+  height: 50px;
+  display: flex;
+  gap: 10px;
+
 }
 .title-stats {
   font-family: theWitcher;
@@ -99,16 +117,53 @@ html .Dashboard {
 .container-contracts {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   width: 100%;
   font-size: 0.8rem;
 }
-.text-container {
+.text-container{
   display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
 }
+#ranking {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+    height:200px;
+  align-items: center;
+}
+.rank-stats{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.title-rank{
+  display: flex;
+  justify-content: space-between;
+  font-family: theWitcher;
+}
+.participante{
+  font-size: 15px;
+  font-weight: 600;
+}
+.posicao{
+  font-size: 20px;
+  font-family: theWitcher;
+}
+.vitorias{
+  font-size: 18px;
+  font-family: theWitcher;
+}
+.layer{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .kpiResultado {
   font-family: theWitcher;
   font-size: 18px;
@@ -147,6 +202,10 @@ background-color: #27272765;
 .container-stats-contracts{
   width: 100%;
   margin-right: 50px;
+}
+#rankUsuarioDiv{
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -243,6 +302,11 @@ background-color: #27272765;
 
 .icon-dash:hover {
   animation: girar 1.5s alternate forwards;
+}
+
+.container-posicoes{
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes girar {

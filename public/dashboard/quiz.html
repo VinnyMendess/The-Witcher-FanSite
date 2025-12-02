@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="../assets/icon/favicon-32x32.png" />
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="./js/sessao.js"></script>
     <title>The Witcher | Quiz</title>
   </head>
   <body>
@@ -450,6 +451,13 @@
         quizServer: quiz,
         idUsuarioServer: sessionStorage.ID_USUARIO,
       }),
-    });
+    })
+
+    alert('Quiz Concluído! veja na dashboard como ficou salvo')
+         
+    setTimeout(function () {
+                        window.location = "./dash.html";
+                      
+                      }, 1500);
   }
 </script>
