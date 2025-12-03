@@ -64,9 +64,9 @@
           <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
             <span id="pontuacaoFinal" class="width-fit-content"
               >Pontuação Final:
-              <span id="spanPontuacaoFinal">***</span>
+              <span id="spanPontuacaoFinal">--</span>
             </span>
-            <span id="msgFinal" class="width-fit-content">***</span>
+            <span id="msgFinal" class="width-fit-content">--</span>
           </div>
         </div>
 
@@ -169,48 +169,48 @@
 <script>
   var listaDeQuestoes = [
     {
-      pergunta: "FÁCIL: Qual o nome da escola de bruxos de Geralt de Rívia?",
+      pergunta: "Qual o nome da escola de bruxos de Geralt de Rívia?",
       alternativaA: "Escola do Gato",
       alternativaB: "Escola do Lobo",
       alternativaC: "Escola da Víbora",
       alternativaD: "Escola do Urso",
-      alternativaCorreta: "alternativaB", // Escola do Lobo
+      alternativaCorreta: "alternativaB",
     },
     {
       pergunta:
-        "NORMAL: Qual é o nome do sinal mágico usado para repelir inimigos e criar uma barreira de proteção?",
+        "Qual é o nome do sinal mágico usado para repelir inimigos e criar uma barreira de proteção?",
       alternativaA: "Igni",
       alternativaB: "Aard",
       alternativaC: "Quen",
       alternativaD: "Axii",
-      alternativaCorreta: "alternativaC", // Quen
+      alternativaCorreta: "alternativaC",
     },
     {
       pergunta:
-        "NORMAL: Quem é o famoso bardo e companheiro de Geralt, conhecido por suas canções?",
+        "Quem é o famoso bardo e companheiro de Geralt, conhecido por suas canções?",
       alternativaA: "Lambert",
       alternativaB: "Vesemir",
       alternativaC: "Jaskier (Dandelion)",
       alternativaD: "Regis",
-      alternativaCorreta: "alternativaC", // Jaskier
+      alternativaCorreta: "alternativaC",
     },
     {
       pergunta:
-        "DIFÍCIL: Qual é o nome do dragão dourado que Geralt e Yennefer caçam na missão 'O Limite do Conhecido'?",
+        "Qual é o nome do dragão dourado que Geralt e Yennefer caçam na missão 'O Limite do Conhecido'?",
       alternativaA: "Ocvist",
       alternativaB: "Villentretenmerth",
       alternativaC: "Saskia",
       alternativaD: "Borch Three Jackdaws",
-      alternativaCorreta: "alternativaB", // Villentretenmerth
+      alternativaCorreta: "alternativaB",
     },
     {
       pergunta:
-        "DIFÍCIL: Qual é o nome do imperador de Nilfgaard e, secretamente, pai biológico de Ciri?",
+        "Qual é o nome do imperador de Nilfgaard e, secretamente, pai biológico de Ciri?",
       alternativaA: "Foltest",
       alternativaB: "Radovid V",
       alternativaC: "Henselt",
       alternativaD: "Emhyr var Emreis",
-      alternativaCorreta: "alternativaD", // Emhyr var Emreis
+      alternativaCorreta: "alternativaD",
     },
   ];
 
@@ -264,7 +264,7 @@
     console.log("questaoAtual");
     console.log(questaoAtual);
     document.getElementById("spanNumeroDaQuestaoAtual").innerHTML =
-      Number(index) + 1; // ajustando porque o index começa em 0
+      Number(index) + 1; 
     document.getElementById("spanQuestaoExibida").innerHTML =
       questaoAtual.pergunta;
     document.getElementById("labelOpcaoUm").innerHTML =
@@ -278,7 +278,7 @@
   }
 
   function submeter() {
-    const options = document.getElementsByName("option"); // recupera alternativas no html
+    const options = document.getElementsByName("option");
 
     let hasChecked = false;
     for (let i = 0; i < options.length; i++) {
@@ -333,7 +333,7 @@
 
   function checarResposta() {
     const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]; // questão atual
-    const respostaQuestaoAtual = questaoAtual.alternativaCorreta; // qual é a resposta correta da questão atual
+    const respostaQuestaoAtual = questaoAtual.alternativaCorreta; // qual é a resposta correta da qu+estão atual
 
     const options = document.getElementsByName("option"); // recupera alternativas no html
 

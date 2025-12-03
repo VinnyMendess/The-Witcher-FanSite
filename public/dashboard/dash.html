@@ -54,7 +54,7 @@
 
     <video autoplay muted loop id="myVideo">
       <source src="../assets/videos/menu-tw3.mp4" type="video/mp4" />
-      Your browser does not support HTML5 video.
+      Teu navegadro não suporta esse video
     </video>
 
     <div class="Dashboard-features">
@@ -186,7 +186,7 @@
   // window.onload = exibirAquariosDoUsuario;
 
   function iniciarKpiDash() {
-    let proximaAtualizacao; // Mantém a variável de timing
+    let proximaAtualizacao; 
 
     const idUsuarioLogado = sessionStorage.ID_USUARIO;
 
@@ -222,7 +222,7 @@
         nomeTitulo.innerHTML = "Falha";
       });
 
-    // Leitura mais segura do ID, DENTRO da função onload
+   
 
     fetch("/dash/imgClasseUsuario", {
       method: "POST",
@@ -631,26 +631,26 @@
     var cores = [];
 
     for (var i = 0; i < resposta.length; i++) {
-      var registro = resposta[i]; // 2. Mudei o nome para 'registro' para bater com o resto
+      var registro = resposta[i]; 
 
       labels.push(registro.nomeSinal);
       dados.push(registro.quantidade);
 
-      // 3. O if/else das cores AGORA está DENTRO do for
+     
       if (registro.nomeSinal == "Igni") {
-        cores.push("#e30000"); // Vermelho
+        cores.push("#e30000"); 
       } else if (registro.nomeSinal == "Aard") {
-        cores.push("rgba(54, 162, 235, 0.8)"); // Azul
+        cores.push("rgba(54, 162, 235, 0.8)"); 
       } else if (registro.nomeSinal == "Yrden") {
-        cores.push("#60088f"); // Roxo
+        cores.push("#60088f"); 
       } else if (registro.nomeSinal == "Quen") {
-        cores.push("#cb980b"); // Amarelo
+        cores.push("#cb980b"); 
       } else if (registro.nomeSinal == "Axii") {
-        cores.push("#06a40d"); // Verde Água
+        cores.push("#06a40d");
       } else {
         cores.push("#808080");
       }
-    } // Fim do for é AQUI
+    }
 
     const dataConfig = {
       labels: labels,
@@ -699,13 +699,13 @@
   function plotarGrafico(resposta, idUsuarioLogado) {
     if (!resposta || resposta.length === 0) {
       console.warn("Nenhum dado de quiz encontrado para plotar.");
-      // Pode desenhar um gráfico vazio ou esconder o canvas
+      
       return;
     }
 
-    const ultimoResultado = resposta[0]; // Pega o resultado mais recente (devido ao LIMIT 1)
+    const ultimoResultado = resposta[0]; 
 
-    // Colunas retornadas: acertos, perguntas, pontuacao
+    
     const totalAcertos = ultimoResultado.acertos;
     const totalQuestoes = ultimoResultado.perguntas;
     const totalErros = totalQuestoes - totalAcertos;
