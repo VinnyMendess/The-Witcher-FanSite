@@ -665,16 +665,33 @@
       return;
     }
 
+    var melhorCarta = -1;
+    var maiorAtaque = -1  
+
+    //for pra ver a maior carta pra jogar
+    for(let i = 0; i < maoAdversario.length; i++){
+      var maoAtual = maoAdversario[i]
+
+      if(maoAtual.atk >maiorAtaque){
+        maiorAtaque = maoAtual.atk
+        melhorCarta = i
+      }
+    }
+
+    
+    
+
     var pontuacoes = calcularPontuacaoTotal();
     var diferenca = pontuacoes.jogador - pontuacoes.adversario;
 
     //pouca chance de agressividade pra jogar mesmo perdendo por poucpo
-    const agressividade = Math.random();
+    var agressividade = Math.random();
+    
     //passa se a mão acabou OU o jogador passou OU a diferença de pontos é muito grande  ou seja maior que 20 OU ele tem poucas cardtas <=2 ou ele falhou no teste de agressividade
     if (
       maoAdversario.length == 0 ||
       (jogadorPassou &&
-        (diferenca > 20 || maoAdversario.length <= 2 || agressividade < 0.7))
+        (diferenca > 20 || maoAdversario.length <= 2 || agressividade < 0.9))
     ) {
       adversarioPassou = true;
       alert("Oponente passou");
@@ -682,9 +699,23 @@
       return;
     }
 
-    //se ele não passar ele joga alguma carta
-    var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
-    jogarCartaAdversario(indiceAdversario);
+    var chance = 0.10
+
+    if(Math.random() < chance){
+      let indiceAleatorio = melhorCarta
+
+      while(indiceAleatorio == melhorCarta && maoAdversario.length >1){
+        indiceAleatorio = Math.floor(Math.random() * maoAdversario.length)
+      }
+      melhorCarta = indiceAleatorio
+    }
+
+    // //se ele não passar ele joga alguma carta
+    // var indiceAdversario = Math.floor(Math.random() * maoAdversario.length);
+    
+    if(melhorCarta != -1){
+      jogarCartaAdversario(melhorCarta);
+    }
 
     exibirCorpoAdversario();
     exibirDistanciaAdversario();
